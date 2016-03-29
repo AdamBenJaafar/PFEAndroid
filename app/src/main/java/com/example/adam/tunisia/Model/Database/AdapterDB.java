@@ -30,14 +30,6 @@ public class AdapterDB {
                     + DBAdapterFeedback.TEXTE+ " TEXT,"
                     + DBAdapterFeedback.EMAIL+ " TEXT" + ");";
 
-    private static final String TABLE_PIN = "pin";
-    private static final String CREATE_TABLE_PIN =
-            "create table " + TABLE_PIN + " (_id integer primary key autoincrement, "
-                    + DBAdapterPin.NAME+ " TEXT,"
-                    + DBAdapterPin.LATITUDE+ " REAL,"
-                    + DBAdapterPin.LONGITUDE+ " REAL,"
-                    + DBAdapterPin.TYPE+ " TEXT,"
-                    + DBAdapterPin.DESCRIPTION+ " TEXT" + ");";
 
 
 
@@ -57,7 +49,6 @@ public class AdapterDB {
         {   Log.v(TAG, "Database CREATED. onCreate method EXECUTED.");
             db.execSQL(CREATE_TABLE_COMPAGNIE);
             db.execSQL(CREATE_TABLE_FEEDBACK);
-            db.execSQL(CREATE_TABLE_PIN);
          // Solution de backup manquante
         }
 
@@ -67,7 +58,6 @@ public class AdapterDB {
         {   Log.v(TAG, "Database UPGRADED. onUpgrade methode EXECUTED.");
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPAGNIE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PIN);
             this.onCreate(db);
 
         }
