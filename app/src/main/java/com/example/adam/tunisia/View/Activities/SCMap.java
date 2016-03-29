@@ -37,7 +37,7 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         ArrayList<Station> A = new ArrayList<Station>();
-
+/*
         A.add(new Station("Le Passage",new LatLng(36.806505, 10.180793)));
         A.add(new Station("Le Passage",new LatLng(36.810354, 10.172349)));
         A.add(new Station("Le Passage",new LatLng(36.813380, 10.168934)));
@@ -51,9 +51,9 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
 
 
 
-        Ligne L = new Ligne("Metro 4","Transtu",A);
+        Ligne L = new Ligne("Metro 4","Transtu",A);*/
 
-        mapMapping(mMap, L);
+        //mapMapping(mMap, L);
 
         LatLng Center = new LatLng(36.859446, 10.277243);
         CameraPosition target = CameraPosition.builder().target(Center).zoom(14).build();
@@ -65,11 +65,11 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
 
         PolylineOptions P = new PolylineOptions();
         P.geodesic(true);
-
+/*
         for(int i=0;i<L.getA().size();i++){
             map.addMarker(new MarkerOptions().title(L.getA().get(i).getName()).snippet("Yes").position(L.getA().get(i).getLatLng()));
             P.add(L.getA().get(i).getLatLng());
-        }
+        }*/
 
 
         P.width(10).color(Color.BLACK);

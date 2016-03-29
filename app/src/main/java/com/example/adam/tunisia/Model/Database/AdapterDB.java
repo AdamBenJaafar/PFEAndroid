@@ -25,10 +25,10 @@ public class AdapterDB {
     private static final String CREATE_TABLE_FEEDBACK =
             "create table " + TABLE_FEEDBACK + " (_id integer primary key autoincrement, "
                     + DBAdapterFeedback.DATE+ " TEXT,"
-                    + DBAdapterFeedback.COMPAGNIENOM+ " TEXT,"
                     + DBAdapterFeedback.NOTE+ " INT,"
                     + DBAdapterFeedback.TEXTE+ " TEXT,"
-                    + DBAdapterFeedback.EMAIL+ " TEXT" + ");";
+                    + DBAdapterFeedback.EMAIL+ " TEXT,"
+                    + DBAdapterFeedback.SOC_ROW_ID+ " INT " + ");";
 
 
 

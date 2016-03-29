@@ -1,4 +1,4 @@
-package com.example.adam.tunisia.View.Activities;
+package com.example.adam.tunisia;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.view.MenuItem;
 
 import com.example.adam.tunisia.Main2Activity;
 import com.example.adam.tunisia.R;
+import com.example.adam.tunisia.View.Activities.MAPActivity;
+import com.example.adam.tunisia.View.Activities.SCList;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

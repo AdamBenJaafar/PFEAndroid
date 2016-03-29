@@ -15,11 +15,11 @@ public class DBAdapterFeedback extends AdapterDB {
     public static final String TAG = "DBAdapterFeedback";
 
     public static final String ROW_ID = "_id";
-    public static final String COMPAGNIENOM = "compagnienom";
     public static final String DATE = "date";
     public static final String NOTE = "note";
     public static final String TEXTE = "texte";
     public static final String EMAIL = "email";
+    public static final String SOC_ROW_ID = "soc_row_id";
 
     public static final int COL_ROW_ID = 0;
     public static final int COL_COMPAGNIENOM = 1;
@@ -28,7 +28,7 @@ public class DBAdapterFeedback extends AdapterDB {
     public static final int COL_TEXTE = 4;
     public static final int COL_EMAIL = 5;
 
-    String [] ALL_KEYS = { ROW_ID, COMPAGNIENOM, DATE, NOTE, TEXTE, EMAIL };
+    String [] ALL_KEYS = { ROW_ID, SOC_ROW_ID, DATE, NOTE, TEXTE, EMAIL };
 
     private static final String DATABASE_TABLE = "feedback";
 
@@ -55,7 +55,7 @@ public class DBAdapterFeedback extends AdapterDB {
     public long createFeedback(Feedback feedback){
         ContentValues initialValues = new ContentValues();
         initialValues.put(DATE, feedback.getDATE());
-        initialValues.put(COMPAGNIENOM, feedback.getSOC_ROW_ID());
+        initialValues.put(SOC_ROW_ID, feedback.getSOC_ROW_ID());
         initialValues.put(NOTE, feedback.getNOTE());
         initialValues.put(TEXTE, feedback.getTEXTE());
         initialValues.put(EMAIL, feedback.getEMAIL());
@@ -163,7 +163,7 @@ public class DBAdapterFeedback extends AdapterDB {
 
         ContentValues args = new ContentValues();
         args.put(DATE, feedback.getDATE());
-        args.put(COMPAGNIENOM, feedback.getSOC_ROW_ID());
+        args.put(SOC_ROW_ID, feedback.getSOC_ROW_ID());
         args.put(NOTE, feedback.getNOTE());
         args.put(TEXTE, feedback.getTEXTE());
         args.put(EMAIL, feedback.getEMAIL());

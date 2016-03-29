@@ -35,9 +35,9 @@ DBAdapterFeedback myDb;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        openDB();
+       // openDB();
     }
-
+/*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -67,15 +67,15 @@ DBAdapterFeedback myDb;
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-        Feedback F = new Feedback(0,"SNTRI","Bien",5,"Oui","J'adore");
+      //  Feedback F = new Feedback(0,"SNTRI","Bien",5,"Oui","J'adore");
 
-        long newId = myDb.createFeedback(F);
+      //  long newId = myDb.createFeedback(F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-            Feedback feedback = myDb.getFeedback(newId);
-            displayText(feedback.toString());
+        //    Feedback feedback = myDb.getFeedback(newId);
+        //    displayText(feedback.toString());
         }catch(Exception e){
 
         }
@@ -100,7 +100,7 @@ DBAdapterFeedback myDb;
 
         displayText(message);
     }
-
+*/
 }
 
 

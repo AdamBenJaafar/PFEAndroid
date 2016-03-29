@@ -79,5 +79,6 @@ public class Feedback {
     public void setSOC_ROW_ID(int SOC_ROW_ID) {
         this.SOC_ROW_ID = SOC_ROW_ID;
     }
+    
 }
 
