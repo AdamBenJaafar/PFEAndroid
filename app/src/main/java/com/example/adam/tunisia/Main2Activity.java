@@ -14,6 +14,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
 /*
+ * Testing commit changes
  * Steps to using the DB:
  * 1. [DONE] Instantiate the DB Adapter
  * 2. [DONE] Open the DB
