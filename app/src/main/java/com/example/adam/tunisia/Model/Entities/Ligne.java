@@ -1,53 +1,72 @@
 package com.example.adam.tunisia.Model.Entities;
 
-import java.util.ArrayList;
-
 public class Ligne {
 
-    private String Name;
-    private String Company;
-    private ArrayList<Station> A;
-
-    public Ligne(String name, String company, ArrayList<Station> a) {
-        Name = name;
-        Company = company;
-        A = a;
-    }
+    private int ROW_ID;
+    private String Direction;
+    private String Identifiant;
+    private String Type;
+    private int SOC_ROW_ID;
 
     public Ligne() {
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getCompany() {
-        return Company;
-    }
-
-    public void setCompany(String company) {
-        Company = company;
-    }
-
-    public ArrayList<Station> getA() {
-        return A;
-    }
-
-    public void setA(ArrayList<Station> a) {
-        A = a;
+    public Ligne(String direction, String identifiant, String type, int SOC_ROW_ID) {
+        Direction = direction;
+        Identifiant = identifiant;
+        Type = type;
+        this.SOC_ROW_ID = SOC_ROW_ID;
     }
 
     @Override
     public String toString() {
         return "Ligne{" +
-                "Name='" + Name + '\'' +
-                ", Company='" + Company + '\'' +
-                ", A=" + A +
+                "ROW_ID=" + ROW_ID +
+                ", Direction='" + Direction + '\'' +
+                ", Identifiant='" + Identifiant + '\'' +
+                ", Type='" + Type + '\'' +
+                ", SOC_ROW_ID=" + SOC_ROW_ID +
                 '}';
+    }
+
+    public int getROW_ID() {
+        return ROW_ID;
+    }
+
+    public String getDirection() {
+        return Direction;
+    }
+
+    public String getIdentifiant() {
+        return Identifiant;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public int getSOC_ROW_ID() {
+        return SOC_ROW_ID;
+    }
+
+    public void setROW_ID(int ROW_ID) {
+        this.ROW_ID = ROW_ID;
+    }
+
+    public void setDirection(String direction) {
+        Direction = direction;
+    }
+
+    public void setIdentifiant(String identifiant) {
+        Identifiant = identifiant;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public void setSOC_ROW_ID(int SOC_ROW_ID) {
+        this.SOC_ROW_ID = SOC_ROW_ID;
     }
 
 }
