@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tunisia</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_cmpdetails">CMPDetails</string>
+    <string name="title_activity_cmpfeedback">CMPFeedback</string>
+    <string name="title_activity_cmpmap">Map</string>
+    <string name="Feedback">Envoyer un feedback</string>
+    <string name="Network">Voir le réseau</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_rtmap">Map</string>
+</resources>
