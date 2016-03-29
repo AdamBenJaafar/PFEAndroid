@@ -1,4 +1,4 @@
-package com.example.adam.tunisia;
+package com.example.adam.tunisia.View.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -11,15 +11,22 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =16;
+    public static final int DATABASE_VERSION =23;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
             "create table " + TABLE_SOCIETE + " (_id integer primary key autoincrement, "
-                    + DBAdapterSociete.NAME+ " TEXT,"
-                    + DBAdapterSociete.MODEL+ " TEXT,"
-                    + DBAdapterSociete.YEAR+ " TEXT" + ");";
-
+                    + DBAdapterSociete.DATE+ " TEXT,"
+                    + DBAdapterSociete.DETAILS+ " TEXT,"
+                    + DBAdapterSociete.FORMEJURIDIQUE+ " TEXT,"
+                    + DBAdapterSociete.IDENTIFICATEUR+ " TEXT,"
+                    + DBAdapterSociete.LOGIN+ " TEXT,"
+                    + DBAdapterSociete.LOGO+ " TEXT,"
+                    + DBAdapterSociete.MOTDEPASSE+ " TEXT,"
+                    + DBAdapterSociete.NOMCOMPLET+ " TEXT,"
+                    + DBAdapterSociete.SIEGESOCIAL+ " TEXT,"
+                    + DBAdapterSociete.SIGLE+ " TEXT,"
+                    + DBAdapterSociete.SITEWEB+ " TEXT" + ");";
 
     private static final String TABLE_FEEDBACK = "feedback";
     private static final String CREATE_TABLE_FEEDBACK =
@@ -30,6 +37,23 @@ public class AdapterDB {
                     + DBAdapterFeedback.EMAIL+ " TEXT,"
                     + DBAdapterFeedback.SOC_ROW_ID+ " INT " + ");";
 
+    private static final String TABLE_STATION = "station";
+    private static final String CREATE_TABLE_STATION =
+            "create table " + TABLE_STATION + " (_id integer primary key autoincrement, "
+                    + DBAdapterStation.NOM+ " TEXT,"
+                    + DBAdapterStation.TYPE+ " TEXT,"
+                    + DBAdapterStation.LAT+ " REAL,"
+                    + DBAdapterStation.LNG+ " REAL,"
+                    + DBAdapterStation.MAJEURE+ " INT,"
+                    + DBAdapterStation.SOC_ROW_ID+ " INT " + ");";
+
+    private static final String TABLE_LIGNE = "ligne";
+    private static final String CREATE_TABLE_LIGNE =
+            "create table " + TABLE_LIGNE + " (_id integer primary key autoincrement, "
+                    + DBAdapterLigne.DIRECTION+ " TEXT,"
+                    + DBAdapterLigne.IDENTIFIANT+ " TEXT,"
+                    + DBAdapterLigne.TYPE+ " TEXT,"
+                    + DBAdapterStation.SOC_ROW_ID+ " INT " + ");";
 
 
 
@@ -49,6 +73,8 @@ public class AdapterDB {
         {   Log.v(TAG, "Database CREATED. onCreate method EXECUTED.");
             db.execSQL(CREATE_TABLE_SOCIETE);
             db.execSQL(CREATE_TABLE_FEEDBACK);
+            db.execSQL(CREATE_TABLE_STATION);
+            db.execSQL(CREATE_TABLE_LIGNE);
          // Solution de backup manquante
         }
 
@@ -58,6 +84,8 @@ public class AdapterDB {
         {   Log.v(TAG, "Database UPGRADED. onUpgrade method EXECUTED.");
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOCIETE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIGNE);
             this.onCreate(db);
 
         }

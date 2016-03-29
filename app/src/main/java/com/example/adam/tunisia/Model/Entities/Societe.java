@@ -3,143 +3,146 @@ package com.example.adam.tunisia.Model.Entities;
 public class Societe {
 
     private int ROW_ID;
-    private String Date;
-    private String Details;
-    private String FormeJuridique;
-    private String Identificateur;
-    private String Login;
-    private String Logo;
-    private String MotDePasse;
-    private String NomComplet;
-    private String SiegeSocial;
-    private String Sigle;
-    private String SiteWeb;
+    private String DATE;
+    private String DETAILS;
+    private String FORMEJURIDIQUE;
+    private String IDENTIFICATEUR;
+    private String LOGIN;
+    private String LOGO;
+    private String MOTDEPASSE;
+    private String NOMCOMPLET;
+    private String SIEGESOCIAL;
+    private String SIGLE;
+    private String SITEWEB;
 
     public Societe() {
     }
 
-    public Societe(String siteWeb, String sigle, String siegeSocial, String nomComplet, String motDePasse, String logo, String login, String identificateur, String formeJuridique, String details, String date) {
-        SiteWeb = siteWeb;
-        Sigle = sigle;
-        SiegeSocial = siegeSocial;
-        NomComplet = nomComplet;
-        MotDePasse = motDePasse;
-        Logo = logo;
-        Login = login;
-        Identificateur = identificateur;
-        FormeJuridique = formeJuridique;
-        Details = details;
-        Date = date;
+    public Societe(String DATE, String DETAILS, String FORMEJURIDIQUE, String IDENTIFICATEUR, String LOGIN, String LOGO, String MOTDEPASSE, String NOMCOMPLET, String SIEGESOCIAL, String SIGLE, String SITEWEB) {
+        this.DATE = DATE;
+        this.DETAILS = DETAILS;
+        this.FORMEJURIDIQUE = FORMEJURIDIQUE;
+        this.IDENTIFICATEUR = IDENTIFICATEUR;
+        this.LOGIN = LOGIN;
+        this.LOGO = LOGO;
+        this.MOTDEPASSE = MOTDEPASSE;
+        this.NOMCOMPLET = NOMCOMPLET;
+        this.SIEGESOCIAL = SIEGESOCIAL;
+        this.SIGLE = SIGLE;
+        this.SITEWEB = SITEWEB;
     }
 
     @Override
     public String toString() {
         return "Societe{" +
                 "ROW_ID=" + ROW_ID +
-                ", Date='" + Date + '\'' +
-                ", Details='" + Details + '\'' +
-                ", FormeJuridique='" + FormeJuridique + '\'' +
-                ", Identificateur='" + Identificateur + '\'' +
-                ", Login='" + Login + '\'' +
-                ", Logo='" + Logo + '\'' +
-                ", MotDePasse='" + MotDePasse + '\'' +
-                ", NomComplet='" + NomComplet + '\'' +
-                ", SiegeSocial='" + SiegeSocial + '\'' +
-                ", Sigle='" + Sigle + '\'' +
-                ", SiteWeb='" + SiteWeb + '\'' +
+                ", DATE='" + DATE + '\'' +
+                ", DETAILS='" + DETAILS + '\'' +
+                ", FORMEJURIDIQUE='" + FORMEJURIDIQUE + '\'' +
+                ", IDENTIFICATEUR='" + IDENTIFICATEUR + '\'' +
+                ", LOGIN='" + LOGIN + '\'' +
+                ", LOGO='" + LOGO + '\'' +
+                ", MOTDEPASSE='" + MOTDEPASSE + '\'' +
+                ", NOMCOMPLET='" + NOMCOMPLET + '\'' +
+                ", SIEGESOCIAL='" + SIEGESOCIAL + '\'' +
+                ", SIGLE='" + SIGLE + '\'' +
+                ", SITEWEB='" + SITEWEB + '\'' +
                 '}';
     }
 
-    public String getDate() {
-        return Date;
+    public int getROW_ID() {
+        return ROW_ID;
     }
 
-    public String getDetails() {
-        return Details;
+    public String getDATE() {
+        return DATE;
     }
 
-    public String getFormeJuridique() {
-        return FormeJuridique;
+    public String getDETAILS() {
+        return DETAILS;
     }
 
-    public String getIdentificateur() {
-        return Identificateur;
+    public String getFORMEJURIDIQUE() {
+        return FORMEJURIDIQUE;
     }
 
-    public String getLogin() {
-        return Login;
+    public String getIDENTIFICATEUR() {
+        return IDENTIFICATEUR;
     }
 
-    public String getLogo() {
-        return Logo;
+    public String getLOGIN() {
+        return LOGIN;
     }
 
-    public String getMotDePasse() {
-        return MotDePasse;
+    public String getLOGO() {
+        return LOGO;
     }
 
-    public String getNomComplet() {
-        return NomComplet;
+    public String getMOTDEPASSE() {
+        return MOTDEPASSE;
     }
 
-    public String getSiegeSocial() {
-        return SiegeSocial;
+    public String getNOMCOMPLET() {
+        return NOMCOMPLET;
     }
 
-    public String getSigle() {
-        return Sigle;
+    public String getSIEGESOCIAL() {
+        return SIEGESOCIAL;
     }
 
-    public String getSiteWeb() {
-        return SiteWeb;
+    public String getSIGLE() {
+        return SIGLE;
+    }
+
+    public String getSITEWEB() {
+        return SITEWEB;
     }
 
     public void setROW_ID(int ROW_ID) {
         this.ROW_ID = ROW_ID;
     }
 
-    public void setDate(String date) {
-        Date = date;
+    public void setDATE(String DATE) {
+        this.DATE = DATE;
     }
 
-    public void setDetails(String details) {
-        Details = details;
+    public void setDETAILS(String DETAILS) {
+        this.DETAILS = DETAILS;
     }
 
-    public void setFormeJuridique(String formeJuridique) {
-        FormeJuridique = formeJuridique;
+    public void setFORMEJURIDIQUE(String FORMEJURIDIQUE) {
+        this.FORMEJURIDIQUE = FORMEJURIDIQUE;
     }
 
-    public void setIdentificateur(String identificateur) {
-        Identificateur = identificateur;
+    public void setIDENTIFICATEUR(String IDENTIFICATEUR) {
+        this.IDENTIFICATEUR = IDENTIFICATEUR;
     }
 
-    public void setLogin(String login) {
-        Login = login;
+    public void setLOGIN(String LOGIN) {
+        this.LOGIN = LOGIN;
     }
 
-    public void setLogo(String logo) {
-        Logo = logo;
+    public void setLOGO(String LOGO) {
+        this.LOGO = LOGO;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        MotDePasse = motDePasse;
+    public void setMOTDEPASSE(String MOTDEPASSE) {
+        this.MOTDEPASSE = MOTDEPASSE;
     }
 
-    public void setNomComplet(String nomComplet) {
-        NomComplet = nomComplet;
+    public void setNOMCOMPLET(String NOMCOMPLET) {
+        this.NOMCOMPLET = NOMCOMPLET;
     }
 
-    public void setSiegeSocial(String siegeSocial) {
-        SiegeSocial = siegeSocial;
+    public void setSIEGESOCIAL(String SIEGESOCIAL) {
+        this.SIEGESOCIAL = SIEGESOCIAL;
     }
 
-    public void setSigle(String sigle) {
-        Sigle = sigle;
+    public void setSIGLE(String SIGLE) {
+        this.SIGLE = SIGLE;
     }
 
-    public void setSiteWeb(String siteWeb) {
-        SiteWeb = siteWeb;
+    public void setSITEWEB(String SITEWEB) {
+        this.SITEWEB = SITEWEB;
     }
-
 }

@@ -5,8 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.adam.tunisia.Model.Database.DBAdapterFeedback;
-import com.example.adam.tunisia.Model.Entities.Feedback;
+import com.example.adam.tunisia.Model.Database.DBAdapterSociete
+        ;
+import com.example.adam.tunisia.Model.Entities.Societe
+        ;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -28,16 +31,17 @@ public class Main2Activity extends AppCompatActivity {
  */
 
 
-DBAdapterFeedback myDb;
+DBAdapterSociete
+        myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-       // openDB();
+        openDB();
     }
-/*
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -46,7 +50,8 @@ DBAdapterFeedback myDb;
 
 
     private void openDB() {
-        myDb = new DBAdapterFeedback(this);
+        myDb = new DBAdapterSociete
+                (this);
 
             myDb.open();
 
@@ -67,15 +72,20 @@ DBAdapterFeedback myDb;
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-      //  Feedback F = new Feedback(0,"SNTRI","Bien",5,"Oui","J'adore");
+        Societe
+                F = new Societe
+                ("SNTRI","Oui","55","SNTRI","Oui","55","SNTRI","Oui","55","SNTRI","Oui");
 
-      //  long newId = myDb.createFeedback(F);
+        long newId = myDb.createSociete
+                (F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-        //    Feedback feedback = myDb.getFeedback(newId);
-        //    displayText(feedback.toString());
+            Societe
+                    societe = myDb.getSociete
+                    (newId);
+            displayText(societe.toString());
         }catch(Exception e){
 
         }
@@ -90,7 +100,9 @@ DBAdapterFeedback myDb;
     public void onClick_DisplayRecords(View v) {
         displayText("Clicked display record!");
 
-        ArrayList<Feedback> A = myDb.getAllFeedback();
+        ArrayList<Societe
+                > A = myDb.getAllSociete
+                ();
 
         String message ="";
 
@@ -100,7 +112,7 @@ DBAdapterFeedback myDb;
 
         displayText(message);
     }
-*/
+
 }
 
 

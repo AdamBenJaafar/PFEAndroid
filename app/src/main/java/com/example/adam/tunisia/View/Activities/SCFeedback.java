@@ -36,7 +36,7 @@ public class SCFeedback extends AppCompatActivity {
     public void envoyerFeedback(View view){
         String feedback = ET.getText().toString();
         double rating = RB.getRating();
-        myDb.createCompagnie(feedback, rating + "", "okkkkkk");
+      //  myDb.createCompagnie(feedback, rating + "", "okkkkkk");
     }
 
     @Override

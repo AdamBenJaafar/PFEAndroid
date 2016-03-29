@@ -4,26 +4,46 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.example.adam.tunisia.Model.Entities.Societe;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DBAdapterSociete extends AdapterDB {
 
     public static final String TAG = "DBAdapterSociete";
 
     public static final String ROW_ID = "_id";
-    public static final String NAME = "name";
-    public static final String MODEL = "model";
-    public static final String YEAR = "year";
+    public static final String DATE = "date";
+    public static final String DETAILS = "details";
+    public static final String FORMEJURIDIQUE = "formejuridique";
+    public static final String IDENTIFICATEUR = "identificateur";
+    public static final String LOGIN = "login";
+    public static final String LOGO = "logo";
+    public static final String MOTDEPASSE = "motdepasse";
+    public static final String NOMCOMPLET = "nomcomplet";
+    public static final String SIEGESOCIAL = "siegesocial";
+    public static final String SIGLE = "sigle";
+    public static final String SITEWEB = "siteweb";
 
     public static final int COL_ROW_ID = 0;
-    public static final int COL_NAME = 1;
-    public static final int COL_MODEL = 2;
-    public static final int COL_YEAR = 3;
+    public static final int COL_DATE = 1;
+    public static final int COL_DETAILS = 2;
+    public static final int COL_FORMEJURIDIQUE = 3;
+    public static final int COL_IDENTIFICATEUR = 4;
+    public static final int COL_LOGIN = 5;
+    public static final int COL_LOGO = 6;
+    public static final int COL_MOTDEPASSE = 7;
+    public static final int COL_NOMCOMPLET = 8;
+    public static final int COL_SIEGESOCIAL = 9;
+    public static final int COL_SIGLE = 10;
+    public static final int COL_SITEWEB = 11;
 
-    String [] ALL_KEYS = { ROW_ID, NAME, MODEL, YEAR };
+    String [] ALL_KEYS = { ROW_ID, DATE, DETAILS, FORMEJURIDIQUE, IDENTIFICATEUR, LOGIN,LOGO, MOTDEPASSE,NOMCOMPLET,SIEGESOCIAL,SIGLE,SITEWEB};
 
-    private static final String DATABASE_TABLE = "compagnie";
+    private static final String DATABASE_TABLE = "societe";
 
     private SQLiteDatabase mDb;
 
@@ -32,7 +52,6 @@ public class DBAdapterSociete extends AdapterDB {
     public DBAdapterSociete(Context ctx) {
         super(ctx);
     }
-
 
     public DBAdapterSociete open() {
         super.open();
@@ -46,26 +65,82 @@ public class DBAdapterSociete extends AdapterDB {
 
     // _____ CREATE, READ, UPDATE, DELETE _____
 
-    public long createCompagnie(String name, String model, String year){
+    public long createSociete(Societe societe){
+        Log.v(TAG, "Societe created");
         ContentValues initialValues = new ContentValues();
-        initialValues.put(NAME, name);
-        initialValues.put(MODEL, model);
-        initialValues.put(YEAR, year);
+        initialValues.put(DATE, societe.getDATE());
+        initialValues.put(DETAILS, societe.getDETAILS());
+        initialValues.put(FORMEJURIDIQUE, societe.getFORMEJURIDIQUE());
+        initialValues.put(IDENTIFICATEUR, societe.getIDENTIFICATEUR());
+        initialValues.put(LOGIN, societe.getLOGIN());
+        initialValues.put(LOGO, societe.getLOGO());
+        initialValues.put(MOTDEPASSE, societe.getMOTDEPASSE());
+        initialValues.put(NOMCOMPLET, societe.getNOMCOMPLET());
+        initialValues.put(SIEGESOCIAL, societe.getSIEGESOCIAL());
+        initialValues.put(SIGLE, societe.getSIGLE());
+        initialValues.put(SITEWEB, societe.getSITEWEB());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean deleteCompagnie(long rowId) {
-
-        return this.mDb.delete(DATABASE_TABLE, ROW_ID + "=" + rowId, null) > 0; //$NON-NLS-1$
+    public boolean deleteSociete(long rowId) {
+        Log.v(TAG,"Societe deleted");
+        String where = ROW_ID + "=" + rowId ;
+        return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
     }
 
-    public Cursor getAllCompagnie() {
+    public ArrayList<Societe> getAllSociete() {
+        Log.v(TAG,"Societe acquired");
+        ArrayList<Societe> A= new ArrayList<Societe>();
+        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
 
-        return this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        if (mCursor.moveToFirst()) {
+            do {
+                Societe S= new Societe();
+
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                String date = mCursor.getString(COL_DATE);
+                String details = mCursor.getString(COL_DETAILS);
+                String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);
+                String identificateur = mCursor.getString(COL_IDENTIFICATEUR);
+                String login = mCursor.getString(COL_LOGIN);
+                String logo = mCursor.getString(COL_LOGO);
+                String motdepasse = mCursor.getString(COL_MOTDEPASSE);
+                String nomcomplet = mCursor.getString(COL_NOMCOMPLET);
+                String siegesocial = mCursor.getString(COL_SIEGESOCIAL);
+                String sigle = mCursor.getString(COL_SIGLE);
+                String siteweb = mCursor.getString(COL_SITEWEB);
+
+
+
+                // Append data to the message:
+                S.setROW_ID(id);
+                S.setDATE(date);
+                S.setDETAILS(details);
+                S.setFORMEJURIDIQUE(formejuridique);
+                S.setIDENTIFICATEUR(identificateur);
+                S.setLOGIN(login);
+                S.setLOGO(logo);
+                S.setMOTDEPASSE(motdepasse);
+                S.setNOMCOMPLET(nomcomplet);
+                S.setSIEGESOCIAL(siegesocial);
+                S.setSIGLE(sigle);
+                S.setSITEWEB(siteweb);
+
+
+
+                A.add(S);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+        return A;
     }
 
-    public Cursor getCompagnie(long rowId) throws SQLException {
-
+    public Societe getSociete(long rowId) throws SQLException {
+        Log.v(TAG,"Societe acquired");
         String where = ROW_ID + "=" + rowId;
 
         Cursor mCursor =
@@ -74,11 +149,53 @@ public class DBAdapterSociete extends AdapterDB {
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
-        return mCursor;
+
+        Societe S= new Societe();
+
+        if (mCursor.moveToFirst()) {
+            do {
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                String date = mCursor.getString(COL_DATE);
+                String details = mCursor.getString(COL_DETAILS);
+                String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);
+                String identificateur = mCursor.getString(COL_IDENTIFICATEUR);
+                String login = mCursor.getString(COL_LOGIN);
+                String logo = mCursor.getString(COL_LOGO);
+                String motdepasse = mCursor.getString(COL_MOTDEPASSE);
+                String nomcomplet = mCursor.getString(COL_NOMCOMPLET);
+                String siegesocial = mCursor.getString(COL_SIEGESOCIAL);
+                String sigle = mCursor.getString(COL_SIGLE);
+                String siteweb = mCursor.getString(COL_SITEWEB);
+
+
+
+                // Append data to the message:
+                S.setROW_ID(id);
+                S.setDATE(date);
+                S.setDETAILS(details);
+                S.setFORMEJURIDIQUE(formejuridique);
+                S.setIDENTIFICATEUR(identificateur);
+                S.setLOGIN(login);
+                S.setLOGO(logo);
+                S.setMOTDEPASSE(motdepasse);
+                S.setNOMCOMPLET(nomcomplet);
+                S.setSIEGESOCIAL(siegesocial);
+                S.setSIGLE(sigle);
+                S.setSITEWEB(siteweb);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+
+        return S;
     }
 
     public void deleteAll() {
-        Cursor c = getAllCompagnie();
+        Log.v(TAG,"Societes deleted");
+        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {
@@ -93,17 +210,24 @@ public class DBAdapterSociete extends AdapterDB {
         return db.delete(DATABASE_TABLE, where, null) != 0;
     }
 
-    public boolean updateCompagnie(long rowId, String name, String model,
-                             String year){
+    public boolean updateSociete(Societe societe){
+        Log.v(TAG,"Societe updated");
+        String where = ROW_ID + "=" + societe.getROW_ID();
 
-        String where = ROW_ID + "=" + rowId;
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(DATE, societe.getDATE());
+        initialValues.put(DETAILS, societe.getDETAILS());
+        initialValues.put(FORMEJURIDIQUE, societe.getFORMEJURIDIQUE());
+        initialValues.put(IDENTIFICATEUR, societe.getIDENTIFICATEUR());
+        initialValues.put(LOGIN, societe.getLOGIN());
+        initialValues.put(LOGO, societe.getLOGO());
+        initialValues.put(MOTDEPASSE, societe.getMOTDEPASSE());
+        initialValues.put(NOMCOMPLET, societe.getNOMCOMPLET());
+        initialValues.put(SIEGESOCIAL, societe.getSIEGESOCIAL());
+        initialValues.put(SIGLE, societe.getSIGLE());
+        initialValues.put(SITEWEB, societe.getSITEWEB());
 
-        ContentValues args = new ContentValues();
-        args.put(NAME, name);
-        args.put(MODEL, model);
-        args.put(YEAR, year);
-
-        return this.mDb.update(DATABASE_TABLE, args, where, null) >0;
+        return this.mDb.update(DATABASE_TABLE, initialValues, where, null) >0;
     }
 
 }

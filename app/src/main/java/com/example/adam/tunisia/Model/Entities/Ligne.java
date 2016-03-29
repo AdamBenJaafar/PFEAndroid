@@ -3,18 +3,18 @@ package com.example.adam.tunisia.Model.Entities;
 public class Ligne {
 
     private int ROW_ID;
-    private String Direction;
-    private String Identifiant;
-    private String Type;
+    private String DIRECTION;
+    private String IDENTIFIANT;
+    private String TYPE;
     private int SOC_ROW_ID;
 
     public Ligne() {
     }
 
-    public Ligne(String direction, String identifiant, String type, int SOC_ROW_ID) {
-        Direction = direction;
-        Identifiant = identifiant;
-        Type = type;
+    public Ligne(String DIRECTION, String IDENTIFIANT, String TYPE, int SOC_ROW_ID) {
+        this.DIRECTION = DIRECTION;
+        this.IDENTIFIANT = IDENTIFIANT;
+        this.TYPE = TYPE;
         this.SOC_ROW_ID = SOC_ROW_ID;
     }
 
@@ -22,9 +22,9 @@ public class Ligne {
     public String toString() {
         return "Ligne{" +
                 "ROW_ID=" + ROW_ID +
-                ", Direction='" + Direction + '\'' +
-                ", Identifiant='" + Identifiant + '\'' +
-                ", Type='" + Type + '\'' +
+                ", DIRECTION='" + DIRECTION + '\'' +
+                ", IDENTIFIANT='" + IDENTIFIANT + '\'' +
+                ", TYPE='" + TYPE + '\'' +
                 ", SOC_ROW_ID=" + SOC_ROW_ID +
                 '}';
     }
@@ -33,16 +33,16 @@ public class Ligne {
         return ROW_ID;
     }
 
-    public String getDirection() {
-        return Direction;
+    public String getDIRECTION() {
+        return DIRECTION;
     }
 
-    public String getIdentifiant() {
-        return Identifiant;
+    public String getIDENTIFIANT() {
+        return IDENTIFIANT;
     }
 
-    public String getType() {
-        return Type;
+    public String getTYPE() {
+        return TYPE;
     }
 
     public int getSOC_ROW_ID() {
@@ -53,16 +53,16 @@ public class Ligne {
         this.ROW_ID = ROW_ID;
     }
 
-    public void setDirection(String direction) {
-        Direction = direction;
+    public void setDIRECTION(String DIRECTION) {
+        this.DIRECTION = DIRECTION;
     }
 
-    public void setIdentifiant(String identifiant) {
-        Identifiant = identifiant;
+    public void setIDENTIFIANT(String IDENTIFIANT) {
+        this.IDENTIFIANT = IDENTIFIANT;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
     }
 
     public void setSOC_ROW_ID(int SOC_ROW_ID) {
