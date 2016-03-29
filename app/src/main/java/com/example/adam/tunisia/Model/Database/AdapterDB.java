@@ -11,11 +11,11 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =15;
+    public static final int DATABASE_VERSION =16;
 
-    private static final String TABLE_COMPAGNIE = "compagnie";
-    private static final String CREATE_TABLE_COMPAGNIE =
-            "create table " + TABLE_COMPAGNIE + " (_id integer primary key autoincrement, "
+    private static final String TABLE_SOCIETE = "societe";
+    private static final String CREATE_TABLE_SOCIETE =
+            "create table " + TABLE_SOCIETE + " (_id integer primary key autoincrement, "
                     + DBAdapterSociete.NAME+ " TEXT,"
                     + DBAdapterSociete.MODEL+ " TEXT,"
                     + DBAdapterSociete.YEAR+ " TEXT" + ");";
@@ -47,7 +47,7 @@ public class AdapterDB {
         @Override
         public void onCreate(SQLiteDatabase db)
         {   Log.v(TAG, "Database CREATED. onCreate method EXECUTED.");
-            db.execSQL(CREATE_TABLE_COMPAGNIE);
+            db.execSQL(CREATE_TABLE_SOCIETE);
             db.execSQL(CREATE_TABLE_FEEDBACK);
          // Solution de backup manquante
         }
@@ -55,8 +55,8 @@ public class AdapterDB {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion,
                               int newVersion)
-        {   Log.v(TAG, "Database UPGRADED. onUpgrade methode EXECUTED.");
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPAGNIE);
+        {   Log.v(TAG, "Database UPGRADED. onUpgrade method EXECUTED.");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOCIETE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
             this.onCreate(db);
 

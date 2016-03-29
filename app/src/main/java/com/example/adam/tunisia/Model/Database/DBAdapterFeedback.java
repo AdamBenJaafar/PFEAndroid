@@ -54,11 +54,11 @@ public class DBAdapterFeedback extends AdapterDB {
 
     public long createFeedback(Feedback feedback){
         ContentValues initialValues = new ContentValues();
-        initialValues.put(DATE, feedback.getDate());
+        initialValues.put(DATE, feedback.getDATE());
         initialValues.put(COMPAGNIENOM, feedback.getSOC_ROW_ID());
-        initialValues.put(NOTE, feedback.getNote());
-        initialValues.put(TEXTE, feedback.getTexte());
-        initialValues.put(EMAIL, feedback.getEmail());
+        initialValues.put(NOTE, feedback.getNOTE());
+        initialValues.put(TEXTE, feedback.getTEXTE());
+        initialValues.put(EMAIL, feedback.getEMAIL());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -86,10 +86,10 @@ public class DBAdapterFeedback extends AdapterDB {
                 // Append data to the message:
                 F.setROW_ID(id);
                 F.setSOC_ROW_ID(compagnienom);
-                F.setDate(date);
-                F.setNote(note);
-                F.setTexte(texte);
-                F.setEmail(email);
+                F.setDATE(date);
+                F.setNOTE(note);
+                F.setTEXTE(texte);
+                F.setEMAIL(email);
 
                 A.add(F);
 
@@ -127,10 +127,10 @@ public class DBAdapterFeedback extends AdapterDB {
                 // Append data to the message:
                 F.setROW_ID(id);
                 F.setSOC_ROW_ID(compagnienom);
-                F.setDate(date);
-                F.setNote(note);
-                F.setTexte(texte);
-                F.setEmail(email);
+                F.setDATE(date);
+                F.setNOTE(note);
+                F.setTEXTE(texte);
+                F.setEMAIL(email);
 
             } while(mCursor.moveToNext());
         }
@@ -162,11 +162,11 @@ public class DBAdapterFeedback extends AdapterDB {
         String where = ROW_ID + "=" + feedback.getROW_ID();
 
         ContentValues args = new ContentValues();
-        args.put(DATE, feedback.getDate());
+        args.put(DATE, feedback.getDATE());
         args.put(COMPAGNIENOM, feedback.getSOC_ROW_ID());
-        args.put(NOTE, feedback.getNote());
-        args.put(TEXTE, feedback.getTexte());
-        args.put(EMAIL, feedback.getEmail());
+        args.put(NOTE, feedback.getNOTE());
+        args.put(TEXTE, feedback.getTEXTE());
+        args.put(EMAIL, feedback.getEMAIL());
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;
     }

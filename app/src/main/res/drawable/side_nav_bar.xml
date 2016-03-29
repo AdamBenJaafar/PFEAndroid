@@ -5,5 +5,5 @@
         android:centerColor="@color/colorPrimary"
         android:endColor="@color/colorPrimaryDark"
         android:startColor="@color/colorPrimary"
-        android:type="linear" />
+        android:TYPE="linear" />
 </shape>
