@@ -17,12 +17,12 @@ import com.example.adam.tunisia.Model.Rest.RetrofitFeedback;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;*/
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 
@@ -53,7 +53,7 @@ DBAdapterSociete
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-       // getReport();
+        getReport();
         openDB();
     }
 
@@ -133,7 +133,7 @@ DBAdapterSociete
         displayText(message);
     }
 
-/*
+
     void getReport() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -181,7 +181,7 @@ DBAdapterSociete
 
         });
     }
-*/
+
 }
 
 

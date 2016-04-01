@@ -1,30 +1,44 @@
 package com.example.adam.tunisia.Model.Entities;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Societe {
 
-
+    @SerializedName("auto_Societe")
+    @Expose
     private int ROW_ID;
-
+    @SerializedName("date_creation")
+    @Expose
     private String DATE;
-
+    @SerializedName("detail")
+    @Expose
     private String DETAILS;
-
+    @SerializedName("form_juridique")
+    @Expose
     private String FORMEJURIDIQUE;
-
+    @SerializedName("identificateur")
+    @Expose
     private String IDENTIFICATEUR;
-
+    @SerializedName("login")
+    @Expose
     private String LOGIN;
     private String LOGO;
-
+    @SerializedName("mot_de_passe")
+    @Expose
     private String MOTDEPASSE;
-
+    @SerializedName("nom_complet")
+    @Expose
     private String NOMCOMPLET;
-
+    @SerializedName("siege_sociale")
+    @Expose
     private String SIEGESOCIAL;
-
+    @SerializedName("sigle")
+    @Expose
     private String SIGLE;
-
+    @SerializedName("site_web")
+    @Expose
     private String SITEWEB;
 
     public Societe() {
