@@ -1,18 +1,30 @@
 package com.example.adam.tunisia.Model.Entities;
 
+
 public class Societe {
 
+
     private int ROW_ID;
+
     private String DATE;
+
     private String DETAILS;
+
     private String FORMEJURIDIQUE;
+
     private String IDENTIFICATEUR;
+
     private String LOGIN;
     private String LOGO;
+
     private String MOTDEPASSE;
+
     private String NOMCOMPLET;
+
     private String SIEGESOCIAL;
+
     private String SIGLE;
+
     private String SITEWEB;
 
     public Societe() {

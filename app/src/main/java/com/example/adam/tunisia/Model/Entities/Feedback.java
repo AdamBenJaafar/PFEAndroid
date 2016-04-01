@@ -1,13 +1,22 @@
 package com.example.adam.tunisia.Model.Entities;
 
+//import com.google.gson.annotations.SerializedName;
+
 public class Feedback {
 
-    private int ROW_ID;
+
+    private transient int ROW_ID;
+
+ //   @SerializedName("date_feed")
     private String DATE;
+  //  @SerializedName("note")
     private int NOTE;
+   // @SerializedName("text")
     private String TEXTE;
+  //  @SerializedName("email")
     private String EMAIL;
-    private int SOC_ROW_ID;
+
+    private transient int SOC_ROW_ID;
 
     public Feedback() {
     }
