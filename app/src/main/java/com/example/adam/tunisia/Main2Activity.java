@@ -143,25 +143,25 @@ DBAdapterSociete
 
         ISociete service = retrofit.create(ISociete.class);
 
-        Call<List<Societe>> call = service.getWheatherReport();
+        Call<Societe> call = service.getWheatherRepor("TRANSTU");
 
-        call.enqueue(new Callback<List<Societe>>() {
+        call.enqueue(new Callback<Societe>() {
 
             @Override
-            public void onResponse(Call<List<Societe>> call, Response<List<Societe>> response) {
+            public void onResponse(Call<Societe> call, Response<Societe> response) {
                 try {
 
                     String RES="";
 
-                    String city = response.body().get(1).getLOGIN();
+                    String city = response.body().getLOGIN();
 
-                    String status = response.body().get(1).getFORMEJURIDIQUE();
+                    String status = response.body().getFORMEJURIDIQUE();
 
-                    String humidity = response.body().get(1).getIDENTIFICATEUR();
+                    String humidity = response.body().getIDENTIFICATEUR();
 
                     String pressure = response.message();
 
-                    RES+= city + status + humidity+ pressure;
+                    RES+= "YESSSS" + city + status + humidity+ pressure;
 
                     displayText(RES);
 
@@ -174,12 +174,18 @@ DBAdapterSociete
             }
 
             @Override
-            public void onFailure(Call<List<Societe>> call, Throwable t) {
+            public void onFailure(Call<Societe> call, Throwable t) {
 
             }
 
 
+
+
         });
+
+
+
+
     }
 
 }
