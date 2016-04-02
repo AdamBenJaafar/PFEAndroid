@@ -11,9 +11,9 @@ import retrofit2.http.Path;
 public interface ISociete {
 
   @GET("rest/societes/crud")
-  Call<List<Societe>> getWheatherReport();
+  Call<List<Societe>> getSocietes();
 
   @GET("rest/societes/crud/{T}")
-  Call<Societe> getWheatherRepor(@Path("T") String T);
+  Call<Societe> getSociete(@Path("T") String T);
 
 }
