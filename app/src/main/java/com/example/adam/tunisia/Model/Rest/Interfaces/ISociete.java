@@ -13,7 +13,7 @@ public interface ISociete {
   @GET("rest/societes/crud")
   Call<List<Societe>> getSocietes();
 
-  @GET("rest/societes/crud/{T}")
-  Call<Societe> getSociete(@Path("T") String T);
+  @GET("rest/societes/crud/{IDENTIFICATEUR}")
+  Call<Societe> getSociete(@Path("IDENTIFICATEUR") String IDENTIFICATEUR);
 
 }

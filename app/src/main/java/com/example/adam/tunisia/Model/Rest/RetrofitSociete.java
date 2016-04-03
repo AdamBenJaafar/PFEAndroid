@@ -7,6 +7,8 @@ import com.example.adam.tunisia.Model.Database.DBAdapterSociete;
 import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Rest.Interfaces.ISociete;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +26,7 @@ public class RetrofitSociete {
         this.context = context;
     }
 
-    public void getSocietes(String id) {
+    public void getSocietes() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
@@ -33,31 +35,35 @@ public class RetrofitSociete {
 
         ISociete service = retrofit.create(ISociete.class);
 
-        Call<Societe> call = service.getSociete("TRANSTU");
+        Call<List<Societe>> call = service.getSocietes();
 
-        call.enqueue(new Callback<Societe>() {
+        call.enqueue(new Callback<List<Societe>>() {
 
             @Override
-            public void onResponse(Call<Societe> call, Response<Societe> response) {
+            public void onResponse(Call<List<Societe>> call, Response<List<Societe>> response) {
                 try {
 
                     DBAdapterSociete myDb;
                     myDb = new DBAdapterSociete(context);
 
                     myDb.open();
-
-                    Societe S = new Societe();
-
-                    String city = response.body().getLOGIN();
-                    S.setLOGIN(city);
-                    String status = response.body().getFORMEJURIDIQUE();
-                    S.setFORMEJURIDIQUE(status);
-                    String humidity = response.body().getIDENTIFICATEUR();
-                    S.setIDENTIFICATEUR(humidity);
-
-
                     myDb.deleteAll();
-                    myDb.createSociete(S);
+
+                    for(int i=0;i<response.body().size();i++) {
+
+                        Societe S = new Societe();
+
+                        String city = response.body().get(i).getLOGIN();
+                        S.setLOGIN(city);
+                        String status = response.body().get(i).getFORMEJURIDIQUE();
+                        S.setFORMEJURIDIQUE(status);
+                        String humidity = response.body().get(i).getIDENTIFICATEUR();
+                        S.setIDENTIFICATEUR(humidity);
+
+                        myDb.createSociete(S);
+                    }
+
+
 
                     myDb.close();
 
@@ -70,8 +76,9 @@ public class RetrofitSociete {
             }
 
             @Override
-            public void onFailure(Call<Societe> call, Throwable t) {
+            public void onFailure(Call<List<Societe>> call, Throwable t) {
                 Log.v(TAG,"getSociete FAILED onFailure");
+                t.printStackTrace();
             }
 
         });

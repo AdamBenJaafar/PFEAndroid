@@ -1,9 +1,12 @@
 package com.example.adam.tunisia.View.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +32,32 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        if(!getIntent().getBooleanExtra("internet",false)){
+            AlertDialog alertDialog = new AlertDialog.Builder(
+                    this).create();
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Alerte");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Les donnes peuvent ne pas étre mises ajour");
+
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.ic_warning_24dp);
+
+            alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+        }
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
