@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.example.adam.tunisia.Model.Rest.RetrofitActualite;
 import com.example.adam.tunisia.Model.Rest.RetrofitLigne;
+import com.example.adam.tunisia.Model.Rest.RetrofitPerturbation;
 import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
 import com.example.adam.tunisia.Model.Rest.RetrofitStation;
 import com.example.adam.tunisia.R;
@@ -94,6 +95,8 @@ public class SplashScreen extends Activity {
         RLigne.getLignes();
         RetrofitActualite RActualite = new RetrofitActualite(this);
         RActualite.getActualites();
+        RetrofitPerturbation RPerturbation = new RetrofitPerturbation(this);
+        RPerturbation.getPerturbations();
 
         new DownloadLink().execute();
 

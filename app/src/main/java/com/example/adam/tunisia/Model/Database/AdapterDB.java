@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =25;
+    public static final int DATABASE_VERSION =26;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -65,11 +65,9 @@ public class AdapterDB {
     private static final String TABLE_PERTURBATION = "perturbation";
     private static final String CREATE_TABLE_PERTURBATION =
             "create table " + TABLE_PERTURBATION + " (_id integer primary key autoincrement, "
-                    + DBAdapterFeedback.DATE+ " TEXT,"
-                    + DBAdapterFeedback.NOTE+ " INT,"
-                    + DBAdapterFeedback.TEXTE+ " TEXT,"
-                    + DBAdapterFeedback.EMAIL+ " TEXT,"
-                    + DBAdapterFeedback.SOC_ROW_ID+ " TEXT " + ");";
+                    + DBAdapterPerturbation.DATE+ " TEXT,"
+                    + DBAdapterPerturbation.TEXTE+ " TEXT,"
+                    + DBAdapterPerturbation.LIG_ROW_ID+ " TEXT " + ");";
 
     private final Context context;
     private DatabaseHelper DBHelper;

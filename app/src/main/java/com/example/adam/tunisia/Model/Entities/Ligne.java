@@ -24,6 +24,10 @@ public class Ligne {
     public Ligne() {
     }
 
+    public Ligne(String IDENTIFIANT) {
+        this.IDENTIFIANT = IDENTIFIANT;
+    }
+
     public Ligne(int ROW_ID, String DIRECTION, String IDENTIFIANT, String TYPE, Societe SOC) {
         this.ROW_ID = ROW_ID;
         this.DIRECTION = DIRECTION;

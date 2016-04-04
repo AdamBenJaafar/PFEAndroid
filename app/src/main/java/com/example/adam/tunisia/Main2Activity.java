@@ -7,12 +7,14 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.adam.tunisia.Model.Database.DBAdapterActualite;
+import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation
+        ;
 import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterSociete
         ;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
-import com.example.adam.tunisia.Model.Entities.Actualite;
+import com.example.adam.tunisia.Model.Entities.Perturbation
+        ;
 import com.example.adam.tunisia.Model.Entities.Feedback;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Societe
@@ -35,7 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
-    DBAdapterActualite myDb;
+    DBAdapterPerturbation
+            myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,8 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void openDB() {
-        myDb = new DBAdapterActualite (this);
+        myDb = new DBAdapterPerturbation
+                (this);
         myDb.open();
     }
 
@@ -67,18 +71,23 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-        Actualite
-                F = new Actualite
-                (5,"Oui","55",new Societe());
+        Perturbation
 
-        long newId = myDb.createActualite
+                F = new Perturbation
+
+                (5,"Oui","55",new Ligne());
+
+        long newId = myDb.createPerturbation
+
                 (F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-            Actualite
-                    societe = myDb.getActualite
+            Perturbation
+
+                    societe = myDb.getPerturbation
+
                     (newId);
             displayText(societe.toString());
         }catch(Exception e){
@@ -95,8 +104,10 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_DisplayRecords(View v) {
         displayText("Clicked display record!");
 
-        ArrayList<Actualite
-                > A = myDb.getAllActualite
+        ArrayList<Perturbation
+
+                > A = myDb.getAllPerturbation
+
                 ();
 
         String message ="";
