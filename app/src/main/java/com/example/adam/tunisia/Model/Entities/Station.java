@@ -1,25 +1,44 @@
 package com.example.adam.tunisia.Model.Entities;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Station {
 
+    @SerializedName("auto_station")
+    @Expose
     private int ROW_ID;
+    @SerializedName("nom")
+    @Expose
     private String NOM;
+    @SerializedName("type")
+    @Expose
     private String TYPE;
-    private LatLng LATLNG;
-    private int MAJEURE;
-    private int SOC_ROW_ID;
+    @SerializedName("latitude")
+    @Expose
+    private String LATITUDE;
+    @SerializedName("longitude")
+    @Expose
+    private String LONGITUDE;
+    @SerializedName("majeure")
+    @Expose
+    private boolean MAJEURE;
+    @SerializedName("societe")
+    @Expose
+    private Societe SOC;
+
 
     public Station() {
     }
 
-    public Station(String nom, String type, com.google.android.gms.maps.model.LatLng latLng, int majeure, int SOC_ROW_ID) {
-        NOM = nom;
-        TYPE = type;
-        LATLNG = latLng;
-        MAJEURE = majeure;
-        this.SOC_ROW_ID = SOC_ROW_ID;
+    public Station(int ROW_ID, String NOM, String TYPE, String LATITUDE, String LONGITUDE, boolean MAJEURE, Societe SOC) {
+        this.ROW_ID = ROW_ID;
+        this.NOM = NOM;
+        this.TYPE = TYPE;
+        this.LATITUDE = LATITUDE;
+        this.LONGITUDE = LONGITUDE;
+        this.MAJEURE = MAJEURE;
+        this.SOC = SOC;
     }
 
     @Override
@@ -28,34 +47,11 @@ public class Station {
                 "ROW_ID=" + ROW_ID +
                 ", NOM='" + NOM + '\'' +
                 ", TYPE='" + TYPE + '\'' +
-                ", LATLNG=" + LATLNG +
+                ", LATITUDE='" + LATITUDE + '\'' +
+                ", LONGITUDE='" + LONGITUDE + '\'' +
                 ", MAJEURE=" + MAJEURE +
-                ", SOC_ROW_ID=" + SOC_ROW_ID +
+                ", SOC=" + SOC +
                 '}';
-    }
-
-    public int getROW_ID() {
-        return ROW_ID;
-    }
-
-    public String getNOM() {
-        return NOM;
-    }
-
-    public String getTYPE() {
-        return TYPE;
-    }
-
-    public com.google.android.gms.maps.model.LatLng getLATLNG() {
-        return LATLNG;
-    }
-
-    public int getMAJEURE() {
-        return MAJEURE;
-    }
-
-    public int getSOC_ROW_ID() {
-        return SOC_ROW_ID;
     }
 
     public void setROW_ID(int ROW_ID) {
@@ -70,16 +66,48 @@ public class Station {
         this.TYPE = TYPE;
     }
 
-    public void setLATLNG(com.google.android.gms.maps.model.LatLng LATLNG) {
-        this.LATLNG = LATLNG;
+    public void setLATITUDE(String LATITUDE) {
+        this.LATITUDE = LATITUDE;
     }
 
-    public void setMAJEURE(int MAJEURE) {
+    public void setLONGITUDE(String LONGITUDE) {
+        this.LONGITUDE = LONGITUDE;
+    }
+
+    public void setMAJEURE(boolean MAJEURE) {
         this.MAJEURE = MAJEURE;
     }
 
-    public void setSOC_ROW_ID(int SOC_ROW_ID) {
-        this.SOC_ROW_ID = SOC_ROW_ID;
+    public void setSOC(Societe SOC) {
+        this.SOC = SOC;
+    }
+
+    public int getROW_ID() {
+        return ROW_ID;
+    }
+
+    public String getNOM() {
+        return NOM;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public String getLATITUDE() {
+        return LATITUDE;
+    }
+
+    public String getLONGITUDE() {
+        return LONGITUDE;
+    }
+
+    public boolean isMAJEURE() {
+        return MAJEURE;
+    }
+
+    public Societe getSOC() {
+        return SOC;
     }
 
 }

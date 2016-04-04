@@ -1,7 +1,5 @@
 package com.example.adam.tunisia.Model.Entities;
 
-//import com.google.gson.annotations.SerializedName;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Feedback {

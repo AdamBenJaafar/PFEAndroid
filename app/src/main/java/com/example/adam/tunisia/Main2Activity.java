@@ -7,11 +7,17 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.example.adam.tunisia.Model.Database.DBAdapterActualite;
+import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterSociete
         ;
+import com.example.adam.tunisia.Model.Database.DBAdapterStation;
+import com.example.adam.tunisia.Model.Entities.Actualite;
 import com.example.adam.tunisia.Model.Entities.Feedback;
+import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Societe
         ;
+import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Rest.Interfaces.ISociete;
 import com.example.adam.tunisia.Model.Rest.RetrofitFeedback;
 import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
@@ -29,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
-    DBAdapterSociete myDb;
+    DBAdapterActualite myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void openDB() {
-        myDb = new DBAdapterSociete (this);
+        myDb = new DBAdapterActualite (this);
         myDb.open();
     }
 
@@ -61,18 +67,18 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-        Societe
-                F = new Societe
-                ("SNTRI","Oui","55","SNTRI","Oui","55","SNTRI","Oui","55","SNTRI","Oui");
+        Actualite
+                F = new Actualite
+                (5,"Oui","55",new Societe());
 
-        long newId = myDb.createSociete
+        long newId = myDb.createActualite
                 (F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-            Societe
-                    societe = myDb.getSociete
+            Actualite
+                    societe = myDb.getActualite
                     (newId);
             displayText(societe.toString());
         }catch(Exception e){
@@ -89,8 +95,8 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_DisplayRecords(View v) {
         displayText("Clicked display record!");
 
-        ArrayList<Societe
-                > A = myDb.getAllSociete
+        ArrayList<Actualite
+                > A = myDb.getAllActualite
                 ();
 
         String message ="";

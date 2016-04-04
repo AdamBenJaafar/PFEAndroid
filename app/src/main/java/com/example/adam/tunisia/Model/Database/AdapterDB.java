@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =23;
+    public static final int DATABASE_VERSION =25;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -42,10 +42,10 @@ public class AdapterDB {
             "create table " + TABLE_STATION + " (_id integer primary key autoincrement, "
                     + DBAdapterStation.NOM+ " TEXT,"
                     + DBAdapterStation.TYPE+ " TEXT,"
-                    + DBAdapterStation.LAT+ " REAL,"
-                    + DBAdapterStation.LNG+ " REAL,"
+                    + DBAdapterStation.LAT+ " TEXT,"
+                    + DBAdapterStation.LNG+ " TEXT,"
                     + DBAdapterStation.MAJEURE+ " INT,"
-                    + DBAdapterStation.SOC_ROW_ID+ " INT " + ");";
+                    + DBAdapterStation.SOC_ROW_ID+ " TEXT " + ");";
 
     private static final String TABLE_LIGNE = "ligne";
     private static final String CREATE_TABLE_LIGNE =
@@ -53,9 +53,23 @@ public class AdapterDB {
                     + DBAdapterLigne.DIRECTION+ " TEXT,"
                     + DBAdapterLigne.IDENTIFIANT+ " TEXT,"
                     + DBAdapterLigne.TYPE+ " TEXT,"
-                    + DBAdapterStation.SOC_ROW_ID+ " INT " + ");";
+                    + DBAdapterStation.SOC_ROW_ID+ " TEXT " + ");";
 
+    private static final String TABLE_ACTUALITE = "actualite";
+    private static final String CREATE_TABLE_ACTUALITE =
+            "create table " + TABLE_ACTUALITE + " (_id integer primary key autoincrement, "
+                    + DBAdapterActualite.TEXTE+ " TEXT,"
+                    + DBAdapterActualite.DATE+ " TEXT,"
+                    + DBAdapterActualite.SOC_ROW_ID+ " TEXT " + ");";
 
+    private static final String TABLE_PERTURBATION = "perturbation";
+    private static final String CREATE_TABLE_PERTURBATION =
+            "create table " + TABLE_PERTURBATION + " (_id integer primary key autoincrement, "
+                    + DBAdapterFeedback.DATE+ " TEXT,"
+                    + DBAdapterFeedback.NOTE+ " INT,"
+                    + DBAdapterFeedback.TEXTE+ " TEXT,"
+                    + DBAdapterFeedback.EMAIL+ " TEXT,"
+                    + DBAdapterFeedback.SOC_ROW_ID+ " TEXT " + ");";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -75,6 +89,8 @@ public class AdapterDB {
             db.execSQL(CREATE_TABLE_FEEDBACK);
             db.execSQL(CREATE_TABLE_STATION);
             db.execSQL(CREATE_TABLE_LIGNE);
+            db.execSQL(CREATE_TABLE_ACTUALITE);
+            db.execSQL(CREATE_TABLE_PERTURBATION);
          // Solution de backup manquante
         }
 
@@ -86,6 +102,8 @@ public class AdapterDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIGNE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTUALITE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERTURBATION);
             this.onCreate(db);
 
         }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -57,14 +58,14 @@ public class DBAdapterStation extends AdapterDB {
     // _____ CREATE, READ, UPDATE, DELETE _____
 
     public long createStation(Station station){
-        Log.v(TAG,"Station created");
+        Log.v(TAG, "Station created");
         ContentValues initialValues = new ContentValues();
         initialValues.put(NOM, station.getNOM());
         initialValues.put(TYPE, station.getTYPE());
-        initialValues.put(LAT, station.getLATLNG().latitude);
-        initialValues.put(LNG, station.getLATLNG().longitude);
-        initialValues.put(MAJEURE, station.getMAJEURE());
-        initialValues.put(SOC_ROW_ID, station.getSOC_ROW_ID());
+        initialValues.put(LAT, station.getLATITUDE());
+        initialValues.put(LNG, station.getLONGITUDE());
+        initialValues.put(MAJEURE, ( station.isMAJEURE() ? 1 : 0 ) );
+        initialValues.put(SOC_ROW_ID, station.getSOC().getIDENTIFICATEUR());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -87,18 +88,19 @@ public class DBAdapterStation extends AdapterDB {
                 int id = mCursor.getInt(COL_ROW_ID);
                 String nom = mCursor.getString(COL_NOM);
                 String type = mCursor.getString(COL_TYPE);
-                double lat = mCursor.getDouble(COL_LAT);
-                double lng = mCursor.getDouble(COL_LNG);
+                String lat = mCursor.getString(COL_LAT);
+                String lng = mCursor.getString(COL_LNG);
                 int majeure = mCursor.getInt(COL_MAJEURE);
-                int soc_row_id = mCursor.getInt(COL_SOC_ROW_ID);
+                String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
                 S.setROW_ID(id);
                 S.setNOM(nom);
                 S.setTYPE(type);
-                S.setLATLNG(new LatLng(lat, lng));
-                S.setMAJEURE(majeure);
-                S.setSOC_ROW_ID(soc_row_id);
+                S.setLONGITUDE(lng);
+                S.setLATITUDE(lat);
+                S.setMAJEURE((majeure == 1 ? true : false));
+                S.setSOC(new Societe(soc_row_id));
 
                 A.add(S);
 
@@ -129,18 +131,19 @@ public class DBAdapterStation extends AdapterDB {
                 int id = mCursor.getInt(COL_ROW_ID);
                 String nom = mCursor.getString(COL_NOM);
                 String type = mCursor.getString(COL_TYPE);
-                double lat = mCursor.getDouble(COL_LAT);
-                double lng = mCursor.getDouble(COL_LNG);
+                String lat = mCursor.getString(COL_LAT);
+                String lng = mCursor.getString(COL_LNG);
                 int majeure = mCursor.getInt(COL_MAJEURE);
-                int soc_row_id = mCursor.getInt(COL_SOC_ROW_ID);
+                String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
                 S.setROW_ID(id);
                 S.setNOM(nom);
                 S.setTYPE(type);
-                S.setLATLNG(new LatLng(lat,lng));
-                S.setMAJEURE(majeure);
-                S.setSOC_ROW_ID(soc_row_id);
+                S.setLONGITUDE(lng);
+                S.setLATITUDE(lat);
+                S.setMAJEURE((majeure == 1 ? true : false));
+                S.setSOC(new Societe(soc_row_id));
 
             } while(mCursor.moveToNext());
         }
@@ -175,10 +178,10 @@ public class DBAdapterStation extends AdapterDB {
         ContentValues args = new ContentValues();
         args.put(NOM, station.getNOM());
         args.put(TYPE, station.getTYPE());
-        args.put(LAT, station.getLATLNG().latitude);
-        args.put(LNG, station.getLATLNG().longitude);
-        args.put(MAJEURE, station.getMAJEURE());
-        args.put(SOC_ROW_ID, station.getSOC_ROW_ID());
+        args.put(LAT, station.getLATITUDE());
+        args.put(LNG, station.getLONGITUDE());
+        args.put(MAJEURE, station.isMAJEURE() ? 1 : 0 );
+        args.put(SOC_ROW_ID, station.getSOC().getIDENTIFICATEUR() );
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;
     }

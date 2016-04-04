@@ -44,6 +44,10 @@ public class Societe {
     public Societe() {
     }
 
+    public Societe(String IDENTIFICATEUR) {
+        this.IDENTIFICATEUR = IDENTIFICATEUR;
+    }
+
     public Societe(String DATE, String DETAILS, String FORMEJURIDIQUE, String IDENTIFICATEUR, String LOGIN, String LOGO, String MOTDEPASSE, String NOMCOMPLET, String SIEGESOCIAL, String SIGLE, String SITEWEB) {
         this.DATE = DATE;
         this.DETAILS = DETAILS;

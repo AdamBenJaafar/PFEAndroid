@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.adam.tunisia.Model.Rest.RetrofitActualite;
+import com.example.adam.tunisia.Model.Rest.RetrofitLigne;
 import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
+import com.example.adam.tunisia.Model.Rest.RetrofitStation;
 import com.example.adam.tunisia.R;
 
 import java.io.IOException;
@@ -83,8 +86,14 @@ public class SplashScreen extends Activity {
 
         setContentView(R.layout.activity_splash);
 
-        RetrofitSociete RS = new RetrofitSociete(this);
-        RS.getSocietes();
+        RetrofitSociete RSociete = new RetrofitSociete(this);
+        RSociete.getSocietes();
+        RetrofitStation RStation = new RetrofitStation(this);
+        RStation.getStations();
+        RetrofitLigne RLigne = new RetrofitLigne(this);
+        RLigne.getLignes();
+        RetrofitActualite RActualite = new RetrofitActualite(this);
+        RActualite.getActualites();
 
         new DownloadLink().execute();
 

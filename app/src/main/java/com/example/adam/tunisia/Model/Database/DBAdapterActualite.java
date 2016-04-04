@@ -6,42 +6,39 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.adam.tunisia.Model.Entities.Ligne;
+import com.example.adam.tunisia.Model.Entities.Actualite;
 import com.example.adam.tunisia.Model.Entities.Societe;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DBAdapterLigne extends AdapterDB {
+public class DBAdapterActualite extends AdapterDB {
 
-    public static final String TAG = "DBAdapterLigne";
+    public static final String TAG = "DBAdapterActualite";
 
     public static final String ROW_ID = "_id";
-    public static final String DIRECTION = "direction";
-    public static final String IDENTIFIANT = "identifiant";
-    public static final String TYPE = "type";
+    public static final String TEXTE = "texte";
+    public static final String DATE = "date";
     public static final String SOC_ROW_ID = "soc_row_id";
 
     public static final int COL_ROW_ID = 0;
-    public static final int COL_DIRECTION = 1;
-    public static final int COL_IDENTIFIANT = 2;
-    public static final int COL_TYPE = 3;
-    public static final int COL_SOC_ROW_ID = 4;
+    public static final int COL_TEXTE = 1;
+    public static final int COL_DATE = 2;
+    public static final int COL_SOC_ROW_ID = 3;
 
-    String [] ALL_KEYS = { ROW_ID, DIRECTION, IDENTIFIANT, TYPE, SOC_ROW_ID};
+    String [] ALL_KEYS = { ROW_ID, TEXTE, DATE,SOC_ROW_ID};
 
-    private static final String DATABASE_TABLE = "ligne";
+    private static final String DATABASE_TABLE = "actualite";
 
     private SQLiteDatabase mDb;
 
     // _____ CONSTRUCTOR, OPEN, CLOSE _____
 
-    public DBAdapterLigne(Context ctx) {
+    public DBAdapterActualite(Context ctx) {
         super(ctx);
     }
 
-    public DBAdapterLigne open() {
+    public DBAdapterActualite open() {
         super.open();
         return this;
     }
@@ -53,46 +50,43 @@ public class DBAdapterLigne extends AdapterDB {
 
     // _____ CREATE, READ, UPDATE, DELETE _____
 
-    public long createLigne(Ligne ligne){
-        Log.v(TAG, "Ligne created");
+    public long createActualite(Actualite actualite){
+        Log.v(TAG, "Actualite created");
         ContentValues initialValues = new ContentValues();
-        initialValues.put(DIRECTION, ligne.getDIRECTION());
-        initialValues.put(IDENTIFIANT, ligne.getIDENTIFIANT());
-        initialValues.put(TYPE, ligne.getTYPE());
-        initialValues.put(SOC_ROW_ID, ligne.getSOC().getIDENTIFICATEUR());
+        initialValues.put(DATE, actualite.getDATE());
+        initialValues.put(TEXTE, actualite.getTEXTE());
+        initialValues.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean deleteLigne(long rowId) {
-        Log.v(TAG,"Ligne deleted");
+    public boolean deleteActualite(long rowId) {
+        Log.v(TAG,"Actualite deleted");
         String where = ROW_ID + "=" + rowId ;
         return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
     }
 
-    public ArrayList<Ligne> getAllLigne() {
-        Log.v(TAG,"Ligne acquired");
-        ArrayList<Ligne> A= new ArrayList<Ligne>();
+    public ArrayList<Actualite> getAllActualite() {
+        Log.v(TAG,"Actualite acquired");
+        ArrayList<Actualite> A= new ArrayList<Actualite>();
         Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
-                Ligne L= new Ligne();
+                Actualite F= new Actualite();
 
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
-                String direction = mCursor.getString(COL_DIRECTION);
-                String identifiant = mCursor.getString(COL_IDENTIFIANT);
-                String type = mCursor.getString(COL_TYPE);
+                String date = mCursor.getString(COL_DATE);
+                String texte = mCursor.getString(COL_TEXTE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
-                L.setROW_ID(id);
-                L.setDIRECTION(direction);
-                L.setIDENTIFIANT(identifiant);
-                L.setTYPE(type);
-                L.setSOC(new Societe(soc_row_id));
+                F.setROW_ID(id);
+                F.setDATE(date);
+                F.setTEXTE(texte);
+                F.setSOC(new Societe(soc_row_id));
 
-                A.add(L);
+                A.add(F);
 
             } while(mCursor.moveToNext());
         }
@@ -102,8 +96,8 @@ public class DBAdapterLigne extends AdapterDB {
         return A;
     }
 
-    public Ligne getLigne(long rowId) throws SQLException {
-        Log.v(TAG,"Ligne acquired");
+    public Actualite getActualite(long rowId) throws SQLException {
+        Log.v(TAG,"Actualite acquired");
         String where = ROW_ID + "=" + rowId;
 
         Cursor mCursor =
@@ -113,23 +107,21 @@ public class DBAdapterLigne extends AdapterDB {
             mCursor.moveToFirst();
         }
 
-        Ligne L= new Ligne();
+        Actualite F= new Actualite();
 
         if (mCursor.moveToFirst()) {
             do {
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
-                String direction = mCursor.getString(COL_DIRECTION);
-                String identifiant = mCursor.getString(COL_IDENTIFIANT);
-                String type = mCursor.getString(COL_TYPE);
+                String date = mCursor.getString(COL_DATE);
+                String texte = mCursor.getString(COL_TEXTE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
-                L.setROW_ID(id);
-                L.setDIRECTION(direction);
-                L.setIDENTIFIANT(identifiant);
-                L.setTYPE(type);
-                L.setSOC(new Societe(soc_row_id));
+                F.setROW_ID(id);
+                F.setDATE(date);
+                F.setTEXTE(texte);
+                F.setSOC(new Societe(soc_row_id));
 
             } while(mCursor.moveToNext());
         }
@@ -137,11 +129,11 @@ public class DBAdapterLigne extends AdapterDB {
         // Close the cursor to avoid a resource leak.
         mCursor.close();
 
-        return L;
+        return F;
     }
 
     public void deleteAll() {
-        Log.v(TAG,"Lignes deleted");
+        Log.v(TAG,"Actualites deleted");
         Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
@@ -157,15 +149,14 @@ public class DBAdapterLigne extends AdapterDB {
         return db.delete(DATABASE_TABLE, where, null) != 0;
     }
 
-    public boolean updateLigne(Ligne ligne){
-        Log.v(TAG, "Ligne updated");
-        String where = ROW_ID + "=" + ligne.getROW_ID();
+    public boolean updateActualite(Actualite actualite){
+        Log.v(TAG,"Actualite updated");
+        String where = ROW_ID + "=" + actualite.getROW_ID();
 
         ContentValues args = new ContentValues();
-        args.put(DIRECTION, ligne.getDIRECTION());
-        args.put(IDENTIFIANT, ligne.getIDENTIFIANT());
-        args.put(TYPE, ligne.getTYPE());
-        args.put(SOC_ROW_ID, ligne.getSOC().getIDENTIFICATEUR());
+        args.put(DATE, actualite.getDATE());
+        args.put(TEXTE, actualite.getTEXTE());
+        args.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;
     }
