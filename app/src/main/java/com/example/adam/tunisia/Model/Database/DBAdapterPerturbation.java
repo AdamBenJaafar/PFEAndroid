@@ -53,6 +53,7 @@ public class DBAdapterPerturbation extends AdapterDB{
     public long createPerturbation(Perturbation perturbation){
         Log.v(TAG, "Perturbation created");
         ContentValues initialValues = new ContentValues();
+        initialValues.put(ROW_ID, perturbation.getROW_ID());
         initialValues.put(DATE, perturbation.getDATE());
         initialValues.put(TEXTE, perturbation.getTEXTE());
         initialValues.put(LIG_ROW_ID, perturbation.getLIG().getIDENTIFIANT());

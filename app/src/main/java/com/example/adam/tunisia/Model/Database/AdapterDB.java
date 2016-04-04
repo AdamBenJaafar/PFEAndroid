@@ -11,11 +11,11 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =26;
+    public static final int DATABASE_VERSION =27;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
-            "create table " + TABLE_SOCIETE + " (_id integer primary key autoincrement, "
+            "create table " + TABLE_SOCIETE + " (_id integer primary key, "
                     + DBAdapterSociete.DATE+ " TEXT,"
                     + DBAdapterSociete.DETAILS+ " TEXT,"
                     + DBAdapterSociete.FORMEJURIDIQUE+ " TEXT,"
@@ -39,7 +39,7 @@ public class AdapterDB {
 
     private static final String TABLE_STATION = "station";
     private static final String CREATE_TABLE_STATION =
-            "create table " + TABLE_STATION + " (_id integer primary key autoincrement, "
+            "create table " + TABLE_STATION + " (_id integer primary key, "
                     + DBAdapterStation.NOM+ " TEXT,"
                     + DBAdapterStation.TYPE+ " TEXT,"
                     + DBAdapterStation.LAT+ " TEXT,"
@@ -49,7 +49,7 @@ public class AdapterDB {
 
     private static final String TABLE_LIGNE = "ligne";
     private static final String CREATE_TABLE_LIGNE =
-            "create table " + TABLE_LIGNE + " (_id integer primary key autoincrement, "
+            "create table " + TABLE_LIGNE + " (_id integer primary key, "
                     + DBAdapterLigne.DIRECTION+ " TEXT,"
                     + DBAdapterLigne.IDENTIFIANT+ " TEXT,"
                     + DBAdapterLigne.TYPE+ " TEXT,"
@@ -57,14 +57,14 @@ public class AdapterDB {
 
     private static final String TABLE_ACTUALITE = "actualite";
     private static final String CREATE_TABLE_ACTUALITE =
-            "create table " + TABLE_ACTUALITE + " (_id integer primary key autoincrement, "
+            "create table " + TABLE_ACTUALITE + " (_id integer primary key, "
                     + DBAdapterActualite.TEXTE+ " TEXT,"
                     + DBAdapterActualite.DATE+ " TEXT,"
                     + DBAdapterActualite.SOC_ROW_ID+ " TEXT " + ");";
 
     private static final String TABLE_PERTURBATION = "perturbation";
     private static final String CREATE_TABLE_PERTURBATION =
-            "create table " + TABLE_PERTURBATION + " (_id integer primary key autoincrement, "
+            "create table " + TABLE_PERTURBATION + " (_id integer primary key, "
                     + DBAdapterPerturbation.DATE+ " TEXT,"
                     + DBAdapterPerturbation.TEXTE+ " TEXT,"
                     + DBAdapterPerturbation.LIG_ROW_ID+ " TEXT " + ");";

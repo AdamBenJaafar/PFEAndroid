@@ -60,6 +60,7 @@ public class DBAdapterStation extends AdapterDB {
     public long createStation(Station station){
         Log.v(TAG, "Station created");
         ContentValues initialValues = new ContentValues();
+        initialValues.put(ROW_ID, station.getROW_ID());
         initialValues.put(NOM, station.getNOM());
         initialValues.put(TYPE, station.getTYPE());
         initialValues.put(LAT, station.getLATITUDE());

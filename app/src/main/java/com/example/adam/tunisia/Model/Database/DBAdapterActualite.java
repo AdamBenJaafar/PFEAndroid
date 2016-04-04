@@ -53,6 +53,7 @@ public class DBAdapterActualite extends AdapterDB {
     public long createActualite(Actualite actualite){
         Log.v(TAG, "Actualite created");
         ContentValues initialValues = new ContentValues();
+        initialValues.put(ROW_ID, actualite.getROW_ID());
         initialValues.put(DATE, actualite.getDATE());
         initialValues.put(TEXTE, actualite.getTEXTE());
         initialValues.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());

@@ -56,6 +56,7 @@ public class DBAdapterLigne extends AdapterDB {
     public long createLigne(Ligne ligne){
         Log.v(TAG, "Ligne created");
         ContentValues initialValues = new ContentValues();
+        initialValues.put(ROW_ID, ligne.getROW_ID());
         initialValues.put(DIRECTION, ligne.getDIRECTION());
         initialValues.put(IDENTIFIANT, ligne.getIDENTIFIANT());
         initialValues.put(TYPE, ligne.getTYPE());

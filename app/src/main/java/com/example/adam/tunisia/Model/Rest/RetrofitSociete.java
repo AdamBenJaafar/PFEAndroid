@@ -51,14 +51,7 @@ public class RetrofitSociete {
 
                     for(int i=0;i<response.body().size();i++) {
 
-                        Societe S = new Societe();
-
-                        String city = response.body().get(i).getLOGIN();
-                        S.setLOGIN(city);
-                        String status = response.body().get(i).getFORMEJURIDIQUE();
-                        S.setFORMEJURIDIQUE(status);
-                        String humidity = response.body().get(i).getIDENTIFICATEUR();
-                        S.setIDENTIFICATEUR(humidity);
+                        Societe S = response.body().get(i);
 
                         myDb.createSociete(S);
                     }

@@ -68,6 +68,7 @@ public class DBAdapterSociete extends AdapterDB {
     public long createSociete(Societe societe){
         Log.v(TAG, "Societe created");
         ContentValues initialValues = new ContentValues();
+        initialValues.put(ROW_ID, societe.getROW_ID());
         initialValues.put(DATE, societe.getDATE());
         initialValues.put(DETAILS, societe.getDETAILS());
         initialValues.put(FORMEJURIDIQUE, societe.getFORMEJURIDIQUE());
