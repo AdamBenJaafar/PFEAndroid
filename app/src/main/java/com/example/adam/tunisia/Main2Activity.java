@@ -7,13 +7,14 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation
+import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne
         ;
 import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterSociete
         ;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
-import com.example.adam.tunisia.Model.Entities.Perturbation
+import com.example.adam.tunisia.Model.Entities.Station_Ligne;
+import com.example.adam.tunisia.Model.Entities.Station_Ligne
         ;
 import com.example.adam.tunisia.Model.Entities.Feedback;
 import com.example.adam.tunisia.Model.Entities.Ligne;
@@ -37,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
-    DBAdapterPerturbation
+    DBAdapterStation_Ligne
             myDb;
 
     @Override
@@ -54,7 +55,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void openDB() {
-        myDb = new DBAdapterPerturbation
+        myDb = new DBAdapterStation_Ligne
                 (this);
         myDb.open();
     }
@@ -71,22 +72,22 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-        Perturbation
+        Station_Ligne
 
-                F = new Perturbation
+                F = new Station_Ligne
 
-                (5,"Oui","55",new Ligne());
+                (5,new Station(),new Ligne(), 1, new ArrayList<String>());
 
-        long newId = myDb.createPerturbation
+        long newId = myDb.createStation_Ligne
 
                 (F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-            Perturbation
+            Station_Ligne
 
-                    societe = myDb.getPerturbation
+                    societe = myDb.getStation_Ligne
 
                     (newId);
             displayText(societe.toString());
@@ -104,9 +105,9 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_DisplayRecords(View v) {
         displayText("Clicked display record!");
 
-        ArrayList<Perturbation
+        ArrayList<Station_Ligne
 
-                > A = myDb.getAllPerturbation
+                > A = myDb.getAllStation_Ligne
 
                 ();
 

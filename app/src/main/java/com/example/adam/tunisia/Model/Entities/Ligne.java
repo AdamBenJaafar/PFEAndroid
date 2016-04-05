@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Ligne {
 
-    @SerializedName("auto_ligne")
+    @SerializedName("auto_Ligne")
     @Expose
     private int ROW_ID;
     @SerializedName("direction")
@@ -22,6 +22,10 @@ public class Ligne {
     private Societe SOC;
 
     public Ligne() {
+    }
+
+    public Ligne(int ROW_ID) {
+        this.ROW_ID = ROW_ID;
     }
 
     public Ligne(String IDENTIFIANT) {

@@ -14,6 +14,7 @@ import com.example.adam.tunisia.Model.Rest.RetrofitLigne;
 import com.example.adam.tunisia.Model.Rest.RetrofitPerturbation;
 import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
 import com.example.adam.tunisia.Model.Rest.RetrofitStation;
+import com.example.adam.tunisia.Model.Rest.RetrofitStation_Ligne_Horaires;
 import com.example.adam.tunisia.R;
 
 import java.io.IOException;
@@ -97,6 +98,8 @@ public class SplashScreen extends Activity {
         RActualite.getActualites();
         RetrofitPerturbation RPerturbation = new RetrofitPerturbation(this);
         RPerturbation.getPerturbations();
+        RetrofitStation_Ligne_Horaires RSLH = new RetrofitStation_Ligne_Horaires(this);
+        RSLH.getStation_Lignes();
 
         new DownloadLink().execute();
 

@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =27;
+    public static final int DATABASE_VERSION =32;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -69,6 +69,19 @@ public class AdapterDB {
                     + DBAdapterPerturbation.TEXTE+ " TEXT,"
                     + DBAdapterPerturbation.LIG_ROW_ID+ " TEXT " + ");";
 
+    private static final String TABLE_STATION_LIGNE = "station_ligne";
+    private static final String CREATE_TABLE_STATION_LIGNE =
+            "create table " + TABLE_STATION_LIGNE + " (_id integer primary key, "
+                    + DBAdapterStation_Ligne.STATION_ID+ " INT,"
+                    + DBAdapterStation_Ligne.LIGNE_ID+ " INT,"
+                    + DBAdapterStation_Ligne.POS+ " INT " + ");";
+
+    private static final String TABLE_STATION_LIGNE_HORAIRES = "station_ligne_horaire";
+    private static final String CREATE_TABLE_STATION_LIGNE_HORAIRES =
+            "create table " + TABLE_STATION_LIGNE_HORAIRES + " (_id integer , "
+                    + DBAdapterStation_Ligne_Horaire.HORAIRE+ " TEXT," +
+                    "PRIMARY KEY ( _id, "+ DBAdapterStation_Ligne_Horaire.HORAIRE + "));";
+
     private final Context context;
     private DatabaseHelper DBHelper;
     protected SQLiteDatabase db;
@@ -89,7 +102,9 @@ public class AdapterDB {
             db.execSQL(CREATE_TABLE_LIGNE);
             db.execSQL(CREATE_TABLE_ACTUALITE);
             db.execSQL(CREATE_TABLE_PERTURBATION);
-         // Solution de backup manquante
+            db.execSQL(CREATE_TABLE_STATION_LIGNE);
+            db.execSQL(CREATE_TABLE_STATION_LIGNE_HORAIRES);
+         // Solution de backup
         }
 
         @Override
@@ -102,6 +117,8 @@ public class AdapterDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIGNE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTUALITE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERTURBATION);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE_HORAIRES);
             this.onCreate(db);
 
         }

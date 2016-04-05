@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Station {
 
-    @SerializedName("auto_station")
+    @SerializedName("auto_Station")
     @Expose
     private int ROW_ID;
     @SerializedName("nom")
@@ -29,6 +29,10 @@ public class Station {
 
 
     public Station() {
+    }
+
+    public Station(int ROW_ID) {
+        this.ROW_ID = ROW_ID;
     }
 
     public Station(int ROW_ID, String NOM, String TYPE, String LATITUDE, String LONGITUDE, boolean MAJEURE, Societe SOC) {
