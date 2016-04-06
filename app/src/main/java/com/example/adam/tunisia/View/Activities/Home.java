@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,8 +18,6 @@ import android.view.MenuItem;
 
 import com.example.adam.tunisia.Main2Activity;
 import com.example.adam.tunisia.R;
-import com.example.adam.tunisia.View.Activities.MAPActivity;
-import com.example.adam.tunisia.View.Activities.SCList;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -123,7 +120,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             Intent i = new Intent(this, SCList.class);
             startActivity(i);
         } else if (id == R.id.nav_slideshow) {
-            Intent i = new Intent(this, MAPActivity.class);
+            Intent i = new Intent(this, MPActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_manage) {
             Intent i = new Intent(this, Main2Activity.class);

@@ -28,6 +28,9 @@ import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,11 +43,16 @@ public class Main2Activity extends AppCompatActivity {
 
     DBAdapterStation_Ligne
             myDb;
+    @Bind(R.id.textDisplay)
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        ButterKnife.bind(this);
+
         openDB();
     }
 
@@ -65,7 +73,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void displayText(String message) {
-        TextView textView = (TextView) findViewById(R.id.textDisplay);
+
         textView.setText(message);
     }
 

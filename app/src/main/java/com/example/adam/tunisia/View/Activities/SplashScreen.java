@@ -9,12 +9,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.adam.tunisia.Model.Rest.RetrofitActualite;
-import com.example.adam.tunisia.Model.Rest.RetrofitLigne;
-import com.example.adam.tunisia.Model.Rest.RetrofitPerturbation;
-import com.example.adam.tunisia.Model.Rest.RetrofitSociete;
-import com.example.adam.tunisia.Model.Rest.RetrofitStation;
-import com.example.adam.tunisia.Model.Rest.RetrofitStation_Ligne_Horaires;
+import com.example.adam.tunisia.Model.Rest.AdapterREST;
 import com.example.adam.tunisia.R;
 
 import java.io.IOException;
@@ -25,7 +20,7 @@ public class SplashScreen extends Activity {
 
     boolean internet=false;
 
-    //Executing internet check in a background thread
+    // EXECUTING INTERNET CHECK IN BACKGROUND THREAD
     class DownloadLink extends AsyncTask<Void, Void, Void> {
 
         boolean CONNECTED=false;
@@ -57,7 +52,7 @@ public class SplashScreen extends Activity {
 
     }
 
-    // Function checking if internet works
+    // CHECKING IF INTERNET WORKS
     public boolean isInternetWorking() {
         boolean success = false;
         try {
@@ -79,36 +74,18 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
+        // FULL SCREEN
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
 
-        RetrofitSociete RSociete = new RetrofitSociete(this);
-        RSociete.getSocietes();
-        RetrofitStation RStation = new RetrofitStation(this);
-        RStation.getStations();
-        RetrofitLigne RLigne = new RetrofitLigne(this);
-        RLigne.getLignes();
-        RetrofitActualite RActualite = new RetrofitActualite(this);
-        RActualite.getActualites();
-        RetrofitPerturbation RPerturbation = new RetrofitPerturbation(this);
-        RPerturbation.getPerturbations();
-        RetrofitStation_Ligne_Horaires RSLH = new RetrofitStation_Ligne_Horaires(this);
-        RSLH.getStation_Lignes();
+        // DOWNLOADING DATA
+        new AdapterREST(this).update();
 
+        // MOVING ACTIVITY WITH INTERNET CHECK
         new DownloadLink().execute();
-
-        Log.v("Internet", internet + "");
-
-        /* New Handler to start the Menu-Activity
-         * and close this Splash-Screen after some seconds.*/
-
-
 
 
     }

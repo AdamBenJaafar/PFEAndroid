@@ -49,7 +49,7 @@
             android:label="@string/title_activity_cmpmap" />
         <activity android:name=".Main2Activity" />
         <activity
-            android:name=".View.Activities.MAPActivity"
+            android:name=".View.Activities.MPActivity"
             android:label="@string/title_activity_map" />
         <activity
             android:name=".View.Activities.RTMap"
