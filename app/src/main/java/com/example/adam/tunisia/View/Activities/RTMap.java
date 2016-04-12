@@ -104,7 +104,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        LatLng sydney = new LatLng(36.85, 10.27);
+        LatLng sydney = new LatLng(36.809182,10.148363);
         position = new MarkerOptions().position(sydney).title("Marker in Sydney");
 
     }
@@ -115,12 +115,12 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
 
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(36.85, 10.27);
+        LatLng sydney = new LatLng(36.809182,10.148363);
         mMap.addMarker(position);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-         X =   this.mMap.addMarker(new MarkerOptions().position(new LatLng(36.856433, 10.281315)));
+         X =   this.mMap.addMarker(new MarkerOptions().position(new LatLng(36.809182,10.148363)));
 
     }
 
@@ -160,7 +160,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
     @Override
     public void onLocationChanged(Location location) {
 
-       animateMarkerTo(X,X.getPosition().latitude+0.005,X.getPosition().longitude+0.005);
+       animateMarkerTo(X,location.getLatitude(),location.getLongitude());
 
         Toast.makeText(this,location.toString(),Toast.LENGTH_LONG).show();
        // position.position(new LatLng(location.getLatitude(),location.getLongitude()));
