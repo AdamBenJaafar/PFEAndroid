@@ -25,7 +25,7 @@ public class RetrofitFeedback {
 
         IFeedback apiService = retrofit.create(IFeedback.class);
 
-        Feedback feedbackd = new Feedback("2015-05-02",4,"OK","yyy@email",1);
+        Feedback feedbackd = new Feedback("2015-05-02","4","OK","yyy@email",1);
         Call<Feedback> call = apiService.createUser("TRANSTU",feedbackd);
 
 

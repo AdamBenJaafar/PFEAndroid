@@ -10,7 +10,7 @@ public class Feedback {
     @SerializedName("date_feed")
     private String DATE;
     @SerializedName("note")
-    private int NOTE;
+    private String NOTE;
     @SerializedName("text")
     private String TEXTE;
     @SerializedName("email")
@@ -21,7 +21,7 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(String date, int note, String texte, String email, int SOC_ROW_ID) {
+    public Feedback(String date, String note, String texte, String email, int SOC_ROW_ID) {
         DATE = date;
         NOTE = note;
         TEXTE = texte;
@@ -49,7 +49,7 @@ public class Feedback {
         return DATE;
     }
 
-    public int getNOTE() {
+    public String getNOTE() {
         return NOTE;
     }
 
@@ -73,7 +73,7 @@ public class Feedback {
         this.DATE = DATE;
     }
 
-    public void setNOTE(int NOTE) {
+    public void setNOTE(String NOTE) {
         this.NOTE = NOTE;
     }
 

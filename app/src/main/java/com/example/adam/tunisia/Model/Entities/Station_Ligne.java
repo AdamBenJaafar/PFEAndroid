@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Station_Ligne {
+public class Station_Ligne implements Comparable<Station_Ligne> {
 
     @SerializedName("auto_Station_Ligne")
     @Expose
@@ -87,5 +87,41 @@ public class Station_Ligne {
 
     public void setHORAIRES(List<String> HORAIRES) {
         this.HORAIRES = HORAIRES;
+    }
+
+    @Override
+    public int compareTo(Station_Ligne another) {
+        if(another.getPOSITION()>this.getPOSITION()){
+            return -1;
+        }else{
+            return 1;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Station_Ligne)) return false;
+
+        Station_Ligne that = (Station_Ligne) o;
+
+        if (getROW_ID() != that.getROW_ID()) return false;
+        if (getPOSITION() != that.getPOSITION()) return false;
+        if (getSTATION() != null ? !getSTATION().equals(that.getSTATION()) : that.getSTATION() != null)
+            return false;
+        if (getLIGNE() != null ? !getLIGNE().equals(that.getLIGNE()) : that.getLIGNE() != null)
+            return false;
+        return getHORAIRES() != null ? getHORAIRES().equals(that.getHORAIRES()) : that.getHORAIRES() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getROW_ID();
+        result = 31 * result + (getSTATION() != null ? getSTATION().hashCode() : 0);
+        result = 31 * result + (getLIGNE() != null ? getLIGNE().hashCode() : 0);
+        result = 31 * result + getPOSITION();
+        result = 31 * result + (getHORAIRES() != null ? getHORAIRES().hashCode() : 0);
+        return result;
     }
 }

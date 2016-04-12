@@ -13,14 +13,14 @@ import com.example.adam.tunisia.R;
 
 public class SCDetails extends AppCompatActivity {
 
-    TextView Text = null;
-    String Company = null;
-
+    TextView Text;
+    String Company;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cmpdetails);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,12 +36,7 @@ public class SCDetails extends AppCompatActivity {
 
         Company = getIntent().getStringExtra(SCList.ID_EXTRA);
 
-
-
-
-
     }
-
 
     public void goToFeedback(View view){
         Intent i = new Intent(getApplicationContext(), SCFeedback.class);

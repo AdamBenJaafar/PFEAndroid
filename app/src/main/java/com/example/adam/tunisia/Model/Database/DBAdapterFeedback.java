@@ -82,7 +82,7 @@ public class DBAdapterFeedback extends AdapterDB {
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
-                int note = mCursor.getInt(COL_NOTE);
+                String note = mCursor.getString(COL_NOTE);
                 String texte = mCursor.getString(COL_TEXTE);
                 String email = mCursor.getString(COL_EMAIL);
                 int soc_row_id = mCursor.getInt(COL_SOC_ROW_ID);
@@ -123,7 +123,7 @@ public class DBAdapterFeedback extends AdapterDB {
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
-                int note = mCursor.getInt(COL_NOTE);
+                String note = mCursor.getString(COL_NOTE);
                 String texte = mCursor.getString(COL_TEXTE);
                 String email = mCursor.getString(COL_EMAIL);
                 int soc_row_id = mCursor.getInt(COL_SOC_ROW_ID);

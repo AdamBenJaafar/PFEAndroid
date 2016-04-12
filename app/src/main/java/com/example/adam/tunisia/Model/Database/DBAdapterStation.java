@@ -76,6 +76,8 @@ public class DBAdapterStation extends AdapterDB {
         return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
     }
 
+
+
     public ArrayList<Station> getAllStation() {
         Log.v(TAG,"Station acquired");
         ArrayList<Station> A= new ArrayList<Station>();
@@ -113,13 +115,11 @@ public class DBAdapterStation extends AdapterDB {
         return A;
     }
 
-    public Station getStation(long rowId) throws SQLException {
+    public Station getStation(long rowId) {
         Log.v(TAG,"Station acquired");
-        String where = ROW_ID + "=" + rowId;
+        String where = ROW_ID + " = " + rowId;
 
-        Cursor mCursor =
-
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }

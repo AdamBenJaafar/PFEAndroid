@@ -42,10 +42,10 @@ public class SCFeedback extends AppCompatActivity {
     }
 
     public void envoyerFeedback(View view){
-        Presenter.postFeedback(new Feedback("AAAA",5,"VVVV","CCCC",5));
+        Presenter.postFeedback(new Feedback("AAAA","5","VVVV","CCCC",5));
     }
 
-    public void merci(){
+    public void redirect(){
         AlertDialog alertDialog = new AlertDialog.Builder(
                 this).create();
 

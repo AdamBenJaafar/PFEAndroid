@@ -7,14 +7,14 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne
+import com.example.adam.tunisia.Model.Database.DBAdapterStation
         ;
 import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterSociete
         ;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
-import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Model.Entities.Station_Ligne
+import com.example.adam.tunisia.Model.Entities.Station;
+import com.example.adam.tunisia.Model.Entities.Station
         ;
 import com.example.adam.tunisia.Model.Entities.Feedback;
 import com.example.adam.tunisia.Model.Entities.Ligne;
@@ -41,7 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
-    DBAdapterStation_Ligne
+    DBAdapterStation
             myDb;
     @Bind(R.id.textDisplay)
     TextView textView;
@@ -63,7 +63,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void openDB() {
-        myDb = new DBAdapterStation_Ligne
+        myDb = new DBAdapterStation
                 (this);
         myDb.open();
     }
@@ -80,22 +80,20 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_AddRecord(View v) {
         displayText("Clicked add record!");
 
-        Station_Ligne
+        Station
 
-                F = new Station_Ligne
+                F = new Station(50,"aaaa","aaaa","aaaa","aaaa",true,new Societe());
 
-                (5,new Station(),new Ligne(), 1, new ArrayList<String>());
-
-        long newId = myDb.createStation_Ligne
+        long newId = myDb.createStation
 
                 (F);
 
         // Query for the record we just added.
         // Use the ID:
         try {
-            Station_Ligne
+            Station
 
-                    societe = myDb.getStation_Ligne
+                    societe = myDb.getStation
 
                     (newId);
             displayText(societe.toString());
@@ -113,9 +111,9 @@ public class Main2Activity extends AppCompatActivity {
     public void onClick_DisplayRecords(View v) {
         displayText("Clicked display record!");
 
-        ArrayList<Station_Ligne
+        ArrayList<Station
 
-                > A = myDb.getAllStation_Ligne
+                > A = myDb.getAllStation
 
                 ();
 
@@ -125,6 +123,9 @@ public class Main2Activity extends AppCompatActivity {
             message += A.get(i).toString() + " \n";
         }
 
+
+        Station XX = myDb.getStation(25);
+        message  = XX.toString();
         displayText(message);
     }
 

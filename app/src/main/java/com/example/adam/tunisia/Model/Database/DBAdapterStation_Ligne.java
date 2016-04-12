@@ -63,9 +63,43 @@ public class DBAdapterStation_Ligne extends AdapterDB {
     }
 
     public boolean deleteStation_Ligne(long rowId) {
-        Log.v(TAG,"Station_Ligne deleted");
+        Log.v(TAG, "Station_Ligne deleted");
         String where = ROW_ID + "=" + rowId ;
         return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
+    }
+
+    public ArrayList<Station_Ligne> getAllStation_LigneByLigne(int LigneID) {
+        Log.v(TAG,"Station_LigneByLigne acquired");
+        ArrayList<Station_Ligne> A= new ArrayList<Station_Ligne>();
+
+        String where = LIGNE_ID + "=" + LigneID;
+
+        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+
+        if (mCursor.moveToFirst()) {
+            do {
+                Station_Ligne F= new Station_Ligne();
+
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                int station_id = mCursor.getInt(COL_STATION_ID);
+                int ligne_id = mCursor.getInt(COL_LIGNE_ID);
+                int soc_row_id = mCursor.getInt(COL_POS);
+
+                // Append data to the message:
+                F.setROW_ID(id);
+                F.setSTATION(new Station(station_id));
+                F.setLIGNE(new Ligne(ligne_id));
+                F.setPOSITION(soc_row_id);
+
+                A.add(F);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+        return A;
     }
 
     public ArrayList<Station_Ligne> getAllStation_Ligne() {

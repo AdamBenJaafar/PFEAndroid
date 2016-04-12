@@ -65,7 +65,7 @@ public class DBAdapterLigne extends AdapterDB {
     }
 
     public boolean deleteLigne(long rowId) {
-        Log.v(TAG,"Ligne deleted");
+        Log.v(TAG, "Ligne deleted");
         String where = ROW_ID + "=" + rowId ;
         return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
     }
@@ -74,6 +74,42 @@ public class DBAdapterLigne extends AdapterDB {
         Log.v(TAG,"Ligne acquired");
         ArrayList<Ligne> A= new ArrayList<Ligne>();
         Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+
+        if (mCursor.moveToFirst()) {
+            do {
+                Ligne L= new Ligne();
+
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                String direction = mCursor.getString(COL_DIRECTION);
+                String identifiant = mCursor.getString(COL_IDENTIFIANT);
+                String type = mCursor.getString(COL_TYPE);
+                String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
+
+                // Append data to the message:
+                L.setROW_ID(id);
+                L.setDIRECTION(direction);
+                L.setIDENTIFIANT(identifiant);
+                L.setTYPE(type);
+                L.setSOC(new Societe(soc_row_id));
+
+                A.add(L);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+        return A;
+    }
+
+    public ArrayList<Ligne> getAllLigneBySocieteAller(String SocieteIDENTIFIANT) {
+        Log.v(TAG,"Lignes by societe  acquired");
+        ArrayList<Ligne> A= new ArrayList<Ligne>();
+
+        String where = SOC_ROW_ID + " LIKE '%"  + SocieteIDENTIFIANT + "%' and "+ DIRECTION + " LIKE '%aller%'";
+
+        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
