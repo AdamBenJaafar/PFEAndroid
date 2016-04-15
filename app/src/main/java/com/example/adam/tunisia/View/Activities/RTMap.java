@@ -24,6 +24,11 @@ import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
 import com.example.adam.tunisia.R;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -54,8 +59,12 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
     private MarkerOptions position;
 
 
+    Firebase mRef;
+
     Marker X;
 
+    private String SSociete;
+    private String SLigne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,35 +72,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rtmap);
 
-
-        DBAdapterSociete A = new DBAdapterSociete(this);
-        A.open();
-
-        ArrayList<CharSequence> L = new ArrayList<CharSequence>();
-
-        for( Societe S : A.getAllSociete() ){
-            L.add(S.getNOMCOMPLET());
-        }
-
-
-        CharSequence [] items = new CharSequence[L.size()];
-        items = L.toArray(items);
-
-        A.close();
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Make your selection");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
-                drawNetwork();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-
-
+        selectSociete();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -107,6 +88,64 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         LatLng sydney = new LatLng(36.809182,10.148363);
         position = new MarkerOptions().position(sydney).title("Marker in Sydney");
 
+
+    }
+
+    public void setupFirebase(){
+
+        Firebase.setAndroidContext(this);
+
+        String URL = "https://pfemaps.firebaseio.com/" + SSociete + "/" + SLigne; // /111
+
+
+        Log.v("AAAA", URL );
+
+        mRef = new Firebase(URL);
+
+      /*  mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                animateMarkerTo(X,(double)dataSnapshot.child("latitude").getValue(),(double)dataSnapshot.child("longitude").getValue());
+                Toast.makeText(getBaseContext(),dataSnapshot.toString(),Toast.LENGTH_LONG).show();
+                Log.v("ddd","changed");
+            }
+
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });*/
+
+        mRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                animateMarkerTo(X,(double)dataSnapshot.child("latitude").getValue(),(double)dataSnapshot.child("longitude").getValue());
+                Toast.makeText(getBaseContext(),dataSnapshot.toString(),Toast.LENGTH_LONG).show();
+                Log.v("Key",dataSnapshot.getKey());
+                Log.v("Value",dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -116,7 +155,6 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(36.809182,10.148363);
-        mMap.addMarker(position);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
@@ -145,8 +183,6 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000);
 
-
-
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
 
@@ -160,12 +196,6 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
     @Override
     public void onLocationChanged(Location location) {
 
-       animateMarkerTo(X,location.getLatitude(),location.getLongitude());
-
-        Toast.makeText(this,location.toString(),Toast.LENGTH_LONG).show();
-       // position.position(new LatLng(location.getLatitude(),location.getLongitude()));
-
-        //mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude())));
     }
 
     @Override
@@ -174,10 +204,6 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
     }
 
     public void drawLine(ArrayList<Station_Ligne> ListeDesLignes){
-
-
-
-
 
         //CREATING THE POLYLINE
         PolylineOptions P = new PolylineOptions();
@@ -322,6 +348,72 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
     }
 
 
+    public void selectLigne(){
+        DBAdapterLigne B = new DBAdapterLigne(this);
+        B.open();
 
+        final ArrayList<CharSequence> LS = new ArrayList<CharSequence>();
+        final ArrayList<Integer> LL = new ArrayList<Integer>();
+
+        for( Ligne S : B.getAllLigneBySocieteAller(SSociete) ){
+            LS.add(S.getIDENTIFIANT());
+            LL.add(S.getROW_ID());
+        }
+
+
+        CharSequence [] itemss = new CharSequence[LS.size()];
+        itemss = LS.toArray(itemss);
+
+        final CharSequence [] Z = itemss;
+
+        B.close();
+
+
+        AlertDialog.Builder builderl = new AlertDialog.Builder(this);
+        builderl.setTitle("Make your selection");
+        builderl.setItems(Z, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                SLigne=LS.get(item).toString();
+                setupFirebase();
+            }
+        });
+        AlertDialog alertl = builderl.create();
+        alertl.show();
+
+    }
+
+    public void selectSociete(){
+
+        DBAdapterSociete A = new DBAdapterSociete(this);
+        A.open();
+
+        final ArrayList<CharSequence> L = new ArrayList<CharSequence>();
+
+        for( Societe S : A.getAllSociete() ){
+            L.add(S.getIDENTIFICATEUR());
+        }
+
+
+        CharSequence [] items = new CharSequence[L.size()];
+        items = L.toArray(items);
+
+        A.close();
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Make your selection");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                drawNetwork();
+                SSociete = L.get(item).toString();
+                selectLigne();
+
+
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 }

@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =33;
+    public static final int DATABASE_VERSION =40;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -82,6 +82,15 @@ public class AdapterDB {
                     + DBAdapterStation_Ligne_Horaire.HORAIRE+ " TEXT," +
                     "PRIMARY KEY ( _id, "+ DBAdapterStation_Ligne_Horaire.HORAIRE + "));";
 
+
+    private static final String TABLE_VEHICULE = "vehicule";
+    private static final String CREATE_TABLE_VEHICULE =
+            "create table " + TABLE_VEHICULE + " (_id integer , "
+                    + DBAdapterVehicule.SOCIETE_ID+ " INT,"
+                    + DBAdapterVehicule.LIGNE_ID+ " INT,"
+                    + DBAdapterVehicule.IMMATRICULATION+ " TEXT " + ");";
+
+
     private final Context context;
     private DatabaseHelper DBHelper;
     protected SQLiteDatabase db;
@@ -104,6 +113,7 @@ public class AdapterDB {
             db.execSQL(CREATE_TABLE_PERTURBATION);
             db.execSQL(CREATE_TABLE_STATION_LIGNE);
             db.execSQL(CREATE_TABLE_STATION_LIGNE_HORAIRES);
+            db.execSQL(CREATE_TABLE_VEHICULE);
          // Solution de backup
         }
 
@@ -119,6 +129,7 @@ public class AdapterDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERTURBATION);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE_HORAIRES);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_VEHICULE);
             this.onCreate(db);
 
         }

@@ -23,6 +23,8 @@ public class AdapterREST {
         RPerturbation.getPerturbations();
         RetrofitStation_Ligne_Horaires RSLH = new RetrofitStation_Ligne_Horaires(context);
         RSLH.getStation_Lignes();
+        RetrofitVehicule RV = new RetrofitVehicule(context);
+        RV.getVehicules();
     }
 
 }
