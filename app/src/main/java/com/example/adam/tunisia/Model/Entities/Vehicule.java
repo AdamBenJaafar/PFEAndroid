@@ -9,9 +9,6 @@ public class Vehicule {
     @SerializedName("auto_Vehicule")
     @Expose
     private int ROW_ID;
-    @SerializedName("societe")
-    @Expose
-    private Societe SOCIETE;
     @SerializedName("ligne")
     @Expose
     private Ligne LIGNE;
@@ -22,9 +19,8 @@ public class Vehicule {
     public Vehicule() {
     }
 
-    public Vehicule(int ROW_ID, Societe SOCIETE, Ligne LIGNE, String IMMATRICULATION) {
+    public Vehicule(int ROW_ID, Ligne LIGNE, String IMMATRICULATION) {
         this.ROW_ID = ROW_ID;
-        this.SOCIETE = SOCIETE;
         this.LIGNE = LIGNE;
         this.IMMATRICULATION = IMMATRICULATION;
     }
@@ -32,10 +28,9 @@ public class Vehicule {
     @Override
     public String toString() {
         return "Vehicule{" +
-                "IMMATRICULATION='" + IMMATRICULATION + '\'' +
+                "ROW_ID=" + ROW_ID +
                 ", LIGNE=" + LIGNE +
-                ", SOCIETE=" + SOCIETE +
-                ", ROW_ID=" + ROW_ID +
+                ", IMMATRICULATION='" + IMMATRICULATION + '\'' +
                 '}';
     }
 
@@ -45,14 +40,6 @@ public class Vehicule {
 
     public void setROW_ID(int ROW_ID) {
         this.ROW_ID = ROW_ID;
-    }
-
-    public Societe getSOCIETE() {
-        return SOCIETE;
-    }
-
-    public void setSOCIETE(Societe SOCIETE) {
-        this.SOCIETE = SOCIETE;
     }
 
     public Ligne getLIGNE() {
@@ -70,5 +57,4 @@ public class Vehicule {
     public void setIMMATRICULATION(String IMMATRICULATION) {
         this.IMMATRICULATION = IMMATRICULATION;
     }
-
 }

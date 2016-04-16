@@ -55,7 +55,7 @@ public class SCMapPresenter {
             List<ArrayList<Station_Ligne>> Network = new ArrayList<ArrayList<Station_Ligne>>();
 
             // GET LINES
-            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("id");
+            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("TRANSTU");
             // FILL LINES
             for( Ligne L : LL) {
 

@@ -20,16 +20,14 @@ public class DBAdapterVehicule extends AdapterDB {
     public static final String TAG = "DBAdapterVehicule";
 
     public static final String ROW_ID = "_id";
-    public static final String SOCIETE_ID = "societe_id";
     public static final String LIGNE_ID = "ligne_id";
     public static final String IMMATRICULATION = "immatriculation";
 
     public static final int COL_ROW_ID = 0;
-    public static final int COL_SOCIETE_ID = 1;
-    public static final int COL_LIGNE_ID = 2;
-    public static final int COL_IMMATRICULATION = 3;
+    public static final int COL_LIGNE_ID = 1;
+    public static final int COL_IMMATRICULATION = 2;
 
-    String[] ALL_KEYS = {ROW_ID, SOCIETE_ID, LIGNE_ID, IMMATRICULATION};
+    String[] ALL_KEYS = {ROW_ID, LIGNE_ID, IMMATRICULATION};
 
     private static final String DATABASE_TABLE = "vehicule";
 
@@ -57,7 +55,6 @@ public class DBAdapterVehicule extends AdapterDB {
         Log.v(TAG, "Vehicule created");
         ContentValues initialValues = new ContentValues();
         initialValues.put(ROW_ID, vehicule.getROW_ID());
-        initialValues.put(SOCIETE_ID, vehicule.getSOCIETE().getROW_ID());
         initialValues.put(LIGNE_ID, vehicule.getLIGNE().getROW_ID());
         initialValues.put(IMMATRICULATION, vehicule.getIMMATRICULATION());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
@@ -83,13 +80,11 @@ public class DBAdapterVehicule extends AdapterDB {
 
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
-                int societe_id = mCursor.getInt(COL_SOCIETE_ID);
                 int ligne_id = mCursor.getInt(COL_LIGNE_ID);
                 String immatriculation = mCursor.getString(COL_IMMATRICULATION);
 
                 // Append data to the message:
                 F.setROW_ID(id);
-                F.setSOCIETE(new Societe(societe_id + ""));
                 F.setLIGNE(new Ligne(ligne_id));
                 F.setIMMATRICULATION(immatriculation);
 
@@ -114,13 +109,11 @@ public class DBAdapterVehicule extends AdapterDB {
 
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
-                int societe_id = mCursor.getInt(COL_SOCIETE_ID);
                 int ligne_id = mCursor.getInt(COL_LIGNE_ID);
                 String immatriculation = mCursor.getString(COL_IMMATRICULATION);
 
                 // Append data to the message:
                 F.setROW_ID(id);
-                F.setSOCIETE(new Societe(societe_id + ""));
                 F.setLIGNE(new Ligne(ligne_id));
                 F.setIMMATRICULATION(immatriculation);
 
@@ -151,13 +144,11 @@ public class DBAdapterVehicule extends AdapterDB {
             do {
                 // Process the data:
                 int id = mCursor.getInt(COL_ROW_ID);
-                int societe_id = mCursor.getInt(COL_SOCIETE_ID);
                 int ligne_id = mCursor.getInt(COL_LIGNE_ID);
                 String immatriculation = mCursor.getString(COL_IMMATRICULATION);
 
                 // Append data to the message:
                 F.setROW_ID(id);
-                F.setSOCIETE(new Societe(societe_id + ""));
                 F.setLIGNE(new Ligne(ligne_id));
                 F.setIMMATRICULATION(immatriculation);
 
@@ -192,7 +183,6 @@ public class DBAdapterVehicule extends AdapterDB {
         String where = ROW_ID + "=" + vehicule.getROW_ID();
 
         ContentValues args = new ContentValues();
-        args.put(SOCIETE_ID, vehicule.getSOCIETE().getROW_ID());
         args.put(LIGNE_ID, vehicule.getLIGNE().getROW_ID());
         args.put(IMMATRICULATION, vehicule.getIMMATRICULATION());
 

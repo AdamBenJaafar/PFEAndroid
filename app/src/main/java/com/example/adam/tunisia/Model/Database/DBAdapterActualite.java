@@ -18,15 +18,17 @@ public class DBAdapterActualite extends AdapterDB {
 
     public static final String ROW_ID = "_id";
     public static final String TEXTE = "texte";
+    public static final String TITRE = "titre";
     public static final String DATE = "date";
     public static final String SOC_ROW_ID = "soc_row_id";
 
     public static final int COL_ROW_ID = 0;
     public static final int COL_TEXTE = 1;
-    public static final int COL_DATE = 2;
-    public static final int COL_SOC_ROW_ID = 3;
+    public static final int COL_TITRE = 2;
+    public static final int COL_DATE = 3;
+    public static final int COL_SOC_ROW_ID = 4;
 
-    String [] ALL_KEYS = { ROW_ID, TEXTE, DATE,SOC_ROW_ID};
+    String [] ALL_KEYS = { ROW_ID, TEXTE, TITRE, DATE,SOC_ROW_ID};
 
     private static final String DATABASE_TABLE = "actualite";
 
@@ -56,6 +58,7 @@ public class DBAdapterActualite extends AdapterDB {
         initialValues.put(ROW_ID, actualite.getROW_ID());
         initialValues.put(DATE, actualite.getDATE());
         initialValues.put(TEXTE, actualite.getTEXTE());
+        initialValues.put(TITRE, actualite.getTITRE());
         initialValues.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -79,12 +82,14 @@ public class DBAdapterActualite extends AdapterDB {
                 int id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
                 String texte = mCursor.getString(COL_TEXTE);
+                String titre = mCursor.getString(COL_TITRE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
                 F.setROW_ID(id);
                 F.setDATE(date);
                 F.setTEXTE(texte);
+                F.setTITRE(titre);
                 F.setSOC(new Societe(soc_row_id));
 
                 A.add(F);
@@ -116,12 +121,14 @@ public class DBAdapterActualite extends AdapterDB {
                 int id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
                 String texte = mCursor.getString(COL_TEXTE);
+                String titre = mCursor.getString(COL_TITRE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
                 F.setROW_ID(id);
                 F.setDATE(date);
                 F.setTEXTE(texte);
+                F.setTITRE(titre);
                 F.setSOC(new Societe(soc_row_id));
 
             } while(mCursor.moveToNext());
@@ -157,6 +164,7 @@ public class DBAdapterActualite extends AdapterDB {
         ContentValues args = new ContentValues();
         args.put(DATE, actualite.getDATE());
         args.put(TEXTE, actualite.getTEXTE());
+        args.put(TITRE, actualite.getTITRE());
         args.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;

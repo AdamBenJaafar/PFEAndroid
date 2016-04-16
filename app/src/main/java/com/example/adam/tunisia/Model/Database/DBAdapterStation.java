@@ -22,7 +22,7 @@ public class DBAdapterStation extends AdapterDB {
     public static final String TYPE = "type";
     public static final String LAT = "lat";
     public static final String LNG = "lng";
-    public static final String MAJEURE = "majeure";
+    public static final String PRINCIPALE = "principale";
     public static final String SOC_ROW_ID = "soc_row_id";
 
     public static final int COL_ROW_ID = 0;
@@ -30,10 +30,10 @@ public class DBAdapterStation extends AdapterDB {
     public static final int COL_TYPE = 2;
     public static final int COL_LAT = 3;
     public static final int COL_LNG = 4;
-    public static final int COL_MAJEURE = 5;
+    public static final int COL_PRINCIPALE = 5;
     public static final int COL_SOC_ROW_ID = 6;
 
-    String [] ALL_KEYS = { ROW_ID, NOM, TYPE, LAT, LNG, MAJEURE, SOC_ROW_ID};
+    String [] ALL_KEYS = { ROW_ID, NOM, TYPE, LAT, LNG, PRINCIPALE, SOC_ROW_ID};
 
     private static final String DATABASE_TABLE = "station";
 
@@ -65,8 +65,8 @@ public class DBAdapterStation extends AdapterDB {
         initialValues.put(TYPE, station.getTYPE());
         initialValues.put(LAT, station.getLATITUDE());
         initialValues.put(LNG, station.getLONGITUDE());
-        initialValues.put(MAJEURE, ( station.isMAJEURE() ? 1 : 0 ) );
-        initialValues.put(SOC_ROW_ID, station.getSOC().getIDENTIFICATEUR());
+        initialValues.put(PRINCIPALE, ( station.isPRINCIPALE() ? 1 : 0 ) );
+        initialValues.put(SOC_ROW_ID, station.getSOCIETE_ID());
         return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -93,7 +93,7 @@ public class DBAdapterStation extends AdapterDB {
                 String type = mCursor.getString(COL_TYPE);
                 String lat = mCursor.getString(COL_LAT);
                 String lng = mCursor.getString(COL_LNG);
-                int majeure = mCursor.getInt(COL_MAJEURE);
+                int principale = mCursor.getInt(COL_PRINCIPALE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
@@ -102,8 +102,8 @@ public class DBAdapterStation extends AdapterDB {
                 S.setTYPE(type);
                 S.setLONGITUDE(lng);
                 S.setLATITUDE(lat);
-                S.setMAJEURE((majeure == 1 ? true : false));
-                S.setSOC(new Societe(soc_row_id));
+                S.setPRINCIPALE((principale == 1 ? true : false));
+                S.setSOCIETE_ID(Long.parseLong(soc_row_id));
 
                 A.add(S);
 
@@ -134,7 +134,7 @@ public class DBAdapterStation extends AdapterDB {
                 String type = mCursor.getString(COL_TYPE);
                 String lat = mCursor.getString(COL_LAT);
                 String lng = mCursor.getString(COL_LNG);
-                int majeure = mCursor.getInt(COL_MAJEURE);
+                int principale = mCursor.getInt(COL_PRINCIPALE);
                 String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
 
                 // Append data to the message:
@@ -143,8 +143,9 @@ public class DBAdapterStation extends AdapterDB {
                 S.setTYPE(type);
                 S.setLONGITUDE(lng);
                 S.setLATITUDE(lat);
-                S.setMAJEURE((majeure == 1 ? true : false));
-                S.setSOC(new Societe(soc_row_id));
+                S.setPRINCIPALE((principale == 1 ? true : false));
+                S.setSOCIETE_ID(Long.parseLong(soc_row_id));
+
 
             } while(mCursor.moveToNext());
         }
@@ -181,8 +182,8 @@ public class DBAdapterStation extends AdapterDB {
         args.put(TYPE, station.getTYPE());
         args.put(LAT, station.getLATITUDE());
         args.put(LNG, station.getLONGITUDE());
-        args.put(MAJEURE, station.isMAJEURE() ? 1 : 0 );
-        args.put(SOC_ROW_ID, station.getSOC().getIDENTIFICATEUR() );
+        args.put(PRINCIPALE, station.isPRINCIPALE() ? 1 : 0 );
+        args.put(SOC_ROW_ID, station.getSOCIETE_ID());
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;
     }

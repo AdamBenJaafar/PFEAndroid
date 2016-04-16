@@ -82,7 +82,7 @@ public class Main2Activity extends AppCompatActivity {
 
         Station
 
-                F = new Station(50,"aaaa","aaaa","aaaa","aaaa",true,new Societe());
+                F = new Station(50,"aaaa","aaaa","aaaa","aaaa",true,00);
 
         long newId = myDb.createStation
 

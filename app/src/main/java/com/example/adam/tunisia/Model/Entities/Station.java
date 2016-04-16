@@ -20,13 +20,12 @@ public class Station {
     @SerializedName("longitude")
     @Expose
     private String LONGITUDE;
-    @SerializedName("majeure")
+    @SerializedName("principale")
     @Expose
-    private boolean MAJEURE;
-    @SerializedName("societe")
+    private boolean PRINCIPALE;
+    @SerializedName("societeID")
     @Expose
-    private Societe SOC;
-
+    private long SOCIETE_ID;
 
     public Station() {
     }
@@ -35,83 +34,82 @@ public class Station {
         this.ROW_ID = ROW_ID;
     }
 
-    public Station(int ROW_ID, String NOM, String TYPE, String LATITUDE, String LONGITUDE, boolean MAJEURE, Societe SOC) {
+    public Station(int ROW_ID, String NOM, String TYPE, String LATITUDE, String LONGITUDE, boolean PRINCIPALE, long SOCIETE_ID) {
         this.ROW_ID = ROW_ID;
         this.NOM = NOM;
         this.TYPE = TYPE;
         this.LATITUDE = LATITUDE;
         this.LONGITUDE = LONGITUDE;
-        this.MAJEURE = MAJEURE;
-        this.SOC = SOC;
+        this.PRINCIPALE = PRINCIPALE;
+        this.SOCIETE_ID = SOCIETE_ID;
     }
 
     @Override
     public String toString() {
         return "Station{" +
-                "ROW_ID=" + ROW_ID +
-                ", NOM='" + NOM + '\'' +
-                ", TYPE='" + TYPE + '\'' +
-                ", LATITUDE='" + LATITUDE + '\'' +
+                "SOCIETE_ID=" + SOCIETE_ID +
+                ", PRINCIPALE=" + PRINCIPALE +
                 ", LONGITUDE='" + LONGITUDE + '\'' +
-                ", MAJEURE=" + MAJEURE +
-                ", SOC=" + SOC +
+                ", LATITUDE='" + LATITUDE + '\'' +
+                ", TYPE='" + TYPE + '\'' +
+                ", NOM='" + NOM + '\'' +
+                ", ROW_ID=" + ROW_ID +
                 '}';
-    }
-
-    public void setROW_ID(int ROW_ID) {
-        this.ROW_ID = ROW_ID;
-    }
-
-    public void setNOM(String NOM) {
-        this.NOM = NOM;
-    }
-
-    public void setTYPE(String TYPE) {
-        this.TYPE = TYPE;
-    }
-
-    public void setLATITUDE(String LATITUDE) {
-        this.LATITUDE = LATITUDE;
-    }
-
-    public void setLONGITUDE(String LONGITUDE) {
-        this.LONGITUDE = LONGITUDE;
-    }
-
-    public void setMAJEURE(boolean MAJEURE) {
-        this.MAJEURE = MAJEURE;
-    }
-
-    public void setSOC(Societe SOC) {
-        this.SOC = SOC;
     }
 
     public int getROW_ID() {
         return ROW_ID;
     }
 
+    public void setROW_ID(int ROW_ID) {
+        this.ROW_ID = ROW_ID;
+    }
+
     public String getNOM() {
         return NOM;
+    }
+
+    public void setNOM(String NOM) {
+        this.NOM = NOM;
     }
 
     public String getTYPE() {
         return TYPE;
     }
 
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
+    }
+
     public String getLATITUDE() {
         return LATITUDE;
+    }
+
+    public void setLATITUDE(String LATITUDE) {
+        this.LATITUDE = LATITUDE;
     }
 
     public String getLONGITUDE() {
         return LONGITUDE;
     }
 
-    public boolean isMAJEURE() {
-        return MAJEURE;
+    public void setLONGITUDE(String LONGITUDE) {
+        this.LONGITUDE = LONGITUDE;
     }
 
-    public Societe getSOC() {
-        return SOC;
+    public boolean isPRINCIPALE() {
+        return PRINCIPALE;
     }
 
+    public void setPRINCIPALE(boolean PRINCIPALE) {
+        this.PRINCIPALE = PRINCIPALE;
+    }
+
+    public long getSOCIETE_ID() {
+        return SOCIETE_ID;
+    }
+
+    public void setSOCIETE_ID(long SOCIETE_ID) {
+        this.SOCIETE_ID = SOCIETE_ID;
+    }
 }

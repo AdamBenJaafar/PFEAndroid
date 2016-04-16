@@ -14,6 +14,9 @@ public class Actualite {
     @SerializedName("text")
     @Expose
     private String TEXTE;
+    @SerializedName("titre")
+    @Expose
+    private String TITRE;
     @SerializedName("date_actualite")
     @Expose
     private String DATE;
@@ -24,20 +27,22 @@ public class Actualite {
     public Actualite() {
     }
 
-    public Actualite(int ROW_ID, String TEXTE, String DATE, Societe soc) {
+    public Actualite(int ROW_ID, String TEXTE, String TITRE, String DATE, Societe SOC) {
         this.ROW_ID = ROW_ID;
         this.TEXTE = TEXTE;
+        this.TITRE = TITRE;
         this.DATE = DATE;
-        SOC = soc;
+        this.SOC = SOC;
     }
 
     @Override
     public String toString() {
         return "Actualite{" +
-                "Soc=" + SOC +
-                ", DATE='" + DATE + '\'' +
+                "ROW_ID=" + ROW_ID +
                 ", TEXTE='" + TEXTE + '\'' +
-                ", ROW_ID=" + ROW_ID +
+                ", TITRE='" + TITRE + '\'' +
+                ", DATE='" + DATE + '\'' +
+                ", SOC=" + SOC +
                 '}';
     }
 
@@ -57,6 +62,14 @@ public class Actualite {
         this.TEXTE = TEXTE;
     }
 
+    public String getTITRE() {
+        return TITRE;
+    }
+
+    public void setTITRE(String TITRE) {
+        this.TITRE = TITRE;
+    }
+
     public String getDATE() {
         return DATE;
     }
@@ -69,7 +82,7 @@ public class Actualite {
         return SOC;
     }
 
-    public void setSOC(Societe soc) {
-        SOC = soc;
+    public void setSOC(Societe SOC) {
+        this.SOC = SOC;
     }
 }

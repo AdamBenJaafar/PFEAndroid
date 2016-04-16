@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =40;
+    public static final int DATABASE_VERSION =43;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -44,7 +44,7 @@ public class AdapterDB {
                     + DBAdapterStation.TYPE+ " TEXT,"
                     + DBAdapterStation.LAT+ " TEXT,"
                     + DBAdapterStation.LNG+ " TEXT,"
-                    + DBAdapterStation.MAJEURE+ " INT,"
+                    + DBAdapterStation.PRINCIPALE+ " INT,"
                     + DBAdapterStation.SOC_ROW_ID+ " TEXT " + ");";
 
     private static final String TABLE_LIGNE = "ligne";
@@ -59,6 +59,7 @@ public class AdapterDB {
     private static final String CREATE_TABLE_ACTUALITE =
             "create table " + TABLE_ACTUALITE + " (_id integer primary key, "
                     + DBAdapterActualite.TEXTE+ " TEXT,"
+                    + DBAdapterActualite.TITRE+ " TEXT,"
                     + DBAdapterActualite.DATE+ " TEXT,"
                     + DBAdapterActualite.SOC_ROW_ID+ " TEXT " + ");";
 
@@ -86,7 +87,6 @@ public class AdapterDB {
     private static final String TABLE_VEHICULE = "vehicule";
     private static final String CREATE_TABLE_VEHICULE =
             "create table " + TABLE_VEHICULE + " (_id integer , "
-                    + DBAdapterVehicule.SOCIETE_ID+ " INT,"
                     + DBAdapterVehicule.LIGNE_ID+ " INT,"
                     + DBAdapterVehicule.IMMATRICULATION+ " TEXT " + ");";
 

@@ -74,7 +74,7 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                     .strokeWidth(6);
 
 
-            if(SL.getSTATION().isMAJEURE()) {
+            if(SL.getSTATION().isPRINCIPALE()) {
                 mMap.addMarker(new MarkerOptions().title(SL.getSTATION().getNOM())
                         .snippet(SL.getSTATION().getNOM())
                         .position(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE())))

@@ -1,44 +1,34 @@
 package com.example.adam.tunisia.View.Activities;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.adam.tunisia.Main2Activity;
 import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
-import com.example.adam.tunisia.Model.Database.DBAdapterSociete;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.Ligne;
-import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Presenters.RTMapPresenter;
 import com.example.adam.tunisia.R;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -49,103 +39,40 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RTMap extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
+public class RTMap extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private static final String TAG = "RTMap" ;
 
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
+    RTMapPresenter RTMapPresenter;
+
+    public GoogleMap mMap;
 
     private MarkerOptions position;
 
-
-    Firebase mRef;
-
-    Marker X;
-
-    private String SSociete;
-    private String SLigne;
+    public Marker X;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rtmap);
 
-        selectSociete();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.testmap);
+
+
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
 
         LatLng sydney = new LatLng(36.809182,10.148363);
         position = new MarkerOptions().position(sydney).title("Marker in Sydney");
 
+        RTMapPresenter = new RTMapPresenter(this);
+        RTMapPresenter.selectSociete();
 
-    }
-
-    public void setupFirebase(){
-
-        Firebase.setAndroidContext(this);
-
-        String URL = "https://pfemaps.firebaseio.com/" + SSociete + "/" + SLigne; // /111
-
-
-        Log.v("AAAA", URL );
-
-        mRef = new Firebase(URL);
-
-      /*  mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                animateMarkerTo(X,(double)dataSnapshot.child("latitude").getValue(),(double)dataSnapshot.child("longitude").getValue());
-                Toast.makeText(getBaseContext(),dataSnapshot.toString(),Toast.LENGTH_LONG).show();
-                Log.v("ddd","changed");
-            }
-
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });*/
-
-        mRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                animateMarkerTo(X,(double)dataSnapshot.child("latitude").getValue(),(double)dataSnapshot.child("longitude").getValue());
-                Toast.makeText(getBaseContext(),dataSnapshot.toString(),Toast.LENGTH_LONG).show();
-                Log.v("Key",dataSnapshot.getKey());
-                Log.v("Value",dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
     }
 
     @Override
@@ -153,53 +80,24 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         mMap = googleMap;
 
 
-        // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(36.809182,10.148363);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-         X =   this.mMap.addMarker(new MarkerOptions().position(new LatLng(36.809182,10.148363)));
+         X =   this.mMap.addMarker(new MarkerOptions().position(new LatLng(36.809182,10.148363)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.tram)));
 
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        mGoogleApiClient.disconnect();
+        RTMapPresenter.onStop();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        mGoogleApiClient.connect();
 
-    }
-
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(1000);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
@@ -219,11 +117,10 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
                     .strokeWidth(6);
 
 
-            if(SL.getSTATION().isMAJEURE()) {
-                mMap.addMarker(new MarkerOptions().title(SL.getSTATION().getNOM())
-                        .snippet(SL.getSTATION().getNOM())
-                        .position(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE())))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            if(SL.getSTATION().isPRINCIPALE()) {
+              //  mMap.addMarker(new MarkerOptions().title(SL.getSTATION().getNOM())
+              //          .snippet(SL.getSTATION().getNOM())
+              //          .position(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE()))));
                 circleOptions.radius(20).fillColor(Color.BLACK).strokeColor(Color.BLACK);
             }
 
@@ -241,7 +138,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
 
     }
 
-    public void drawNetwork(){
+    public void drawNetworkOfLine(String Ligne){
 
         // CAMERA SETTING VARIABLES
         // -181 & +181 are the bounds of the latlng
@@ -271,35 +168,37 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
             List<ArrayList<Station_Ligne>> Network = new ArrayList<ArrayList<Station_Ligne>>();
 
             // GET LINES
-            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("id");
+            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("TRANSTU");
             // FILL LINES
             for( Ligne L : LL) {
+                Log.v("We are checking", Ligne + " and the currsent is " + L.getIDENTIFIANT());
+                if(L.getIDENTIFIANT().equals(Ligne)) {
+                    // GET STATIONS
+                    ArrayList<Station_Ligne> SLL = myDBStation_Ligne.getAllStation_LigneByLigne(L.getROW_ID());
+                    // FILL STATIONS
+                    for (Station_Ligne SL : SLL) {
 
-                // GET STATIONS
-                ArrayList<Station_Ligne> SLL = myDBStation_Ligne.getAllStation_LigneByLigne(L.getROW_ID());
-                // FILL STATIONS
-                for( Station_Ligne SL : SLL){
+                        SL.setSTATION(myDBStation.getStation(SL.getSTATION().getROW_ID()));
 
-                    SL.setSTATION(myDBStation.getStation(SL.getSTATION().getROW_ID()));
+                        if (Double.parseDouble(SL.getSTATION().getLATITUDE()) > MaxLAT) {
+                            MaxLAT = Double.parseDouble(SL.getSTATION().getLATITUDE());
+                        } else if (Double.parseDouble(SL.getSTATION().getLATITUDE()) < MinLAT) {
+                            MinLAT = Double.parseDouble(SL.getSTATION().getLATITUDE());
+                        }
 
-                    if(Double.parseDouble(SL.getSTATION().getLATITUDE())>MaxLAT){
-                        MaxLAT=Double.parseDouble(SL.getSTATION().getLATITUDE());
-                    }else if(Double.parseDouble(SL.getSTATION().getLATITUDE())<MinLAT){
-                        MinLAT=Double.parseDouble(SL.getSTATION().getLATITUDE());
+                        if (Double.parseDouble(SL.getSTATION().getLONGITUDE()) > MaxLNG) {
+                            MaxLNG = Double.parseDouble(SL.getSTATION().getLONGITUDE());
+                        }
+                        if (Double.parseDouble(SL.getSTATION().getLONGITUDE()) < MinLNG) {
+                            MinLNG = Double.parseDouble(SL.getSTATION().getLONGITUDE());
+                        }
+
                     }
 
-                    if(Double.parseDouble(SL.getSTATION().getLONGITUDE())>MaxLNG){
-                        MaxLNG=Double.parseDouble(SL.getSTATION().getLONGITUDE());
-                    }
-                    if(Double.parseDouble(SL.getSTATION().getLONGITUDE())<MinLNG){
-                        MinLNG=Double.parseDouble(SL.getSTATION().getLONGITUDE());
-                    }
+                    Collections.sort(SLL);
 
+                    drawLine(SLL);
                 }
-
-                Collections.sort(SLL);
-
-                drawLine(SLL);
              //   Network.add(SLL);
 
             }
@@ -322,7 +221,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         // SCMap.setCameraPosition((MaxLAT+MinLAT)/2,(MaxLNG+MinLNG)/2, Zoom);
     }
 
-    private void animateMarkerTo(final Marker marker, final double lat, final double lng) {
+    public void animateMarkerTo(final Marker marker, final double lat, final double lng) {
         final Handler handler = new Handler();
         final long start = SystemClock.uptimeMillis();
         final long DURATION_MS = 3000;
@@ -347,73 +246,34 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback, Locat
         });
     }
 
+    public void addMarker(MarkerOptions MarkerOptions) {
+        mMap.addMarker(MarkerOptions);
+    }
 
-    public void selectLigne(){
-        DBAdapterLigne B = new DBAdapterLigne(this);
-        B.open();
+    public void animateCamera(LatLng LatLng){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(LatLng)      // Sets the center of the map to Mountain View
+                .zoom(15)                   // Sets the zoom
+                .build();                   // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        CircleOptions circleOptions = new CircleOptions()
+                .center(LatLng)
+                .radius(20)
+                .strokeColor(Color.BLACK)
+                .strokeWidth(6);
+        mMap.addCircle(circleOptions);
+    }
 
-        final ArrayList<CharSequence> LS = new ArrayList<CharSequence>();
-        final ArrayList<Integer> LL = new ArrayList<Integer>();
+    public void goToPosition(View view){
 
-        for( Ligne S : B.getAllLigneBySocieteAller(SSociete) ){
-            LS.add(S.getIDENTIFIANT());
-            LL.add(S.getROW_ID());
-        }
-
-
-        CharSequence [] itemss = new CharSequence[LS.size()];
-        itemss = LS.toArray(itemss);
-
-        final CharSequence [] Z = itemss;
-
-        B.close();
-
-
-        AlertDialog.Builder builderl = new AlertDialog.Builder(this);
-        builderl.setTitle("Make your selection");
-        builderl.setItems(Z, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                SLigne=LS.get(item).toString();
-                setupFirebase();
-            }
-        });
-        AlertDialog alertl = builderl.create();
-        alertl.show();
+        RTMapPresenter.showDialog();
 
     }
 
-    public void selectSociete(){
 
-        DBAdapterSociete A = new DBAdapterSociete(this);
-        A.open();
-
-        final ArrayList<CharSequence> L = new ArrayList<CharSequence>();
-
-        for( Societe S : A.getAllSociete() ){
-            L.add(S.getIDENTIFICATEUR());
+        public void retour(){
+            Intent i = new Intent(this, Home.class);
+            startActivity(i);
         }
-
-
-        CharSequence [] items = new CharSequence[L.size()];
-        items = L.toArray(items);
-
-        A.close();
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Make your selection");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
-                drawNetwork();
-                SSociete = L.get(item).toString();
-                selectLigne();
-
-
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 
 }
