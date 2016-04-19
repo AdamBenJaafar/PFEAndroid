@@ -5,6 +5,13 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.constant.TransportMode;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
@@ -47,6 +54,9 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
 
         HM = new HashMap<Integer,Integer>();
 
+
+
+
     }
 
     @Override
@@ -54,6 +64,32 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         Presenter.drawNetwork();
+
+        String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
+        LatLng origin = new LatLng(36.809182,10.148363);
+        LatLng destination = new LatLng(36.809182, 10.185);
+        GoogleDirection.withServerKey(serverKey)
+                .from(origin)
+                .to(destination)
+                .transportMode(TransportMode.WALKING)
+                .execute(new DirectionCallback() {
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                        Route route = direction.getRouteList().get(0);
+                        Leg leg = route.getLegList().get(0);
+                        ArrayList<LatLng> pointList = leg.getDirectionPoint();
+                        Log.v("TETSETS",pointList.toString());
+                        PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
+                        mMap.addPolyline(polylineOptions);
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+                        Log.v("TESTTEST", " FAILED");
+                    }
+                });
+
+
     }
 
     public void drawLine(ArrayList<Station_Ligne> ListeDesLignes, int color ){

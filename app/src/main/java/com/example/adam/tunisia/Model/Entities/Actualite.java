@@ -27,6 +27,12 @@ public class Actualite {
     public Actualite() {
     }
 
+    public Actualite(String TEXTE, String TITRE, String DATE) {
+        this.TEXTE = TEXTE;
+        this.TITRE = TITRE;
+        this.DATE = DATE;
+    }
+
     public Actualite(int ROW_ID, String TEXTE, String TITRE, String DATE, Societe SOC) {
         this.ROW_ID = ROW_ID;
         this.TEXTE = TEXTE;
