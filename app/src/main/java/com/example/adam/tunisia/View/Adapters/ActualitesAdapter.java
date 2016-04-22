@@ -43,7 +43,7 @@ public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.My
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Actualite movie = moviesList.get(position);
         holder.title.setText(movie.getTITRE());
-        holder.genre.setText(movie.getTEXTE());
+        holder.genre.setText(movie.getDATE());
        // holder.year.setText(movie.getDATE());
     }
 

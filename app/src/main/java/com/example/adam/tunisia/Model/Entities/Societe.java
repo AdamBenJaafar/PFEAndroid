@@ -8,7 +8,7 @@ public class Societe {
 
     @SerializedName("auto_Societe")
     @Expose
-    private int ROW_ID;
+    private long ROW_ID;
     @SerializedName("date_creation")
     @Expose
     private String DATE;
@@ -80,7 +80,7 @@ public class Societe {
                 '}';
     }
 
-    public int getROW_ID() {
+    public long getROW_ID() {
         return ROW_ID;
     }
 
@@ -128,7 +128,7 @@ public class Societe {
         return SITEWEB;
     }
 
-    public void setROW_ID(int ROW_ID) {
+    public void setROW_ID(long ROW_ID) {
         this.ROW_ID = ROW_ID;
     }
 

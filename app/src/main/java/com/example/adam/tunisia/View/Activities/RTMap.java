@@ -168,7 +168,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
             List<ArrayList<Station_Ligne>> Network = new ArrayList<ArrayList<Station_Ligne>>();
 
             // GET LINES
-            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("TRANSTU");
+            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("id");
             // FILL LINES
             for( Ligne L : LL) {
                 Log.v("We are checking", Ligne + " and the currsent is " + L.getIDENTIFIANT());

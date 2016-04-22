@@ -99,7 +99,7 @@ public class DBAdapterSociete extends AdapterDB {
                 Societe S= new Societe();
 
                 // Process the data:
-                int id = mCursor.getInt(COL_ROW_ID);
+                long id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
                 String details = mCursor.getString(COL_DETAILS);
                 String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);

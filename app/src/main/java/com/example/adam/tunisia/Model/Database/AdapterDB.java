@@ -11,7 +11,7 @@ public class AdapterDB {
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =43;
+    public static final int DATABASE_VERSION =46;
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -90,6 +90,12 @@ public class AdapterDB {
                     + DBAdapterVehicule.LIGNE_ID+ " INT,"
                     + DBAdapterVehicule.IMMATRICULATION+ " TEXT " + ");";
 
+    private static final String TABLE_VOYAGE = "voyage";
+    private static final String CREATE_TABLE_VOYAGE =
+            "create table " + TABLE_VOYAGE + " (_id integer , "
+                    + DBAdapterVehicule.LIGNE_ID+ " INT,"
+                    + DBAdapterVehicule.IMMATRICULATION+ " TEXT " + ");";
+
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -114,6 +120,7 @@ public class AdapterDB {
             db.execSQL(CREATE_TABLE_STATION_LIGNE);
             db.execSQL(CREATE_TABLE_STATION_LIGNE_HORAIRES);
             db.execSQL(CREATE_TABLE_VEHICULE);
+            db.execSQL(CREATE_TABLE_VOYAGE);
          // Solution de backup
         }
 
@@ -130,6 +137,7 @@ public class AdapterDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE_HORAIRES);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VEHICULE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOYAGE);
             this.onCreate(db);
 
         }

@@ -10,12 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +34,13 @@ import android.widget.Toast;
 
 import com.example.adam.tunisia.Main2Activity;
 import com.example.adam.tunisia.Model.Database.DBAdapterActualite;
+import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation;
 import com.example.adam.tunisia.Model.Entities.Actualite;
+import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
+import com.example.adam.tunisia.Model.Entities.OpenWeather.Model;
+import com.example.adam.tunisia.Model.Entities.Perturbation;
+import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
+import com.example.adam.tunisia.Model.Rest.Weather.OpenWeatherAPI;
 import com.example.adam.tunisia.R;
 import com.example.adam.tunisia.View.Adapters.ActualitesAdapter;
 import com.example.adam.tunisia.View.Adapters.DividerItemDecorations;
@@ -43,12 +49,22 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -97,6 +113,33 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         prepareActualiteData();
 
+      /*  new LovelyInfoDialog(this)
+                .setTopColor(color(R.color.darkBlueGrey))
+                .setIcon(R.mipmap.perturbation)
+                //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+                .setNotShowAgainOptionEnabled(0)
+                .setTitle("TESTESTESTESTE")
+                .setMessage("TESTESTESTESTE")
+                .show();*/
+
+        new LovelyStandardDialog(this)
+                .setTopColor(color(R.color.colorPrimaryDark))
+                .setButtonsColor(color(R.color.colorAccent))
+                .setIcon(R.mipmap.actualite)
+                .setTitle("11111111111111")
+                .setMessage("55555555555")
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+        getPlaces();
+
+
+        //getReport();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -154,6 +197,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private int color(int colorRes) {
+        return ContextCompat.getColor(this, colorRes);
+    }
+
     public void showDialog(){
         // custom dialog
         final Dialog dialog = new Dialog(this);
@@ -187,11 +234,21 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         DBAdapterActualite DBA = new DBAdapterActualite(this);
         DBA.open();
 
+
         for( Actualite A : DBA.getAllActualite() ){
             movieList.add(A);
         }
         DBA.close();
 
+
+        DBAdapterPerturbation DBP = new DBAdapterPerturbation(this);
+        DBP.open();
+
+
+        for( Perturbation A : DBP.getAllPerturbation() ){
+         //   movieList.add(new Actualite(A.getLIG().getIDENTIFIANT()));
+        }
+        DBP.close();
 
 
         movie = new Actualite("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
@@ -322,6 +379,98 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         super.onStart();
         mGoogleApiClient.connect();
 
+    }
+
+    void getPlaces() {
+
+        String url = "https://maps.googleapis.com/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GooglePlacesAPI service = retrofit.create(GooglePlacesAPI.class);
+
+        Call<Example> call = service.getPlacesReport();
+
+        call.enqueue(new Callback<Example>() {
+            @Override
+            public void onResponse(Call<Example> call, Response<Example> response) {
+
+                try {
+
+
+                    String city = response.body().getResults().get(0).getName();
+
+                    String status = response.body().getResults().get(0).getGeometry().toString();
+
+                    String humidity = response.body().getResults().get(0).getReference();
+
+                    String pressure = response.body().getResults().get(0).getTypes().toString();
+
+                    String message = city +"  " + status +"  " + humidity +"  " + pressure;
+
+                    Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v("NOO","FAILED");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Example> call, Throwable t) {
+
+            }
+
+
+        });
+    }
+
+    void getReport() {
+
+        String url = "http://api.openweathermap.org/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        OpenWeatherAPI service = retrofit.create(OpenWeatherAPI.class);
+
+        Call<Model> call = service.getWheatherReport();
+
+        call.enqueue(new Callback<Model>() {
+            @Override
+            public void onResponse(Call<Model> call, Response<Model> response) {
+
+                try {
+
+
+                    String city = response.body().getName();
+
+                    String status = response.body().getWeather().get(0).getDescription();
+
+                    String humidity = response.body().getMain().getHumidity().toString();
+
+                    String pressure = response.body().getMain().getPressure().toString();
+
+                    String message = city +"  " + status +"  " + humidity +"  " + pressure;
+
+                    Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v("NOO","FAILED");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Model> call, Throwable t) {
+
+            }
+
+
+        });
     }
 
 

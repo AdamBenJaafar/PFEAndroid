@@ -6,15 +6,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.adam.tunisia.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +33,18 @@ public class SCList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cmplist);
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedCurrentDate = sdf.parse("2013-09-18");
+            String date = sdf.format(convertedCurrentDate);
+
+            Toast.makeText(this, date.toString(), Toast.LENGTH_LONG).show();
+            Log.v("TEST","SUCCES");
+        }catch(Exception e){
+            Log.v("TEST","FAIL");
+        }
+
 
         // MENU
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

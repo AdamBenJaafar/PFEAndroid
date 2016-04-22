@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitVehicule {
     private final Context context;
 
-    private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/";
+    private static final String URL = "http://benj-ksayeh.rhcloud.com/";
     private static final String TAG = "RetrofitVehicule";
 
     public RetrofitVehicule(Context context) {

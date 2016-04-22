@@ -24,14 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/TEST"
         android:text="Actualités"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_below="@+id/Actualite"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:elevation="50dp"/>
 
 
 </RelativeLayout>
