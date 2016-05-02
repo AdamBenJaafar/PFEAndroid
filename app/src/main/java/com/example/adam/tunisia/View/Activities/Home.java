@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -44,6 +46,7 @@ import com.example.adam.tunisia.Model.Rest.Weather.OpenWeatherAPI;
 import com.example.adam.tunisia.R;
 import com.example.adam.tunisia.View.Adapters.ActualitesAdapter;
 import com.example.adam.tunisia.View.Adapters.DividerItemDecorations;
+import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -122,24 +125,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 .setMessage("TESTESTESTESTE")
                 .show();*/
 
-        new LovelyStandardDialog(this)
-                .setTopColor(color(R.color.colorPrimaryDark))
-                .setButtonsColor(color(R.color.colorAccent))
-                .setIcon(R.mipmap.actualite)
-                .setTitle("11111111111111")
-                .setMessage("55555555555")
-                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            new LovelyStandardDialog(this)
+                    .setTopColor(color(R.color.colorPrimaryDark))
+                    .setButtonsColor(color(R.color.colorAccent))
+                    .setIcon(R.mipmap.perturbation)
+                    .setTitle("Bloquage du metro X4 au niveau de la station le Passage")
+                    .setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .show();
-        getPlaces();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+            //getPlaces();
 
 
-        //getReport();
+        getReport();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -174,6 +177,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
             // Showing Alert Message
             alertDialog.show();
+
+
+
         }
 
 
@@ -191,9 +197,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        drawer.openDrawer(Gravity.LEFT);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        WeatherIconView weatherIconView;
+        weatherIconView = (WeatherIconView) findViewById(R.id.my_weather_icon);
+        weatherIconView.setIconResource(getString(R.string.wi_cloud));
 
     }
 
@@ -361,6 +372,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_send) {
             Intent i = new Intent(this, MPLigne.class);
             startActivity(i);
+        } else if (id == R.id.nav_actualites) {
+            Intent i = new Intent(this, Actualites.class);
+            startActivity(i);
+        } else if (id == R.id.nav_perturbations) {
+            Intent i = new Intent(this, Perturbations.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -458,6 +475,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     String message = city +"  " + status +"  " + humidity +"  " + pressure;
 
                     Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
+                    Log.v("YES","WWEATHEROPTAINED");
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.v("NOO","FAILED");
@@ -466,7 +484,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
-
+                t.printStackTrace();
+                Log.v("NOO","Onfailure");
             }
 
 

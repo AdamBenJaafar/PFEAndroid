@@ -51,16 +51,13 @@ public class MPLigne extends AppCompatActivity {
 
     public void showDialog(){
         List<String> mAnimals = new ArrayList<String>();
-        mAnimals.add("Cat");
-        mAnimals.add("Dog");
-        mAnimals.add("Horse");
-        mAnimals.add("Elephant");
-        mAnimals.add("Rat");
-        mAnimals.add("Lion");
+        mAnimals.add("18:40");
+        mAnimals.add("19:40");
+        mAnimals.add("20:40");
         //Create sequence of items
         final CharSequence[] Animals = mAnimals.toArray(new String[mAnimals.size()]);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle("Animals");
+        dialogBuilder.setTitle("Horaires");
         dialogBuilder.setItems(Animals, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 String selectedText = Animals[item].toString();  //Selected item in listview

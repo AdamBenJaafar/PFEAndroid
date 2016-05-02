@@ -9,14 +9,14 @@ public class Clouds {
 
     @SerializedName("all")
     @Expose
-    private Integer all;
+    private Double all;
 
     /**
      * 
      * @return
      *     The all
      */
-    public Integer getAll() {
+    public Double getAll() {
         return all;
     }
 
@@ -25,7 +25,7 @@ public class Clouds {
      * @param all
      *     The all
      */
-    public void setAll(Integer all) {
+    public void setAll(Double all) {
         this.all = all;
     }
 

@@ -146,7 +146,7 @@ public class DBAdapterSociete extends AdapterDB {
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+                this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }

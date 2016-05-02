@@ -10,10 +10,10 @@ public class Sys {
 
     @SerializedName("type")
     @Expose
-    private Integer type;
+    private Double type;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Double id;
     @SerializedName("message")
     @Expose
     private Double message;
@@ -22,17 +22,17 @@ public class Sys {
     private String country;
     @SerializedName("sunrise")
     @Expose
-    private Integer sunrise;
+    private Double sunrise;
     @SerializedName("sunset")
     @Expose
-    private Integer sunset;
+    private Double sunset;
 
     /**
      * 
      * @return
      *     The type
      */
-    public Integer getType() {
+    public Double getType() {
         return type;
     }
 
@@ -41,7 +41,7 @@ public class Sys {
      * @param type
      *     The type
      */
-    public void setType(Integer type) {
+    public void setType(Double type) {
         this.type = type;
     }
 
@@ -50,7 +50,7 @@ public class Sys {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public Double getId() {
         return id;
     }
 
@@ -59,7 +59,7 @@ public class Sys {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(Double id) {
         this.id = id;
     }
 
@@ -104,7 +104,7 @@ public class Sys {
      * @return
      *     The sunrise
      */
-    public Integer getSunrise() {
+    public Double getSunrise() {
         return sunrise;
     }
 
@@ -113,7 +113,7 @@ public class Sys {
      * @param sunrise
      *     The sunrise
      */
-    public void setSunrise(Integer sunrise) {
+    public void setSunrise(Double sunrise) {
         this.sunrise = sunrise;
     }
 
@@ -122,7 +122,7 @@ public class Sys {
      * @return
      *     The sunset
      */
-    public Integer getSunset() {
+    public Double getSunset() {
         return sunset;
     }
 
@@ -131,7 +131,7 @@ public class Sys {
      * @param sunset
      *     The sunset
      */
-    public void setSunset(Integer sunset) {
+    public void setSunset(Double sunset) {
         this.sunset = sunset;
     }
 

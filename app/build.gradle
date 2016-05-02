@@ -42,7 +42,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.akexorcist:googledirectionlibrary:1.0.4'
 
-
+    compile 'com.github.pwittchen:weathericonview:1.1.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.2'
 
 }

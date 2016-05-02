@@ -111,10 +111,10 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
 
 
             if(SL.getSTATION().isPRINCIPALE()) {
-                mMap.addMarker(new MarkerOptions().title(SL.getSTATION().getNOM())
+                /*mMap.addMarker(new MarkerOptions().title(SL.getSTATION().getNOM())
                         .snippet(SL.getSTATION().getNOM())
                         .position(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE())))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));*/
                 circleOptions.radius(20).fillColor(color).strokeColor(color);
             }
 

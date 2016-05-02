@@ -21,7 +21,7 @@ public class RetrofitStation_Ligne_Horaires {
 
     private final Context context;
 
-    private static final String URL = "http://benj-ksayeh.rhcloud.com/";
+    private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/";
     private static final String TAG = "RetrofitStation_Ligne_Horaires";
 
     public RetrofitStation_Ligne_Horaires(Context context) {

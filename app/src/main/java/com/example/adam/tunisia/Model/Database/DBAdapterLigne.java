@@ -140,12 +140,10 @@ public class DBAdapterLigne extends AdapterDB {
     }
 
     public Ligne getLigne(long rowId) throws SQLException {
-        Log.v(TAG,"Ligne acquired");
-        String where = ROW_ID + "=" + rowId;
 
-        Cursor mCursor =
+        String where = ROW_ID + " = " + rowId;
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -174,6 +172,46 @@ public class DBAdapterLigne extends AdapterDB {
         // Close the cursor to avoid a resource leak.
         mCursor.close();
 
+
+        Log.v(TAG,"getLigne SUCCEEDED");
+        return L;
+    }
+
+    public Ligne getLigne(String ID) throws SQLException {
+
+        String where = IDENTIFIANT + " LIKE '%"  + ID + "%' ";
+
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        Ligne L= new Ligne();
+
+        if (mCursor.moveToFirst()) {
+            do {
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                String direction = mCursor.getString(COL_DIRECTION);
+                String identifiant = mCursor.getString(COL_IDENTIFIANT);
+                String type = mCursor.getString(COL_TYPE);
+                String soc_row_id = mCursor.getString(COL_SOC_ROW_ID);
+
+                // Append data to the message:
+                L.setROW_ID(id);
+                L.setDIRECTION(direction);
+                L.setIDENTIFIANT(identifiant);
+                L.setTYPE(type);
+                L.setSOC(new Societe(soc_row_id));
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+
+
+        Log.v(TAG,"getLigne SUCCEEDED");
         return L;
     }
 

@@ -48,7 +48,7 @@ public class SCList extends AppCompatActivity {
 
         // MENU
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Liste de comjkjjjpagnies");
+        toolbar.setTitle("Liste des sociétés");
         setSupportActionBar(toolbar);
 
         // FAB Button

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="darkBlueGrey">#80300F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="year">#999999</color>
-    <color name="title">#222222</color>
+    <color name="colorPrimary">#005EBF</color>
+    <color name="colorPrimaryDark">#003F7F</color>
+    <color name="darkBlueGrey">#303F9F</color>
+    <color name="colorAccent">#007DFF</color>
+    <color name="year">#FF4081</color>
+    <color name="title">#3F51B5</color>
+    <color name="colorPrimaryLight">#d5e2ef</color>
 </resources>

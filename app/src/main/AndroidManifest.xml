@@ -67,7 +67,9 @@
         <activity
             android:name=".View.Activities.est"
             android:label="@string/title_activity_est"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.Activities.Perturbations" />
+        <activity android:name=".View.Activities.Actualites"></activity>
     </application>
 
 </manifest>

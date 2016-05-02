@@ -30,19 +30,19 @@ public class Model {
     private Clouds clouds;
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    private Double dt;
     @SerializedName("sys")
     @Expose
     private Sys sys;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Double id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("cod")
     @Expose
-    private Integer cod;
+    private Double cod;
 
     /**
      * 
@@ -157,7 +157,7 @@ public class Model {
      * @return
      *     The dt
      */
-    public Integer getDt() {
+    public Double getDt() {
         return dt;
     }
 
@@ -166,7 +166,7 @@ public class Model {
      * @param dt
      *     The dt
      */
-    public void setDt(Integer dt) {
+    public void setDt(Double dt) {
         this.dt = dt;
     }
 
@@ -193,7 +193,7 @@ public class Model {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public Double getId() {
         return id;
     }
 
@@ -202,7 +202,7 @@ public class Model {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(Double id) {
         this.id = id;
     }
 
@@ -229,7 +229,7 @@ public class Model {
      * @return
      *     The cod
      */
-    public Integer getCod() {
+    public Double getCod() {
         return cod;
     }
 
@@ -238,7 +238,7 @@ public class Model {
      * @param cod
      *     The cod
      */
-    public void setCod(Integer cod) {
+    public void setCod(Double cod) {
         this.cod = cod;
     }
 
