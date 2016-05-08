@@ -18,8 +18,9 @@
     <Button
         android:id="@+id/dialogButtonOK"
         android:layout_width="match_parent"
+        android:background="@drawable/borders"
         android:layout_height="wrap_content"
-        android:text=" Ok "
+        android:text="Lignes a proximité"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@+id/image"
@@ -28,8 +29,9 @@
     <Button
         android:id="@+id/dialogButtonLOC"
         android:layout_width="match_parent"
+        android:background="@drawable/borders"
         android:layout_height="wrap_content"
-        android:text=" LOCALISER "
+        android:text="Lignes par société"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@+id/dialogButtonOK"
@@ -37,8 +39,9 @@
     <Button
         android:id="@+id/dialogButtonBACK"
         android:layout_width="match_parent"
+        android:background="@drawable/borders"
         android:layout_height="wrap_content"
-        android:text=" RETOUR "
+        android:text="Ma position"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@+id/dialogButtonLOC"

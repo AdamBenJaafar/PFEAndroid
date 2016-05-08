@@ -26,9 +26,11 @@ public class GeoHelper {
 
     // CALCULATE ZOOM LEVEL FROM DISTANCE
     public static int getZoomLevel(double radius) {
-        int zoomLevel=0;
+        int zoomLevel=15;
         double scale = radius / 500;
         zoomLevel =(int) (16 - Math.log(scale) / Math.log(2));
+        if(zoomLevel<=5)
+            zoomLevel=15;
         return zoomLevel;
     }
 

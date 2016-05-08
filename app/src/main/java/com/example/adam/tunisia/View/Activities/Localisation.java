@@ -1,28 +1,27 @@
 package com.example.adam.tunisia.View.Activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.adam.tunisia.Main2Activity;
 import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.Ligne;
+import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Presenter.Presenters.RTMapPresenter;
+import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Presenters.P_Localisation;
 import com.example.adam.tunisia.R;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,26 +38,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RTMap extends FragmentActivity implements OnMapReadyCallback {
+public class Localisation extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "RTMap" ;
+    // TAG
+    private static final String TAG = "Localisation" ;
 
-    RTMapPresenter RTMapPresenter;
+    // PRESENTER : P_Localisation
+    P_Localisation P_Localisation;
 
+    // GOOGLE MAP
     public GoogleMap mMap;
 
-    private MarkerOptions position;
 
-    public Marker X;
+    /* *************************************************************
+                        LIFECYCLE FUNCTIONS
+    ****************************************************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testmap);
 
-
+        // TOOLBAR
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Localisation");
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -66,38 +71,39 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        LatLng sydney = new LatLng(36.809182,10.148363);
-        position = new MarkerOptions().position(sydney).title("Marker in Sydney");
-
-        RTMapPresenter = new RTMapPresenter(this);
-        RTMapPresenter.selectSociete();
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-
-        LatLng sydney = new LatLng(36.809182,10.148363);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
-         X =   this.mMap.addMarker(new MarkerOptions().position(new LatLng(36.809182,10.148363)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.tram)));
+        // Presenter setup
+        P_Localisation = new P_Localisation(this);
+        P_Localisation.selectTracking();
 
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        RTMapPresenter.onStop();
+        P_Localisation.onStop();
+    }
+
+    public void resetup(){
+        mMap.clear();
+       // P_Localisation.selectTracking();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+    }
 
+    /* *************************************************************
+                           MAP FUNCTIONS
+    ****************************************************************/
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        LatLng sydney = new LatLng(36.809182,10.148363);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
     }
 
@@ -124,7 +130,17 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
                 circleOptions.radius(20).fillColor(Color.BLACK).strokeColor(Color.BLACK);
             }
 
+            DBAdapterStation DBAS = new DBAdapterStation(this);
+            DBAS.open();
 
+            Station S = DBAS.getStation(SL.getSTATION().getROW_ID());
+
+            DBAS.close();
+
+            LatLng POS = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
+
+            MarkerOptions MO = new MarkerOptions().title(S.getNOM()).position(POS).icon(BitmapDescriptorFactory.fromResource(R.mipmap.stat));
+            mMap.addMarker(MO);
 
             P.add(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE())));
             mMap.addCircle(circleOptions);
@@ -138,7 +154,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
-    public void drawNetworkOfLine(String Ligne){
+    public void drawNetworkOfLine(String Ligne, String Soc){
 
         // CAMERA SETTING VARIABLES
         // -181 & +181 are the bounds of the latlng
@@ -168,7 +184,7 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
             List<ArrayList<Station_Ligne>> Network = new ArrayList<ArrayList<Station_Ligne>>();
 
             // GET LINES
-            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("TRANSTU");
+            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller(Soc);
             // FILL LINES
             for( Ligne L : LL) {
                 Log.v("We are checking", Ligne + " and the currsent is " + L.getIDENTIFIANT());
@@ -182,7 +198,8 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
 
                         if (Double.parseDouble(SL.getSTATION().getLATITUDE()) > MaxLAT) {
                             MaxLAT = Double.parseDouble(SL.getSTATION().getLATITUDE());
-                        } else if (Double.parseDouble(SL.getSTATION().getLATITUDE()) < MinLAT) {
+                        }
+                        if (Double.parseDouble(SL.getSTATION().getLATITUDE()) < MinLAT) {
                             MinLAT = Double.parseDouble(SL.getSTATION().getLATITUDE());
                         }
 
@@ -213,12 +230,32 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
             //Log.v(TAG,"An exception has been thrown");
             e.printStackTrace();
         }
-///////////////
-      //  Zoom = GeoHelper.getZoomLevel(Math.max(GeoHelper.distFrom(MaxLAT,0,MinLAT,0),GeoHelper.distFrom(MaxLNG,0,MinLNG,0)));
+
+        Log.v(TAG," MAXLAT = "+ MaxLAT);
+        Log.v(TAG," MINLAT = "+ MinLAT);
+        Log.v(TAG," MAXLNG = "+ MaxLNG);
+        Log.v(TAG," MINLNG = "+ MinLNG);
+        Zoom = GeoHelper.getZoomLevel(Math.max(GeoHelper.distFrom(MaxLAT,0,MinLAT,0),GeoHelper.distFrom(MaxLNG,0,MinLNG,0)));
+
 
         // SETTING CAMERA POSITION
-       //////////////////////////////
-        // SCMap.setCameraPosition((MaxLAT+MinLAT)/2,(MaxLNG+MinLNG)/2, Zoom);
+       // setCameraPosition((MaxLAT+MinLAT)/2,(MaxLNG+MinLNG)/2, Zoom);
+
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng((MaxLAT+MinLAT)/2,(MaxLNG+MinLNG)/2))
+                .zoom(Zoom)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        Log.v(TAG, " zoom = " + Zoom);
+
+    }
+
+
+    public void setCameraPosition(double lat, double lng, int zoom){
+        CameraPosition target = CameraPosition.builder().target(new LatLng(lat,lng)).zoom(zoom).build();
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(target));
     }
 
     public void animateMarkerTo(final Marker marker, final double lat, final double lng) {
@@ -246,34 +283,48 @@ public class RTMap extends FragmentActivity implements OnMapReadyCallback {
         });
     }
 
-    public void addMarker(MarkerOptions MarkerOptions) {
-        mMap.addMarker(MarkerOptions);
-    }
-
     public void animateCamera(LatLng LatLng){
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(LatLng)      // Sets the center of the map to Mountain View
-                .zoom(15)                   // Sets the zoom
-                .build();                   // Creates a CameraPosition from the builder
+                .target(LatLng)
+                .zoom(15)
+                .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        CircleOptions circleOptions = new CircleOptions()
-                .center(LatLng)
-                .radius(20)
-                .strokeColor(Color.BLACK)
-                .strokeWidth(6);
-        mMap.addCircle(circleOptions);
+//        CircleOptions circleOptions = new CircleOptions()
+//                .center(LatLng)
+//                .radius(20)
+//                .strokeColor(Color.BLACK)
+//                .strokeWidth(6);
+//        mMap.addCircle(circleOptions);
     }
 
     public void goToPosition(View view){
-
-        RTMapPresenter.showDialog();
-
+        P_Localisation.showDialog();
     }
 
 
-        public void retour(){
-            Intent i = new Intent(this, Home.class);
-            startActivity(i);
+    public void retour(){
+        Intent i = new Intent(this, Home.class);
+        startActivity(i);
+    }
+
+    /* *************************************************************
+                        ACTIVITY FUNCTIONS
+    *************************************************************** */
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, Home.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void addMarker(MarkerOptions MarkerOptions) {
+        mMap.addMarker(MarkerOptions);
+    }
 
 }

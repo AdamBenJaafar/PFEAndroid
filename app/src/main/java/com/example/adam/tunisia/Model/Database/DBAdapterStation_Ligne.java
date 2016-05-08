@@ -102,6 +102,40 @@ public class DBAdapterStation_Ligne extends AdapterDB {
         return A;
     }
 
+    public ArrayList<Station_Ligne> getAllStation_LigneByStation(int StationID) {
+        Log.v(TAG,"Station_LigneByLigne acquired");
+        ArrayList<Station_Ligne> A= new ArrayList<Station_Ligne>();
+
+        String where = STATION_ID + "=" + StationID;
+
+        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+
+        if (mCursor.moveToFirst()) {
+            do {
+                Station_Ligne F= new Station_Ligne();
+
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                int station_id = mCursor.getInt(COL_STATION_ID);
+                int ligne_id = mCursor.getInt(COL_LIGNE_ID);
+                int soc_row_id = mCursor.getInt(COL_POS);
+
+                // Append data to the message:
+                F.setROW_ID(id);
+                F.setSTATION(new Station(station_id));
+                F.setLIGNE(new Ligne(ligne_id));
+                F.setPOSITION(soc_row_id);
+
+                A.add(F);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+        return A;
+    }
+
     public ArrayList<Station_Ligne> getAllStation_Ligne() {
         Log.v(TAG,"Station_Ligne acquired");
         ArrayList<Station_Ligne> A= new ArrayList<Station_Ligne>();

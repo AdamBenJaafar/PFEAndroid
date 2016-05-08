@@ -18,14 +18,13 @@
         android:text="@string/Feedback"
         android:id="@+id/button2"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginBottom="96dp"
-        android:layout_marginTop="4dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:onClick="goToFeedback"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignEnd="@+id/button3" />
+        android:layout_below="@+id/button3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +33,79 @@
         android:id="@+id/button3"
         android:background="@color/colorPrimaryDark"
         android:onClick="goToMap"
-        android:layout_above="@+id/button2"
+        android:layout_below="@+id/imageView11"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView5"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Nom Complet:"
+        android:textStyle="bold"
+        android:id="@+id/TVNom_Complet"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Siége social:"
+        android:textStyle="bold"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/TVNom_Complet"
+        android:layout_alignParentLeft="true"
+        android:textAlignment="center"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Site web:"
+        android:textStyle="bold"
+        android:id="@+id/textView16"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView15"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Forme juridique:"
+        android:textStyle="bold"
+        android:id="@+id/textView17"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView16"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Details:"
+        android:textStyle="bold"
+        android:id="@+id/textView18"
+        android:layout_below="@+id/textView17"
+        android:textAlignment="center"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -43,15 +114,128 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView5"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/TVNom"
+        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/TVSite"
+        android:textAlignment="center"
+        android:layout_alignStart="@+id/TVSite"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/TVSiege"
+        android:layout_below="@+id/TVNom"
+        android:layout_alignLeft="@+id/TVSite"
+        android:layout_alignStart="@+id/TVSite"
+        android:layout_alignRight="@+id/TVNom"
+        android:textAlignment="center"
+        android:layout_alignEnd="@+id/TVNom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/TVSite"
+        android:layout_below="@+id/TVSiege"
+        android:textAlignment="center"
+        android:layout_alignLeft="@+id/TVFormeJuridique"
+        android:layout_alignStart="@+id/TVFormeJuridique"
+        android:layout_alignRight="@+id/TVFormeJuridique"
+        android:layout_alignEnd="@+id/TVFormeJuridique" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/TVDetails"
+        android:layout_below="@+id/textView18"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:textAlignment="center"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/TVFormeJuridique"
+        android:layout_below="@+id/TVSite"
+        android:layout_toRightOf="@+id/textView17"
+        android:layout_alignRight="@+id/textView18"
+        android:textAlignment="center"
+        android:layout_alignEnd="@+id/textView18" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Liste des lignes"
+        android:id="@+id/textView14"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Types de transport "
+        android:id="@+id/textView19"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/TVDetails"
+        android:layout_alignLeft="@+id/TVFormeJuridique"
+        android:layout_alignStart="@+id/TVFormeJuridique" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView11"
+        android:src="@mipmap/ic_directions_bus_black_24dp"
+        android:layout_alignTop="@+id/imageView13"
+        android:layout_toLeftOf="@+id/imageView13"
+        android:layout_toStartOf="@+id/imageView13" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView12"
+        android:src="@mipmap/tram"
+        android:layout_alignTop="@+id/imageView13"
+        android:layout_toRightOf="@+id/imageView13"
+        android:layout_toEndOf="@+id/imageView13" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView13"
+        android:src="@drawable/train"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RVLignes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView14"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.example.adam.tunisia.Model.Entities.Feedback;
 import com.example.adam.tunisia.Presenter.Presenters.SCFeedbackPresenter;
 import com.example.adam.tunisia.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,12 +27,16 @@ public class SCFeedback extends AppCompatActivity {
 
     private static final String TAG = "SCFeedback";
 
+    public final static String ID_EXTRA="com.example.adam.tunisia.View.Activities.SCList._ID";
+
     private SCFeedbackPresenter Presenter;
 
     @Bind(R.id.ratingBar) RatingBar RB;
-    @Bind(R.id.editText) EditText ET;
+    @Bind(R.id.ETEmail) EditText ETEmail;
+    @Bind(R.id.ETCommentaires) EditText ETCommentaires;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
+    String Soc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +49,20 @@ public class SCFeedback extends AppCompatActivity {
 
         Presenter = new SCFeedbackPresenter(this);
 
+        // TOOLBAR
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Feedback");
+
+        Soc = getIntent().getStringExtra("Societe");
+
     }
 
     public void envoyerFeedback(View view){
-        Presenter.postFeedback(new Feedback("AAAA","5","VVVV","CCCC",5));
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        Presenter.postFeedback(new Feedback(date,(int)RB.getRating()+"",ETEmail.getText().toString(),ETCommentaires.getText().toString(),1),Soc);
     }
 
     public void redirect(){
@@ -68,6 +88,18 @@ public class SCFeedback extends AppCompatActivity {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, SCDetails.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

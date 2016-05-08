@@ -21,10 +21,10 @@ public class SCFeedbackPresenter {
 
     }
 
-    public void postFeedback(Feedback f){
+    public void postFeedback(Feedback f, String Soc){
         Log.v(TAG, "postFeedback");
 
-        RetrofitFeedback.postFeedback(f);
+        RetrofitFeedback.postFeedback(f,Soc);
         SCFeedback.redirect();
 
     }

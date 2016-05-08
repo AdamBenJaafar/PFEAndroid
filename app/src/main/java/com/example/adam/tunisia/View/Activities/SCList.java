@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.adam.tunisia.Model.Database.DBAdapterSociete;
+import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.R;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +54,11 @@ public class SCList extends AppCompatActivity {
         toolbar.setTitle("Liste des sociétés");
         setSupportActionBar(toolbar);
 
+        // TOOLBAR
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Liste des sociétés");
+
         // FAB Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,23 +69,22 @@ public class SCList extends AppCompatActivity {
             }
         });
 
+        DBAdapterSociete DBAS = new DBAdapterSociete(this);
+        DBAS.open();
+        final List<Societe> LS = DBAS.getAllSociete();
+        DBAS.close();
+
         // LISTING
         vue = (ListView) findViewById(R.id.listView);
-
-        String[][] repertoire = new String[][]{
-                {"TRANSTU", "Transtu"},
-                {"SNTRI", "Société Nationale de Transport Inter urbain"},
-                {"SRTGN", "Société Régionale de Transport du Gouvernorat de Nabeul"},
-                {"SRTB", "Société Régionale de Transport de Bizerte"}};
 
 
         List<HashMap<String, String>> liste = new ArrayList<HashMap<String, String>>();
 
         HashMap<String, String> element;
-        for(int i = 0 ; i < repertoire.length ; i++) {
+        for(int i = 0 ; i < LS.size() ; i++) {
             element = new HashMap<String, String>();
-            element.put("text1", repertoire[i][0]);
-            element.put("text2", repertoire[i][1]);
+            element.put("text1", LS.get(i).getIDENTIFICATEUR());
+            element.put("text2", LS.get(i).getNOMCOMPLET());
             liste.add(element);
         }
 
@@ -93,13 +100,26 @@ public class SCList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(SCList.this, SCDetails.class)   ;
-                i.putExtra(ID_EXTRA,String.valueOf(id));
+                i.putExtra(ID_EXTRA,LS.get((int)id).getIDENTIFICATEUR());
+                i.putExtra("SocID",LS.get((int)id).getROW_ID());
                 //////////// implements serializable to pass a class between two actvities or juste some informations
 
                 startActivity(i);
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, Home.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

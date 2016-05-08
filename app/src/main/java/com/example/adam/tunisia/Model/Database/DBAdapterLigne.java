@@ -139,7 +139,7 @@ public class DBAdapterLigne extends AdapterDB {
         return A;
     }
 
-    public Ligne getLigne(long rowId) throws SQLException {
+    public Ligne getLigne(long rowId){
 
         String where = ROW_ID + " = " + rowId;
 
@@ -177,9 +177,9 @@ public class DBAdapterLigne extends AdapterDB {
         return L;
     }
 
-    public Ligne getLigne(String ID) throws SQLException {
+    public Ligne getLigne(String ID){
 
-        String where = IDENTIFIANT + " LIKE '%"  + ID + "%' ";
+        String where = IDENTIFIANT + " LIKE '%"  + ID + "%' and "+ DIRECTION + " LIKE '%aller%'";;
 
         Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
         if (mCursor != null) {

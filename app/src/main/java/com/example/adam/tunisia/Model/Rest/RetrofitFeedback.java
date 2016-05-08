@@ -16,7 +16,7 @@ public class RetrofitFeedback {
     private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/";
     private static final String TAG = "RetrofitFeedback";
 
-    public void postFeedback(Feedback f){
+    public void postFeedback(Feedback f, String Soc){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
@@ -25,8 +25,7 @@ public class RetrofitFeedback {
 
         IFeedback apiService = retrofit.create(IFeedback.class);
 
-        Feedback feedbackd = new Feedback("2015-05-02","4","OK","yyy@email",1);
-        Call<Feedback> call = apiService.createUser("TRANSTU",feedbackd);
+        Call<Feedback> call = apiService.createUser(Soc,f);
 
 
         call.enqueue(new Callback<Feedback>() {

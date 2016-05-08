@@ -1,25 +1,17 @@
 package com.example.adam.tunisia.View.Activities;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,33 +24,21 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.adam.tunisia.Main2Activity;
-import com.example.adam.tunisia.Model.Database.DBAdapterActualite;
-import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation;
 import com.example.adam.tunisia.Model.Entities.Actualite;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.OpenWeather.Model;
-import com.example.adam.tunisia.Model.Entities.Perturbation;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
 import com.example.adam.tunisia.Model.Rest.Weather.OpenWeatherAPI;
 import com.example.adam.tunisia.R;
-import com.example.adam.tunisia.View.Adapters.ActualitesAdapter;
-import com.example.adam.tunisia.View.Adapters.DividerItemDecorations;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.yarolegovich.lovelydialog.LovelyInfoDialog;
-import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -72,13 +52,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private List<Actualite> movieList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private ActualitesAdapter mAdapter;
 
 
+    @Bind(R.id.TVMeteo)
+    TextView TVMeteo;
 
-    @Bind(R.id.TEST)
-    TextView TT ;
+    @Bind(R.id.TVPlace)
+    TextView TVPlace;
+
+    @Bind(R.id.my_weather_icon)
+    WeatherIconView weatherIconView;
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -92,57 +75,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        mAdapter = new ActualitesAdapter(movieList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecorations(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
 
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                showDialog();
-            }
 
-            @Override
-            public void onLongClick(View view, int position) {
 
-            }
-        }));
-
-        prepareActualiteData();
-
-      /*  new LovelyInfoDialog(this)
-                .setTopColor(color(R.color.darkBlueGrey))
-                .setIcon(R.mipmap.perturbation)
-                //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
-                .setNotShowAgainOptionEnabled(0)
-                .setTitle("TESTESTESTESTE")
-                .setMessage("TESTESTESTESTE")
-                .show();*/
-
-            new LovelyStandardDialog(this)
-                    .setTopColor(color(R.color.colorPrimaryDark))
-                    .setButtonsColor(color(R.color.colorAccent))
-                    .setIcon(R.mipmap.perturbation)
-                    .setTitle("Bloquage du metro X4 au niveau de la station le Passage")
-                    .setMessage("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, null)
-                    .show();
             //getPlaces();
 
 
-        getReport();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -150,12 +89,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 .addOnConnectionFailedListener(this)
                 .build();
 
-
         ButterKnife.bind(this);
 
-        TT.setText("111111");
 
-        if(!getIntent().getBooleanExtra("internet",false)){
+        weatherIconView.setIconResource(getString(R.string.wi_cloud));
+        TVMeteo.setText("55 C°");
+
+        if(!getIntent().getBooleanExtra("internet",true)){
             AlertDialog alertDialog = new AlertDialog.Builder(
                     this).create();
 
@@ -177,8 +117,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
             // Showing Alert Message
             alertDialog.show();
-
-
 
         }
 
@@ -202,14 +140,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        WeatherIconView weatherIconView;
-        weatherIconView = (WeatherIconView) findViewById(R.id.my_weather_icon);
-        weatherIconView.setIconResource(getString(R.string.wi_cloud));
 
-    }
 
-    private int color(int colorRes) {
-        return ContextCompat.getColor(this, colorRes);
     }
 
     public void showDialog(){
@@ -238,83 +170,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         dialog.show();
     }
 
-    private void prepareActualiteData() {
-        Actualite movie = new Actualite("Mad Max: Fury Road", "Action & Adventure", "2015");
-        movieList.add(movie);
 
-        DBAdapterActualite DBA = new DBAdapterActualite(this);
-        DBA.open();
-
-
-        for( Actualite A : DBA.getAllActualite() ){
-            movieList.add(A);
-        }
-        DBA.close();
-
-
-        DBAdapterPerturbation DBP = new DBAdapterPerturbation(this);
-        DBP.open();
-
-
-        for( Perturbation A : DBP.getAllPerturbation() ){
-         //   movieList.add(new Actualite(A.getLIG().getIDENTIFIANT()));
-        }
-        DBP.close();
-
-
-        movie = new Actualite("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
-        movieList.add(movie);
-
-        mAdapter.notifyDataSetChanged();
-    }
 
     public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
-    }
-
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private Home.ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final Home.ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
     }
 
     @Override
@@ -364,13 +225,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             Intent i = new Intent(this, MPActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_manage) {
-            Intent i = new Intent(this, Main2Activity.class);
+            Intent i = new Intent(this, Localisation.class);
             startActivity(i);
         } else if (id == R.id.nav_share) {
-            Intent i = new Intent(this, RTMap.class);
+            Intent i = new Intent(this, Localisation.class);
             startActivity(i);
         } else if (id == R.id.nav_send) {
-            Intent i = new Intent(this, MPLigne.class);
+            Intent i = new Intent(this, Stations.class);
             startActivity(i);
         } else if (id == R.id.nav_actualites) {
             Intent i = new Intent(this, Actualites.class);
@@ -418,17 +279,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 try {
 
 
-                    String city = response.body().getResults().get(0).getName();
 
-                    String status = response.body().getResults().get(0).getGeometry().toString();
 
-                    String humidity = response.body().getResults().get(0).getReference();
-
-                    String pressure = response.body().getResults().get(0).getTypes().toString();
-
-                    String message = city +"  " + status +"  " + humidity +"  " + pressure;
-
-                    Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.v("NOO","FAILED");
@@ -444,7 +296,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         });
     }
 
-    void getReport() {
+    void getReport(String lat, String lon) {
 
         String url = "http://api.openweathermap.org/";
 
@@ -455,7 +307,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         OpenWeatherAPI service = retrofit.create(OpenWeatherAPI.class);
 
-        Call<Model> call = service.getWheatherReport();
+        Call<Model> call = service.getWheatherReport(lat,lon);
 
         call.enqueue(new Callback<Model>() {
             @Override
@@ -463,18 +315,34 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
                 try {
 
-
                     String city = response.body().getName();
+                    TVPlace.setText(city);
 
-                    String status = response.body().getWeather().get(0).getDescription();
+                    double temp = response.body().getMain().getTemp();
+                    TVMeteo.setText(Math.round(temp) + " °c");
 
-                    String humidity = response.body().getMain().getHumidity().toString();
+                    String icon = response.body().getWeather().get(0).getIcon();
 
-                    String pressure = response.body().getMain().getPressure().toString();
+                    switch(icon){
+                        case"01d":  weatherIconView.setIconResource(getString(R.string.wi_day_sunny));  break;
+                        case"01n":  weatherIconView.setIconResource(getString(R.string.wi_night_clear));  break;
+                        case"02d":  weatherIconView.setIconResource(getString(R.string.wi_day_cloudy));  break;
+                        case"02n":  weatherIconView.setIconResource(getString(R.string.wi_night_alt_cloudy));  break;
+                        case"03d":  weatherIconView.setIconResource(getString(R.string.wi_cloud));  break;
+                        case"03n":  weatherIconView.setIconResource(getString(R.string.wi_cloud));  break;
+                        case"04d":  weatherIconView.setIconResource(getString(R.string.wi_cloudy));  break;
+                        case"04n":  weatherIconView.setIconResource(getString(R.string.wi_cloudy));  break;
+                        case"09d":  weatherIconView.setIconResource(getString(R.string.wi_hail));  break;
+                        case"09n":  weatherIconView.setIconResource(getString(R.string.wi_hail));  break;
+                        case"10d":  weatherIconView.setIconResource(getString(R.string.wi_day_showers));  break;
+                        case"10n":  weatherIconView.setIconResource(getString(R.string.wi_night_alt_showers));  break;
+                        case"11d":  weatherIconView.setIconResource(getString(R.string.wi_storm_showers));  break;
+                        case"11n":  weatherIconView.setIconResource(getString(R.string.wi_storm_showers));  break;
+                        case"13d":  weatherIconView.setIconResource(getString(R.string.wi_day_fog));  break;
+                        case"13n":  weatherIconView.setIconResource(getString(R.string.wi_night_fog));  break;
+                        default:  weatherIconView.setIconResource(getString(R.string.wi_refresh));  break;
+                    }
 
-                    String message = city +"  " + status +"  " + humidity +"  " + pressure;
-
-                    Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
                     Log.v("YES","WWEATHEROPTAINED");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -519,6 +387,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public void onLocationChanged(Location location) {
-        TT.setText(location.toString());
+        getReport(location.getLatitude()+"",location.getLongitude()+"");
     }
 }

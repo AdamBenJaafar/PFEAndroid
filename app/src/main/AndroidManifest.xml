@@ -54,7 +54,7 @@
             android:name=".View.Activities.MPActivity"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".View.Activities.RTMap"
+            android:name=".View.Activities.Localisation"
             android:label="@string/title_activity_rtmap" />
         <activity android:name=".View.Activities.SplashScreen">
             <intent-filter>
@@ -69,7 +69,8 @@
             android:label="@string/title_activity_est"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.Activities.Perturbations" />
-        <activity android:name=".View.Activities.Actualites"></activity>
+        <activity android:name=".View.Activities.Actualites" />
+        <activity android:name=".View.Activities.Stations"></activity>
     </application>
 
 </manifest>

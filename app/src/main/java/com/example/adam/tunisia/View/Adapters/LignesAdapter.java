@@ -47,19 +47,19 @@ public class LignesAdapter extends BaseAdapter{
 
         ImageView I = (ImageView) row.findViewById(R.id.imageView2);
         TextView title = (TextView) row.findViewById(R.id.textView4);
-        TextView desc = (TextView) row.findViewById(R.id.textView6);
+        //TextView desc = (TextView) row.findViewById(R.id.textView6);
 
         Station temps = L.get(position);
 
         if(position==0 || position == L.size()-1 )
-        I.setImageResource(R.mipmap.dot);
+            I.setImageResource(R.mipmap.majeur);
         else
-            I.setImageResource(R.mipmap.more);
+            I.setImageResource(R.mipmap.station);
 
 
 
         title.setText(temps.getNOM());
-        desc.setText(temps.getSOCIETE_ID()+"");
+       // desc.setText(temps.getSOCIETE_ID()+"");
 
         return row;
     }

@@ -1,9 +1,12 @@
 package com.example.adam.tunisia.View.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
@@ -29,6 +32,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +58,6 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
 
         HM = new HashMap<Integer,Integer>();
 
-
-
-
     }
 
     @Override
@@ -78,7 +79,6 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                         Route route = direction.getRouteList().get(0);
                         Leg leg = route.getLegList().get(0);
                         ArrayList<LatLng> pointList = leg.getDirectionPoint();
-                        Log.v("TETSETS",pointList.toString());
                         PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
                         mMap.addPolyline(polylineOptions);
                     }
@@ -88,6 +88,53 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                         Log.v("TESTTEST", " FAILED");
                     }
                 });
+
+
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                // Creating a marker
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                // Setting the position for the marker
+                markerOptions.position(latLng);
+
+                // Setting the title for the marker.
+                // This will be displayed on taping the marker
+                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+
+                // Placing a marker on the touched position
+                mMap.addMarker(markerOptions);
+
+
+                String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
+                LatLng origin = new LatLng(latLng.latitude,latLng.longitude);
+                LatLng destination = new LatLng(36.809182, 10.185);
+
+                GoogleDirection.withServerKey(serverKey)
+                        .from(origin)
+                        .to(destination)
+                        .transportMode(TransportMode.WALKING)
+                        .execute(new DirectionCallback() {
+                            @Override
+                            public void onDirectionSuccess(Direction direction, String rawBody) {
+                                Route route = direction.getRouteList().get(0);
+                                Leg leg = route.getLegList().get(0);
+                                ArrayList<LatLng> pointList = leg.getDirectionPoint();
+                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
+                                mMap.addPolyline(polylineOptions);
+                            }
+
+                            @Override
+                            public void onDirectionFailure(Throwable t) {
+                                Log.v("TESTTEST", " FAILED");
+                            }
+                        });
+
+            }
+        });
 
 
     }
@@ -154,6 +201,11 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
     public void setCameraPosition(double lat, double lng, int zoom){
         CameraPosition target = CameraPosition.builder().target(new LatLng(lat,lng)).zoom(zoom).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(target));
+    }
+
+    public void retour(View view){
+        Intent intent = new Intent(this, SCDetails.class);
+        startActivity(intent);
     }
 
 
