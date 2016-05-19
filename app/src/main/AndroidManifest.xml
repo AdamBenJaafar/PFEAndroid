@@ -14,7 +14,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -49,7 +49,6 @@
         <activity
             android:name=".View.Activities.SCMap"
             android:label="@string/title_activity_cmpmap" />
-        <activity android:name=".Main2Activity" />
         <activity
             android:name=".View.Activities.MPActivity"
             android:label="@string/title_activity_map" />
@@ -70,7 +69,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.Activities.Perturbations" />
         <activity android:name=".View.Activities.Actualites" />
-        <activity android:name=".View.Activities.Stations"></activity>
+        <activity android:name=".View.Activities.Stations" />
+        <activity android:name=".View.Activities.Soceites" />
+        <activity
+            android:name=".View.Activities.Main3Activity"
+            android:label="@string/title_activity_main3"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -6,13 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne_Horaire;
 import com.example.adam.tunisia.Model.Entities.Station;
+import com.example.adam.tunisia.Model.Entities.Station_Ligne_Horaire;
 import com.example.adam.tunisia.R;
-import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +49,9 @@ public class StationsRVAdapter extends RecyclerView.Adapter<StationsRVAdapter.My
 
         holder.TVTitre.setText(P.getNOM());
 
+        if( P.isPRINCIPALE() )
+            holder.IVPrincipale.setVisibility(View.VISIBLE);
+
         if(position!=0)
             holder.IV.setImageResource(R.mipmap.station);
         else
@@ -61,30 +68,42 @@ public class StationsRVAdapter extends RecyclerView.Adapter<StationsRVAdapter.My
 
         TextView TVTitre;
         ImageView IV;
+        ImageView IVPrincipale;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             TVTitre = (TextView) itemView.findViewById(R.id.TVTitre);
             IV = (ImageView) itemView.findViewById(R.id.imageView3);
-
+            IVPrincipale = (ImageView) itemView.findViewById(R.id.IVPrincipale);
             // BDetails.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            new LovelyStandardDialog(C)
+
+            DBAdapterStation_Ligne_Horaire B = new DBAdapterStation_Ligne_Horaire(C);
+            B.open();
+
+
+            final ArrayList<Station_Ligne_Horaire> LL = B.getAllStation_Ligne_Horaire();
+
+            B.close();
+
+
+            ArrayAdapter<Station_Ligne_Horaire> adapter = new StationDialogAdapter(C, LL );
+            new LovelyChoiceDialog(C)
                     .setTopColor(ContextCompat.getColor(C,R.color.colorPrimary))
-                    .setButtonsColor(ContextCompat.getColor(C,R.color.colorAccent))
-                    .setIcon(R.mipmap.station)
-                    .setTitle("")
-                    .setMessage("")
-                    .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    .setIcon(R.mipmap.query)
+                    .setTitleGravity(50)
+                    .setItems(adapter, new LovelyChoiceDialog.OnItemSelectedListener<Station_Ligne_Horaire>() {
                         @Override
-                        public void onClick(View v) {
+                        public void onItemSelected(int position, Station_Ligne_Horaire item) {
 
                         }
                     })
+
+                    .setCancelable(false)
                     .show();
         }
 

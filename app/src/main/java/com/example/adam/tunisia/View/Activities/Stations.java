@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
@@ -34,17 +35,22 @@ public class Stations extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
 
+
+
+        String ligne = getIntent().getStringExtra("ligne");
+        Toast.makeText(this,ligne,Toast.LENGTH_LONG).show();
+
         // TOOLBAR
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Stations");
+        getSupportActionBar().setTitle(ligne);
+
+        getSupportActionBar().setIcon(R.mipmap.tram);
 
 
         ButterKnife.bind(this);
 
 
-        String ligne = getIntent().getStringExtra("ligne");
-        Toast.makeText(this,ligne,Toast.LENGTH_LONG).show();
 
         DBAS = new DBAdapterStation(this);
         DBAS.open();

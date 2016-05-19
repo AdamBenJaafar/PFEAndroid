@@ -10,6 +10,10 @@ public class AdapterREST {
         this.context = context;
     }
 
+    /* ***************************************************************
+                        DATA UPDATE METHODS
+    *************************************************************** */
+
     public void update(){
         RetrofitSociete RSociete = new RetrofitSociete(context);
         RSociete.getSocietes();

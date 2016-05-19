@@ -28,7 +28,9 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterStation_Ligne_Horaire(Context ctx) {
         super(ctx);
@@ -44,7 +46,9 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createStation_Ligne_Horaire(Station_Ligne_Horaire station_ligne_horaire){
         Log.v(TAG,"SLH Created");

@@ -1,78 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView"
+    android:layout_below="@+id/linearLayout"
+    android:layout_alignParentBottom="true"
+    tools:context=".View.Activities.SCDetails"
+    tools:showIn="@layout/activity_cmpdetails"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".View.Activities.SCDetails"
-    tools:showIn="@layout/activity_cmpdetails">
+    android:focusableInTouchMode="true"
+    >
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Feedback"
+        android:text="Envoyer un feed-back"
         android:id="@+id/button2"
         android:background="@color/colorPrimaryDark"
         android:onClick="goToFeedback"
+        android:textColor="#ffffff"
         android:layout_below="@+id/button3"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="4dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Network"
+        android:text="Voir le réseau"
         android:id="@+id/button3"
+        android:layout_marginTop="16dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="goToMap"
-        android:layout_below="@+id/imageView11"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textView18"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView5"
-        android:textAlignment="center"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Nom Complet:"
-        android:textStyle="bold"
-        android:id="@+id/TVNom_Complet"
-        android:textAlignment="center"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Siége social:"
+        android:text="Siège social:"
         android:textStyle="bold"
         android:id="@+id/textView15"
-        android:layout_below="@+id/TVNom_Complet"
         android:layout_alignParentLeft="true"
         android:textAlignment="center"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/TVNom" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,7 +78,17 @@
         android:textAlignment="center"
         android:layout_below="@+id/textView15"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimaryDark"  />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/textView12"
+        android:layout_marginBottom="14dp"
+        android:id="@+id/view" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,20 +100,23 @@
         android:textAlignment="center"
         android:layout_below="@+id/textView16"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Details:"
+        android:text="Détails"
+
         android:textStyle="bold"
         android:id="@+id/textView18"
-        android:layout_below="@+id/textView17"
-        android:textAlignment="center"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignLeft="@+id/profile_image"
+        android:layout_alignStart="@+id/profile_image"
+        android:layout_alignRight="@+id/textView17"
+        android:layout_alignEnd="@+id/textView17"
+        android:layout_alignTop="@+id/TVDetails"
+        android:layout_alignBottom="@+id/TVDetails" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -117,12 +124,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/TVNom"
-        android:layout_below="@+id/textView5"
-        android:layout_alignLeft="@+id/TVSite"
         android:textAlignment="center"
-        android:layout_alignStart="@+id/TVSite"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/view"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/TVSiege"
+        android:layout_alignEnd="@+id/TVSiege" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -130,12 +139,56 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/TVSiege"
-        android:layout_below="@+id/TVNom"
-        android:layout_alignLeft="@+id/TVSite"
-        android:layout_alignStart="@+id/TVSite"
-        android:layout_alignRight="@+id/TVNom"
         android:textAlignment="center"
-        android:layout_alignEnd="@+id/TVNom" />
+        android:layout_above="@+id/TVSite"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/textView17"
+        android:layout_toEndOf="@+id/textView17" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/TVDetails"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView17"
+        android:layout_alignRight="@+id/TVSiege"
+        android:layout_alignEnd="@+id/TVSiege"
+        android:layout_toRightOf="@+id/textView18"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/textView18" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Liste des lignes:"
+        android:id="@+id/textView14"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="2dp"
+        android:id="@+id/kkk"
+        android:layout_below="@+id/textView14"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RVLignes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kkk"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+    </android.support.v7.widget.RecyclerView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -143,24 +196,12 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/TVSite"
-        android:layout_below="@+id/TVSiege"
         android:textAlignment="center"
-        android:layout_alignLeft="@+id/TVFormeJuridique"
-        android:layout_alignStart="@+id/TVFormeJuridique"
+        android:layout_above="@+id/TVFormeJuridique"
         android:layout_alignRight="@+id/TVFormeJuridique"
-        android:layout_alignEnd="@+id/TVFormeJuridique" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/TVDetails"
-        android:layout_below="@+id/textView18"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:textAlignment="center"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/TVFormeJuridique"
+        android:layout_toEndOf="@+id/textView17"
+        android:layout_toRightOf="@+id/textView17" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -168,74 +209,36 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/TVFormeJuridique"
-        android:layout_below="@+id/TVSite"
-        android:layout_toRightOf="@+id/textView17"
-        android:layout_alignRight="@+id/textView18"
         android:textAlignment="center"
-        android:layout_alignEnd="@+id/textView18" />
+        android:layout_above="@+id/TVDetails"
+        android:layout_alignRight="@+id/TVDetails"
+        android:layout_alignEnd="@+id/TVDetails"
+        android:layout_toEndOf="@+id/textView17"
+        android:layout_toRightOf="@+id/textView17" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Liste des lignes"
-        android:id="@+id/textView14"
+        android:text="Détails de a société:"
+        android:id="@+id/textView12"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_marginTop="4dp"
-        android:layout_below="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/profile_image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Types de transport "
-        android:id="@+id/textView19"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_marginTop="4dp"
-        android:layout_below="@+id/TVDetails"
-        android:layout_alignLeft="@+id/TVFormeJuridique"
-        android:layout_alignStart="@+id/TVFormeJuridique" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView11"
-        android:src="@mipmap/ic_directions_bus_black_24dp"
-        android:layout_alignTop="@+id/imageView13"
-        android:layout_toLeftOf="@+id/imageView13"
-        android:layout_toStartOf="@+id/imageView13" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView12"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
         android:src="@mipmap/tram"
-        android:layout_alignTop="@+id/imageView13"
-        android:layout_toRightOf="@+id/imageView13"
-        android:layout_toEndOf="@+id/imageView13" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView13"
-        android:src="@drawable/train"
-        android:layout_below="@+id/textView19"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimary"
         android:layout_centerHorizontal="true" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/RVLignes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>
+</ScrollView>

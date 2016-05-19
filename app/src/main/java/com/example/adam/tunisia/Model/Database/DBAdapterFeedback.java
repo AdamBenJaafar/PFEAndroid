@@ -35,7 +35,9 @@ public class DBAdapterFeedback extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+    /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterFeedback(Context ctx) {
         super(ctx);
@@ -51,7 +53,9 @@ public class DBAdapterFeedback extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createFeedback(Feedback feedback){
         Log.v(TAG,"Feedback created");

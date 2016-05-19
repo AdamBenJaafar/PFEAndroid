@@ -7,11 +7,19 @@ import android.util.Log;
 
 public class AdapterDB {
 
+    /* ***************************************************************
+                         DATABASE INFO
+    *************************************************************** */
+
     private static final String TAG = "AdapterDB";
 
     public static final String DATABASE_NAME = "stuffIOwn";
 
-    public static final int DATABASE_VERSION =46;
+    public static final int DATABASE_VERSION =51;
+
+    /* ***************************************************************
+                         DATABASE SCHEMA
+    *************************************************************** */
 
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
@@ -83,7 +91,6 @@ public class AdapterDB {
                     + DBAdapterStation_Ligne_Horaire.HORAIRE+ " TEXT," +
                     "PRIMARY KEY ( _id, "+ DBAdapterStation_Ligne_Horaire.HORAIRE + "));";
 
-
     private static final String TABLE_VEHICULE = "vehicule";
     private static final String CREATE_TABLE_VEHICULE =
             "create table " + TABLE_VEHICULE + " (_id integer , "
@@ -100,6 +107,10 @@ public class AdapterDB {
     private final Context context;
     private DatabaseHelper DBHelper;
     protected SQLiteDatabase db;
+
+    /* ***************************************************************
+                        DATABASE HELPER
+    *************************************************************** */
 
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
@@ -121,12 +132,11 @@ public class AdapterDB {
             db.execSQL(CREATE_TABLE_STATION_LIGNE_HORAIRES);
             db.execSQL(CREATE_TABLE_VEHICULE);
             db.execSQL(CREATE_TABLE_VOYAGE);
-         // Solution de backup
+
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion,
-                              int newVersion)
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {   Log.v(TAG, "Database UPGRADED. onUpgrade method EXECUTED.");
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOCIETE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
@@ -143,7 +153,9 @@ public class AdapterDB {
         }
     }
 
-    // _____ CONSTRUCTOR - OPEN - CLOSE _____
+     /* ***************************************************************
+                        INTIALISATION METHODS
+    *************************************************************** */
 
     public AdapterDB(Context ctx){
         this.context = ctx;

@@ -1,14 +1,18 @@
 package com.example.adam.tunisia.View.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.akexorcist.googledirection.DirectionCallback;
@@ -18,9 +22,12 @@ import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.model.Leg;
 import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
+import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Result;
+import com.example.adam.tunisia.Model.Entities.Ligne;
+import com.example.adam.tunisia.Model.Entities.Perturbation;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
@@ -28,6 +35,10 @@ import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
 import com.example.adam.tunisia.Presenter.Presenters.MPActivityPresenter;
 import com.example.adam.tunisia.Presenter.Presenters.SCMapPresenter;
 import com.example.adam.tunisia.R;
+import com.example.adam.tunisia.View.Adapters.LignesDialogAdapter;
+import com.example.adam.tunisia.View.Adapters.PertubationsDialogAdapter;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,8 +47,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.ArrayList;
@@ -61,6 +75,53 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
     boolean to,from;
 
+    FloatingActionsMenu menuMultipleActions;
+
+    boolean aller;
+    boolean retour;
+
+    FloatingActionsMenu buttonf;
+    Polyline Aller;
+    Polyline Retour;
+    Polyline Way;
+
+    Marker AllerM;
+    Marker RetourM;
+
+    int sfrom;
+    int sto;
+
+
+
+    public void Clear(View view ){
+        sfrom=-1;
+        sto=-1;
+
+        aller= false;
+        retour=false;
+
+        if(Aller!=null) {
+            Aller.remove();
+            Aller = null;
+        }
+        if(Retour!=null) {
+            Retour.remove();
+            Retour = null;
+        }
+        if(AllerM!=null) {
+            AllerM.remove();
+            AllerM = null;
+        }
+        if(RetourM!=null) {
+            RetourM.remove();
+            RetourM = null;
+        }
+        if(Way!=null) {
+            Way.remove();
+            Way = null;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +132,28 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
         mapFragment.getMapAsync(this);
 
 
+        sfrom = -1;
+        sto = -1;
+
         // TOOLBAR
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Réseau de transport");
+
+
+        menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+
+        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.action_a);
+
+
+        buttonf = (FloatingActionsMenu) findViewById(R.id.topaa);
+        buttonf.setVisibility(View.INVISIBLE);
+
+        //button.setEnabled(false);
+
+        aller = false;
+        retour = false;
+
 
         Presenter = new MPActivityPresenter(this);
 
@@ -82,6 +161,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
 
         HM = new HashMap<Integer,Integer>();
+
 
     }
 
@@ -107,68 +187,129 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
 
-                // Setting the position for the marker
-                markerOptions.position(latLng);
+                if(aller || retour ){
 
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                    // Creating a marker
+                    MarkerOptions markerOptions = new MarkerOptions();
 
-                // Placing a marker on the touched position
-                mMap.addMarker(markerOptions);
+                    // Setting the position for the marker
+                    markerOptions.position(latLng);
 
+                    // Setting the title for the marker.
+                    // This will be displayed on taping the marker
+                    markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.launcher));
 
-                String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
-                LatLng origin = new LatLng(latLng.latitude,latLng.longitude);
-                LatLng destination = new LatLng(36.809182, 10.185);
+                    // Placing a marker on the touched position
+                    Marker X= mMap.addMarker(markerOptions);
+                    if(aller)
+                        AllerM = X;
+                    else if (retour)
+                        RetourM = X ;
 
-                DBAdapterStation DBAS = new DBAdapterStation(getBaseContext());
-                DBAS.open();
+                    String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
+                    LatLng origin = new LatLng(latLng.latitude,latLng.longitude);
+                    LatLng destination = new LatLng(36.809182, 10.185);
 
-                List<Station> LS = DBAS.getAllStation();
+                    DBAdapterStation DBAS = new DBAdapterStation(getBaseContext());
+                    DBAS.open();
 
-                DBAS.close();
+                    List<Station> LS = DBAS.getAllStation();
 
-                double dist = 1000000000;
+                    DBAS.close();
 
-                for( Station S : LS ){
-                    Log.v("sssss","test");
-                    if(GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
-                        dist = GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
-                        destination = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
-                        Log.v("sssss","Smaller, changin");
+                    double dist = 1000000000;
+
+                    for( Station S : LS ){
+                        Log.v("sssss","test");
+                        if(GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
+                            dist = GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
+                            destination = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
+                            Log.v("sssss","Smaller, changin");
+                            if(aller)
+                                sfrom = S.getROW_ID();
+                            else if(retour)
+                                sto = S.getROW_ID();
+                        }
                     }
+
+
+                    if( sfrom!=-1 && sto !=-1 )
+                        itinerary(sfrom,sto);
+
+
+                    GoogleDirection.withServerKey(serverKey)
+                            .from(origin)
+                            .to(destination)
+                            .transportMode(TransportMode.WALKING)
+                            .execute(new DirectionCallback() {
+                                @Override
+                                public void onDirectionSuccess(Direction direction, String rawBody) {
+                                    Route route = direction.getRouteList().get(0);
+                                    Leg leg = route.getLegList().get(0);
+                                    ArrayList<LatLng> pointList = leg.getDirectionPoint();
+                                    PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
+                                    Polyline X = mMap.addPolyline(polylineOptions);
+                                    if(aller)
+                                        Aller = X;
+                                    else if (retour) {
+                                        Retour = X;
+
+
+                                    }
+
+                                    if(aller)
+                                        aller= false;
+                                    else if (retour)
+                                        retour= false;
+
+                                }
+
+                                @Override
+                                public void onDirectionFailure(Throwable t) {
+                                    Log.v("TESTTEST", " FAILED");
+                                }
+                            });
+
+
+
                 }
 
-                GoogleDirection.withServerKey(serverKey)
-                        .from(origin)
-                        .to(destination)
-                        .transportMode(TransportMode.WALKING)
-                        .execute(new DirectionCallback() {
-                            @Override
-                            public void onDirectionSuccess(Direction direction, String rawBody) {
-                                Route route = direction.getRouteList().get(0);
-                                Leg leg = route.getLegList().get(0);
-                                ArrayList<LatLng> pointList = leg.getDirectionPoint();
-                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
-                                mMap.addPolyline(polylineOptions);
-                            }
 
-                            @Override
-                            public void onDirectionFailure(Throwable t) {
-                                Log.v("TESTTEST", " FAILED");
-                            }
-                        });
 
             }
         });
 
         getPlaces();
 
+
     }
+
+    public void itinerary(int from, int to){
+
+        GeoHelper GH = new GeoHelper();
+        ArrayList<Integer>  R = GH.BuildGraph(this,from, to);
+
+        DBAdapterStation DBAS = new DBAdapterStation(this);
+        DBAS.open();
+        PolylineOptions P = new PolylineOptions();
+        P.geodesic(true);
+
+        for ( Integer I : R) {
+
+
+            Station SS = DBAS.getStation(I);
+
+            P.add(new LatLng(Double.parseDouble(SS.getLATITUDE()), Double.parseDouble(SS.getLONGITUDE())));
+
+
+        }
+        P.width(5).color(Color.BLUE);
+        Way = mMap.addPolyline(P);
+        DBAS.close();
+    }
+
 
     void getPlaces() {
 
@@ -191,7 +332,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
                     for ( Result R : response.body().getResults()) {
 
-                        double lat =    R.getGeometry().getLocation().getLat();
+                       /* double lat =    R.getGeometry().getLocation().getLat();
                         double lon =    R.getGeometry().getLocation().getLng();
 
                         LatLng LL = new LatLng(lat,lon);
@@ -202,7 +343,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
                                 .strokeColor(Color.BLACK)
                                 .strokeWidth(6);
 
-                        mMap.addCircle(circleOptions);
+                        mMap.addCircle(circleOptions);*/
                     }
                     Toast.makeText(getBaseContext(),response.body().getResults().get(0).getName(),Toast.LENGTH_LONG).show();
 
@@ -243,8 +384,8 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
             if(SL.getSTATION().isPRINCIPALE()) {
                 LatLng POS = new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()),Double.parseDouble(SL.getSTATION().getLONGITUDE()));
 
-                MarkerOptions MO = new MarkerOptions().title(SL.getSTATION().getNOM()).position(POS).snippet("TEST").icon(BitmapDescriptorFactory.fromResource(R.mipmap.stat));
-                mMap.addMarker(MO);
+                /*MarkerOptions MO = new MarkerOptions().title(SL.getSTATION().getNOM()).position(POS).snippet("TEST").icon(BitmapDescriptorFactory.fromResource(R.mipmap.stat));
+                mMap.addMarker(MO);/*/
                 circleOptions.radius(20).fillColor(color).strokeColor(color);
             }
 
@@ -323,4 +464,195 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void Destination(View view){
+
+
+
+        Toast.makeText(this,"ok",Toast.LENGTH_LONG).show();
+        retour = true;
+        aller= false;
+
+        if(Retour!=null)
+            Retour.remove();
+        if(RetourM!=null)
+            RetourM.remove();
+
+        menuMultipleActions.collapse();
+
+        Toast.makeText(getBaseContext(), "Cliquez sur l'endroit ou vous voulez aller", Toast.LENGTH_SHORT).show();
+
+        buttonf.setVisibility(View.VISIBLE);
+    }
+
+    public void Source(View view){
+
+        new LovelyStandardDialog(this)
+                .setTopColor(R.color.colorPrimaryDark)
+                .setButtonsColor(R.color.colorPrimary)
+                .setIcon(R.mipmap.perturbation)
+                .setTitle("Voulez vous chercher votre position ?")
+                .setMessage("OK ?? plz")
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Creating a marker
+                        MarkerOptions markerOptions = new MarkerOptions();
+
+                        // Setting the position for the marker
+                        markerOptions.position(Presenter.Position);
+
+                        // Setting the title for the marker.
+                        // This will be displayed on taping the marker
+                        markerOptions.title(Presenter.Position.latitude + " : " + Presenter.Position.longitude);
+
+                        // Placing a marker on the touched position
+                        Marker X= mMap.addMarker(markerOptions);
+                        if(aller)
+                            AllerM = X;
+                        else if (retour)
+                            RetourM = X ;
+
+                        String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
+                        LatLng origin = new LatLng(Presenter.Position.latitude,Presenter.Position.longitude);
+                        LatLng destination = new LatLng(36.809182, 10.185);
+
+                        DBAdapterStation DBAS = new DBAdapterStation(getBaseContext());
+                        DBAS.open();
+
+                        List<Station> LS = DBAS.getAllStation();
+
+                        DBAS.close();
+
+                        double dist = 1000000000;
+
+                        for( Station S : LS ){
+                            Log.v("sssss","test");
+                            if(GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
+                                dist = GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
+                                destination = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
+                                Log.v("sssss","Smaller, changin");
+                            }
+                        }
+
+                        GoogleDirection.withServerKey(serverKey)
+                                .from(origin)
+                                .to(destination)
+                                .transportMode(TransportMode.WALKING)
+                                .execute(new DirectionCallback() {
+                                    @Override
+                                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                                        Route route = direction.getRouteList().get(0);
+                                        Leg leg = route.getLegList().get(0);
+                                        ArrayList<LatLng> pointList = leg.getDirectionPoint();
+                                        PolylineOptions polylineOptions = DirectionConverter.createPolyline(getBaseContext(), pointList, 5, Color.RED);
+                                        Polyline X = mMap.addPolyline(polylineOptions);
+                                        if(aller)
+                                            Aller = X;
+                                        else if (retour)
+                                            Retour = X ;
+
+                                        if(aller)
+                                            aller= false;
+                                        else if (retour)
+                                            retour= false;
+
+                                    }
+
+                                    @Override
+                                    public void onDirectionFailure(Throwable t) {
+                                        Log.v("TESTTEST", " FAILED");
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+
+        Toast.makeText(this,"ok",Toast.LENGTH_LONG).show();
+        retour =false;
+        aller  = true;
+
+        if(Aller!=null)
+            Aller.remove();
+        if(AllerM!=null)
+            AllerM.remove();
+
+        menuMultipleActions.collapse();
+
+
+
+
+    }
+
+    public void Localisation( View view ){
+        Toast.makeText(this,"ok",Toast.LENGTH_LONG).show();
+        Presenter.goToPosition();
+    }
+
+    public void animateCamera(LatLng LatLng){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(LatLng)
+                .zoom(15)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//        CircleOptions circleOptions = new CircleOptions()
+//                .center(LatLng)
+//                .radius(20)
+//                .strokeColor(Color.BLACK)
+//                .strokeWidth(6);
+//        mMap.addCircle(circleOptions);
+    }
+
+    public void Perturbations(View view){
+
+        DBAdapterPerturbation DBAP = new DBAdapterPerturbation(this);
+        DBAP.open();
+
+        ArrayAdapter<Perturbation> adapter = new PertubationsDialogAdapter(this, DBAP.getAllPerturbation() );
+        new LovelyChoiceDialog(this)
+                .setTopColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setTitle("Choisissez une ligne de ")
+                .setIcon(R.mipmap.ligne)
+                .setTitleGravity(50)
+                .setItems(adapter, new LovelyChoiceDialog.OnItemSelectedListener<Perturbation>() {
+                    @Override
+                    public void onItemSelected(int position, Perturbation item) {
+
+
+                    }
+                })
+
+                .setCancelable(false)
+                .show();
+
+        DBAP.close();
+    }
+
+
+    public void Itineraire(View view){
+
+        DBAdapterPerturbation DBAP = new DBAdapterPerturbation(this);
+        DBAP.open();
+
+        ArrayAdapter<Perturbation> adapter = new PertubationsDialogAdapter(this, DBAP.getAllPerturbation() );
+        new LovelyChoiceDialog(this)
+                .setTopColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setTitle("Choisissez une ligne de ")
+                .setIcon(R.mipmap.ligne)
+                .setTitleGravity(50)
+                .setItems(adapter, new LovelyChoiceDialog.OnItemSelectedListener<Perturbation>() {
+                    @Override
+                    public void onItemSelected(int position, Perturbation item) {
+
+
+                    }
+                })
+
+                .setCancelable(false)
+                .show();
+
+        DBAP.close();
+    }
+
 }

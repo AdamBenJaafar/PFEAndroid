@@ -33,7 +33,7 @@ public class ActualiteRVAdapter extends RecyclerView.Adapter<ActualiteRVAdapter.
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.perturbation_row, parent, false);
+        View view = inflater.inflate(R.layout.actualite_row, parent, false);
 
         MyViewHolder holder = new MyViewHolder(view);
 
@@ -45,7 +45,7 @@ public class ActualiteRVAdapter extends RecyclerView.Adapter<ActualiteRVAdapter.
 
         Actualite P = List.get(position);
 
-        holder.TVTitre.setText(P.getSOC().getIDENTIFICATEUR());
+        holder.TVTitre.setText(P.getTITRE());
         holder.TVLigne.setText(P.getSOC().getIDENTIFICATEUR());
         holder.TVDate.setText(P.getDATE());
 
@@ -78,7 +78,7 @@ public class ActualiteRVAdapter extends RecyclerView.Adapter<ActualiteRVAdapter.
                     .setTopColor(ContextCompat.getColor(C,R.color.colorPrimary))
                     .setButtonsColor(ContextCompat.getColor(C,R.color.colorAccent))
                     .setIcon(R.mipmap.perturbation)
-                    .setTitle(List.get(getPosition()).getDATE())
+                    .setTitle(List.get(getPosition()).getTITRE() + "\n " +List.get(getPosition()).getDATE())
                     .setMessage(List.get(getPosition()).getTEXTE())
                     .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
                         @Override

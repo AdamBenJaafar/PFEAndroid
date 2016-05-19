@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +28,8 @@ import com.example.adam.tunisia.Model.Entities.Actualite;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.OpenWeather.Model;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
-import com.example.adam.tunisia.Model.Rest.Weather.OpenWeatherAPI;
+import com.example.adam.tunisia.Model.Rest.OpenWeather.OpenWeatherAPI;
+import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
 import com.example.adam.tunisia.R;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.google.android.gms.common.ConnectionResult;
@@ -57,6 +57,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Bind(R.id.TVMeteo)
     TextView TVMeteo;
 
+    @Bind(R.id.imageView)
+    ImageView IV;
+
     @Bind(R.id.TVPlace)
     TextView TVPlace;
 
@@ -74,7 +77,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
 
@@ -118,6 +120,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             // Showing Alert Message
             alertDialog.show();
 
+
+
+
         }
 
 
@@ -135,12 +140,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        drawer.openDrawer(Gravity.LEFT);
+        //drawer.openDrawer(Gravity.LEFT);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        System.out.println(" OK GO BUILD ");
+
+        //GeoHelper GH = new GeoHelper();
+        //GH.BuildGraph(this);
 
     }
 
@@ -219,7 +228,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            Intent i = new Intent(this, SCList.class);
+            Intent i = new Intent(this, Soceites.class);
             startActivity(i);
         } else if (id == R.id.nav_slideshow) {
             Intent i = new Intent(this, MPActivity.class);
@@ -227,13 +236,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_manage) {
             Intent i = new Intent(this, Localisation.class);
             startActivity(i);
-        } else if (id == R.id.nav_share) {
-            Intent i = new Intent(this, Localisation.class);
+        } /*else if (id == R.id.nav_share) {
+            Intent i = new Intent(this, Soceites.class);
             startActivity(i);
         } else if (id == R.id.nav_send) {
             Intent i = new Intent(this, Stations.class);
             startActivity(i);
-        } else if (id == R.id.nav_actualites) {
+        }*/ else if (id == R.id.nav_actualites) {
             Intent i = new Intent(this, Actualites.class);
             startActivity(i);
         } else if (id == R.id.nav_perturbations) {
@@ -389,4 +398,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public void onLocationChanged(Location location) {
         getReport(location.getLatitude()+"",location.getLongitude()+"");
     }
+
+
+    public void Open(View view){
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //drawer.openDrawer(Gravity.LEFT);
+
+
+    }
+
 }

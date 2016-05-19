@@ -41,12 +41,12 @@ public class LignesDialogAdapter extends ArrayAdapter<Ligne> {
 
         vh.Bus.setVisibility(View.INVISIBLE);
         vh.Train.setVisibility(View.INVISIBLE);
-        vh.Metro.setVisibility(View.INVISIBLE);
+
 
         switch (option.getTYPE()) {
-            case "metro": vh.Metro.setVisibility(View.VISIBLE); break;
-            case "bus":  vh.Bus.setVisibility(View.VISIBLE); break;
-            case "train":  vh.Train.setVisibility(View.VISIBLE); break;
+            case "metro": vh.Metro.setImageResource(R.mipmap.tram); break;
+            case "bus":  vh.Metro.setImageResource(R.mipmap.ic_directions_bus_black_24dp); break;
+            case "train":  vh.Metro.setImageResource(R.drawable.train); break ;
         }
 
         return convertView;

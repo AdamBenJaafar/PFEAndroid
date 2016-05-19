@@ -32,7 +32,9 @@ public class DBAdapterPerturbation extends AdapterDB{
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterPerturbation(Context ctx) {
         super(ctx);
@@ -48,7 +50,9 @@ public class DBAdapterPerturbation extends AdapterDB{
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createPerturbation(Perturbation perturbation){
         Log.v(TAG, "Perturbation created");

@@ -19,7 +19,7 @@ public class RetrofitSociete {
 
     private final Context context;
 
-    private static final String URL = "http://192.168.43.17:8083/projet_pfe_serveur/";//"http://benj-ksayeh.rhcloud.com/";
+    private static final String URL =  "http://192.168.1.6:8083/projet_pfe_serveur/" ;    //"http://benj-ksayeh.rhcloud.com/";
     private static final String TAG = "RetrofitSociete";
 
     public RetrofitSociete(Context context) {
@@ -52,6 +52,14 @@ public class RetrofitSociete {
                     for(int i=0;i<response.body().size();i++) {
 
                         Societe S = response.body().get(i);
+
+
+                        String X = response.body().get(i).getLOGO() ;
+
+                        if(X!=null) {
+                            Log.v("LOOGOOO", X.substring(X.length() - 10, X.length() ));
+                            System.out.println(response.body().get(i).getLOGO());
+                        }
 
                         myDb.createSociete(S);
                     }

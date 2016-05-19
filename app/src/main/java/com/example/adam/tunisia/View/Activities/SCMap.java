@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.akexorcist.googledirection.DirectionCallback;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SCMap extends FragmentActivity implements OnMapReadyCallback {
+public class SCMap extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private SCMapPresenter Presenter;
@@ -49,6 +51,13 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cmpmap);
+
+
+        // TOOLBAR
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Réseau de transport");
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -66,7 +75,7 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         Presenter.drawNetwork();
 
-        String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
+       /* String serverKey = "AIzaSyC8jV2zXq-4-4h3wbAzb-a04tyB1jueZP0";
         LatLng origin = new LatLng(36.809182,10.148363);
         LatLng destination = new LatLng(36.809182, 10.185);
         GoogleDirection.withServerKey(serverKey)
@@ -88,10 +97,10 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                         Log.v("TESTTEST", " FAILED");
                     }
                 });
+*/
 
 
-
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+     /*   mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
 
@@ -113,7 +122,7 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                 LatLng origin = new LatLng(latLng.latitude,latLng.longitude);
                 LatLng destination = new LatLng(36.809182, 10.185);
 
-                GoogleDirection.withServerKey(serverKey)
+                /*GoogleDirection.withServerKey(serverKey)
                         .from(origin)
                         .to(destination)
                         .transportMode(TransportMode.WALKING)
@@ -134,9 +143,21 @@ public class SCMap extends FragmentActivity implements OnMapReadyCallback {
                         });
 
             }
-        });
+        });*/
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, SCDetails.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void drawLine(ArrayList<Station_Ligne> ListeDesLignes, int color ){

@@ -22,12 +22,14 @@ public class RetrofitActualite {
 
     private final Context context;
 
-    private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/";
+    private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/" ;             // "http://192.168.1.6:8083/projet_pfe_serveur/";
     private static final String TAG = "RetrofitActualite";
 
     public RetrofitActualite(Context context) {
         this.context = context;
     }
+
+
 
     public void getActualites() {
 

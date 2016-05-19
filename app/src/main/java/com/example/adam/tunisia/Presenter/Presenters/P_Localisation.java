@@ -433,10 +433,11 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
             switch (ligtype) {
                case "metro": MO.icon(BitmapDescriptorFactory.fromResource(R.mipmap.tram)) ; break;
                case "bus": MO.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_directions_bus_black_24dp)) ; break;
-                    case "train": MO.icon(BitmapDescriptorFactory.fromResource(R.drawable.train)) ; break;
+                case "train": MO.icon(BitmapDescriptorFactory.fromResource(R.drawable.train)) ; break;
             }
             HM.put(S.getIMMATRICULATION(),Localisation.mMap.addMarker(MO));
             HM.get(S.getIMMATRICULATION()).setVisible(false);
+            HM.get(S.getIMMATRICULATION()).setSnippet(S.toString());
         }
 
         B.close();

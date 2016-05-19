@@ -1,6 +1,10 @@
 package com.example.adam.tunisia.View.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +27,12 @@ import com.example.adam.tunisia.R;
 import com.example.adam.tunisia.View.Adapters.LigneRVAdapter;
 import com.example.adam.tunisia.View.Adapters.PerturbationRVAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SCDetails extends AppCompatActivity {
 
@@ -38,8 +46,6 @@ public class SCDetails extends AppCompatActivity {
     TextView TVSite;
     @Bind(R.id.TVFormeJuridique)
     TextView TVFormeJuridique;
-    @Bind(R.id.textView5)
-    TextView TVTextView5;
 
     @Bind(R.id.RVLignes)
     RecyclerView RV;
@@ -68,7 +74,7 @@ public class SCDetails extends AppCompatActivity {
             }
         });
 
-        Company = getIntent().getStringExtra(SCList.ID_EXTRA);
+        Company = getIntent().getStringExtra("SocIDEN");
         SocID = getIntent().getLongExtra("SocID",0);
 
         Societe S = new Societe();
@@ -103,10 +109,9 @@ public class SCDetails extends AppCompatActivity {
         TVFormeJuridique.setText(S.getFORMEJURIDIQUE());
         TVNom_Complet.setText(S.getNOMCOMPLET());
         TVSiege.setText(S.getSIEGESOCIAL());
-        TVTextView5.setText(S.getIDENTIFICATEUR());
         TVSite.setText(S.getSITEWEB());
 
-        Toast.makeText(SCDetails.this, S.toString() , Toast.LENGTH_LONG).show();
+       // Toast.makeText(SCDetails.this, S.toString() , Toast.LENGTH_LONG).show();
 
         // TOOLBAR
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -115,6 +120,48 @@ public class SCDetails extends AppCompatActivity {
 
 
 
+       // ImageView IV = (ImageView ) findViewById(R.id.imageView5);
+        ImageView IVC = (ImageView ) findViewById(R.id.profile_image);
+
+
+        DBAdapterSociete DBAS = new DBAdapterSociete(this);
+        DBAS.open();
+
+        ArrayList<Societe> LS = DBAS.getAllSociete();
+        try {
+
+
+            byte[] blob = Base64.decode(S.getLOGO(), Base64.DEFAULT);
+
+            System.out.println(LS.get(0).getLOGO());
+            System.out.println(LS.get(0).getLOGO().substring(LS.get(0).getLOGO().length() - 10, LS.get(0).getLOGO().length()));
+
+            //  String X = LS.get(0).getLogo();
+            //  Log.v("TeSTADDD AE", X.substring(X.length()-10,X.length()));
+            //  Log.v("TEST",blob+"");
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+
+
+           // IV.setImageBitmap(Bitmap.createScaledBitmap(bmp, 300, 300, false));
+
+            IVC.setImageBitmap(Bitmap.createScaledBitmap(bmp, 300, 300, false));
+
+         // IV.setImageBitmap(bmp);
+
+           // IV.setMinimumWidth(500);
+           // IV.setMinimumHeight(500);
+
+
+
+            //Toast.makeText(this,LS.get(0).toString(),Toast.LENGTH_LONG).show();
+
+            DBAS.close();
+
+
+        }catch(Exception e){
+
+        }
 
     }
 
@@ -134,7 +181,7 @@ public class SCDetails extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, SCList.class);
+                Intent intent = new Intent(this, Soceites.class);
                 intent.putExtra("Societe",Company);
                 startActivity(intent);
                 return true;

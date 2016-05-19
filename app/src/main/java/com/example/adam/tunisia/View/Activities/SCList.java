@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation;
 import com.example.adam.tunisia.Model.Database.DBAdapterSociete;
 import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.R;
@@ -93,6 +94,7 @@ public class SCList extends AppCompatActivity {
                 android.R.layout.simple_list_item_2,
                 new String[] {"text1", "text2"},
                 new int[] {android.R.id.text1, android.R.id.text2 });
+
 
         vue.setAdapter(adapter);
 

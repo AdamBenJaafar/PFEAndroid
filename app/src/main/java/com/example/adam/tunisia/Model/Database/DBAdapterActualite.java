@@ -34,7 +34,9 @@ public class DBAdapterActualite extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterActualite(Context ctx) {
         super(ctx);
@@ -50,7 +52,9 @@ public class DBAdapterActualite extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createActualite(Actualite actualite){
         Log.v(TAG, "Actualite created");

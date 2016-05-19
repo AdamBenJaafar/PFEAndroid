@@ -34,7 +34,9 @@ public class DBAdapterStation_Ligne extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterStation_Ligne(Context ctx) {
         super(ctx);
@@ -50,7 +52,9 @@ public class DBAdapterStation_Ligne extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createStation_Ligne(Station_Ligne station_ligne){
         Log.v(TAG, "Station_Ligne created");

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class DBAdapterVehicule extends AdapterDB {
 
-
     public static final String TAG = "DBAdapterVehicule";
 
     public static final String ROW_ID = "_id";
@@ -33,7 +32,9 @@ public class DBAdapterVehicule extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterVehicule(Context ctx) {
         super(ctx);
@@ -49,7 +50,9 @@ public class DBAdapterVehicule extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createVehicule(Vehicule vehicule) {
         Log.v(TAG, "Vehicule created");

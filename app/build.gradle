@@ -45,4 +45,8 @@ dependencies {
     compile 'com.github.pwittchen:weathericonview:1.1.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.2'
 
+    compile 'com.getbase:floatingactionbutton:1.10.1'
+
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+
 }

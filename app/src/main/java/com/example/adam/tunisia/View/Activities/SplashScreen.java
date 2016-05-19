@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.adam.tunisia.Model.Rest.AdapterREST;
 import com.example.adam.tunisia.R;
@@ -69,6 +73,7 @@ public class SplashScreen extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 1000;
 
+    ImageView IV ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,15 @@ public class SplashScreen extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
         setContentView(R.layout.activity_splash);
+
+        ImageView myImageView= (ImageView)findViewById(R.id.imageView4);
+        Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        myImageView.startAnimation(myFadeInAnimation);
+
+
+
 
         // DOWNLOADING DATA
         new AdapterREST(this).update();

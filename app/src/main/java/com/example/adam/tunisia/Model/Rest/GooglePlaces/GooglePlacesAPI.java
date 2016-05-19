@@ -9,4 +9,5 @@ public interface GooglePlacesAPI {
 
     @GET("maps/api/place/nearbysearch/json?location=36.809182,10.148363&radius=1000&key=AIzaSyBze1aC3aLS4CblBPTUeMLZHOXa5d27ydQ")
     Call<Example> getPlacesReport();
+
 }

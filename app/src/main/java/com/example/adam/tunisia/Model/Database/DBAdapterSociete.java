@@ -47,7 +47,9 @@ public class DBAdapterSociete extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterSociete(Context ctx) {
         super(ctx);
@@ -63,7 +65,9 @@ public class DBAdapterSociete extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createSociete(Societe societe){
         Log.v(TAG, "Societe created");
@@ -74,7 +78,14 @@ public class DBAdapterSociete extends AdapterDB {
         initialValues.put(FORMEJURIDIQUE, societe.getFORMEJURIDIQUE());
         initialValues.put(IDENTIFICATEUR, societe.getIDENTIFICATEUR());
         initialValues.put(LOGIN, societe.getLOGIN());
+
+
         initialValues.put(LOGO, societe.getLOGO());
+
+        if(societe.getLOGO()!=null)
+            Log.v("ADD LOGO",societe.getLOGO());
+
+
         initialValues.put(MOTDEPASSE, societe.getMOTDEPASSE());
         initialValues.put(NOMCOMPLET, societe.getNOMCOMPLET());
         initialValues.put(SIEGESOCIAL, societe.getSIEGESOCIAL());
@@ -105,7 +116,11 @@ public class DBAdapterSociete extends AdapterDB {
                 String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);
                 String identificateur = mCursor.getString(COL_IDENTIFICATEUR);
                 String login = mCursor.getString(COL_LOGIN);
+
+
                 String logo = mCursor.getString(COL_LOGO);
+
+
                 String motdepasse = mCursor.getString(COL_MOTDEPASSE);
                 String nomcomplet = mCursor.getString(COL_NOMCOMPLET);
                 String siegesocial = mCursor.getString(COL_SIEGESOCIAL);
@@ -121,7 +136,9 @@ public class DBAdapterSociete extends AdapterDB {
                 S.setFORMEJURIDIQUE(formejuridique);
                 S.setIDENTIFICATEUR(identificateur);
                 S.setLOGIN(login);
+
                 S.setLOGO(logo);
+
                 S.setMOTDEPASSE(motdepasse);
                 S.setNOMCOMPLET(nomcomplet);
                 S.setSIEGESOCIAL(siegesocial);

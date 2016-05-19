@@ -24,7 +24,20 @@ public class Societe {
     @SerializedName("login")
     @Expose
     private String LOGIN;
+    @SerializedName("logo")
+    @Expose
     private String LOGO;
+
+    private byte[] testt;
+
+    public byte[] getLogo() {
+        return testt;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.testt = logo;
+    }
+
     @SerializedName("mot_de_passe")
     @Expose
     private String MOTDEPASSE;

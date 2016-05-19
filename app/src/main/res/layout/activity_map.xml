@@ -21,14 +21,107 @@
         tools:context=".View.Activities.MPActivity" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <!-- <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="@dimen/fab_margin"
+          android:src="@android:drawable/ic_dialog_info"
+          android:onClick="retour"/>-->
+
+      <com.getbase.floatingactionbutton.FloatingActionsMenu
+          android:id="@+id/multiple_actions"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="@dimen/fab_margin"
+          app:fab_addButtonColorNormal="@color/colorPrimaryLight"
+          app:fab_addButtonColorPressed="@color/colorPrimary"
+          app:fab_addButtonPlusIconColor="@color/colorPrimary"
+          app:fab_labelStyle="@style/DialogButton">
+
+          <com.getbase.floatingactionbutton.FloatingActionButton
+              android:id="@+id/action_a"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:fab_colorNormal="@color/colorPrimaryLight"
+              app:fab_title="Source"
+              app:fabSize="mini"
+              app:fab_colorPressed="@color/colorPrimary"
+              app:fab_icon="@mipmap/trend"
+              android:onClick="Source"/>
+
+          <com.getbase.floatingactionbutton.FloatingActionButton
+              android:id="@+id/action_b"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:fab_colorNormal="@color/colorPrimaryLight"
+              app:fab_title="Destination"
+              app:fabSize="mini"
+              app:fab_colorPressed="@color/colorPrimary"
+              app:fab_icon="@mipmap/tracking"
+              android:onClick="Destination"/>
+
+          <com.getbase.floatingactionbutton.FloatingActionButton
+              android:id="@+id/localisation"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:fab_colorNormal="@color/colorPrimaryLight"
+              app:fab_title="Localisation"
+              app:fab_colorPressed="@color/colorPrimary"
+              app:fab_icon="@mipmap/stat"
+              app:fabSize="mini"
+              android:onClick="Localisation"/>
+
+          <com.getbase.floatingactionbutton.FloatingActionButton
+              android:id="@+id/action_c"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:fab_colorNormal="@color/colorPrimaryLight"
+              app:fab_title="Destination"
+              app:fabSize="mini"
+              app:fab_colorPressed="@color/colorPrimary"
+              app:fab_icon="@mipmap/tracking"
+              android:onClick="Clear"/>
+
+      </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/topaa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_info"
-        android:onClick="retour"/>
+        app:fab_addButtonColorNormal="@color/colorPrimaryLight"
+        app:fab_addButtonColorPressed="@color/colorPrimary"
+        app:fab_addButtonPlusIconColor="@color/colorPrimary"
+        app:fab_expandDirection="down"
+        app:fab_labelStyle="@style/DialogButton">
 
-</android.support.design.widget.CoordinatorLayout>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimaryLight"
+            app:fab_title="Source"
+            app:fabSize="mini"
+            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_icon="@mipmap/perturbation"
+            android:onClick="Perturbations"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimaryLight"
+            app:fab_title="Destination"
+            app:fabSize="mini"
+            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_icon="@mipmap/perturbation"
+            android:onClick="Itineraire"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+  </android.support.design.widget.CoordinatorLayout>
 

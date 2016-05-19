@@ -140,7 +140,7 @@ public class Localisation extends AppCompatActivity implements OnMapReadyCallbac
             LatLng POS = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
 
             MarkerOptions MO = new MarkerOptions().title(S.getNOM()).position(POS).icon(BitmapDescriptorFactory.fromResource(R.mipmap.stat));
-            mMap.addMarker(MO);
+           // mMap.addMarker(MO);
 
             P.add(new LatLng(Double.parseDouble(SL.getSTATION().getLATITUDE()), Double.parseDouble(SL.getSTATION().getLONGITUDE())));
             mMap.addCircle(circleOptions);

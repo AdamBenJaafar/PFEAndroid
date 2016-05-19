@@ -39,7 +39,9 @@ public class DBAdapterStation extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-    // _____ CONSTRUCTOR, OPEN, CLOSE _____
+     /* ***************************************************************
+                        INITIALISATION METHODS
+    *************************************************************** */
 
     public DBAdapterStation(Context ctx) {
         super(ctx);
@@ -55,7 +57,9 @@ public class DBAdapterStation extends AdapterDB {
         super.close();
     }
 
-    // _____ CREATE, READ, UPDATE, DELETE _____
+     /* ***************************************************************
+                         CRUD METHODS
+    *************************************************************** */
 
     public long createStation(Station station){
         Log.v(TAG, "Station created");
@@ -75,8 +79,6 @@ public class DBAdapterStation extends AdapterDB {
         String where = ROW_ID + "=" + rowId ;
         return this.mDb.delete(DATABASE_TABLE, where, null) > 0; //$NON-NLS-1$
     }
-
-
 
     public ArrayList<Station> getAllStation() {
         Log.v(TAG,"Station acquired");

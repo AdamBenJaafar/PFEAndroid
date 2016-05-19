@@ -57,7 +57,7 @@ public class PerturbationRVAdapter extends RecyclerView.Adapter<PerturbationRVAd
                     holder.IV.setImageResource(R.mipmap.ic_directions_bus_black_24dp);
                     break;
                 case "metro":
-                    holder.IV.setImageResource(R.mipmap.tram);
+                    holder.IV.setImageResource(R.mipmap.big_tram);
                     break;
                 case "train":
                     holder.IV.setImageResource(R.mipmap.tracking);
@@ -96,7 +96,7 @@ public class PerturbationRVAdapter extends RecyclerView.Adapter<PerturbationRVAd
                     .setTopColor(ContextCompat.getColor(C,R.color.colorPrimary))
                     .setButtonsColor(ContextCompat.getColor(C,R.color.colorAccent))
                     .setIcon(R.mipmap.perturbation)
-                    .setTitle(List.get(getPosition()).getDATE())
+                    .setTitle(List.get(getPosition()).getLIG().getIDENTIFIANT())
                     .setMessage(List.get(getPosition()).getTEXTE())
                     .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
                         @Override
