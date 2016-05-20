@@ -330,10 +330,10 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
                 try {
 
-                    for ( Result R : response.body().getResults()) {
+                    for ( Result D : response.body().getResults()) {
 
-                       /* double lat =    R.getGeometry().getLocation().getLat();
-                        double lon =    R.getGeometry().getLocation().getLng();
+                        double lat =    D.getGeometry().getLocation().getLat();
+                        double lon =    D.getGeometry().getLocation().getLng();
 
                         LatLng LL = new LatLng(lat,lon);
 
@@ -343,7 +343,25 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
                                 .strokeColor(Color.BLACK)
                                 .strokeWidth(6);
 
-                        mMap.addCircle(circleOptions);*/
+                      //  mMap.addCircle(circleOptions);
+
+
+                        // Creating a marker
+                        MarkerOptions markerOptions = new MarkerOptions();
+
+                        // Setting the position for the marker
+                        markerOptions.position(new LatLng(lat,lon));
+
+                        // Setting the title for the marker.
+                        // This will be displayed on taping the marker
+                        markerOptions.title(D.getName());
+                        markerOptions.snippet(D.getTypes().toString());
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.stat));
+
+                        // Placing a marker on the touched position
+                        Marker X= mMap.addMarker(markerOptions);
+
+
                     }
                     Toast.makeText(getBaseContext(),response.body().getResults().get(0).getName(),Toast.LENGTH_LONG).show();
 
@@ -505,7 +523,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
                         // Setting the title for the marker.
                         // This will be displayed on taping the marker
                         markerOptions.title(Presenter.Position.latitude + " : " + Presenter.Position.longitude);
-
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.launcher));
                         // Placing a marker on the touched position
                         Marker X= mMap.addMarker(markerOptions);
                         if(aller)

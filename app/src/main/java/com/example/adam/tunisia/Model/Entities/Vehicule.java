@@ -27,11 +27,7 @@ public class Vehicule {
 
     @Override
     public String toString() {
-        return "Vehicule{" +
-                "ROW_ID=" + ROW_ID +
-                ", LIGNE=" + LIGNE +
-                ", IMMATRICULATION='" + IMMATRICULATION + '\'' +
-                '}';
+        return "rgrgrVehicule{" + "ROW_ID=" + ROW_ID + " , LIGNE=" + LIGNE + " , IMMATRICULATION='" + IMMATRICULATION + '\'' + '}';
     }
 
     public int getROW_ID() {

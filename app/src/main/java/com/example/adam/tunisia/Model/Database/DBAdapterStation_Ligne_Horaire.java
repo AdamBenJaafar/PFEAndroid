@@ -91,6 +91,36 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
         return A;
     }
 
+    public ArrayList<Station_Ligne_Horaire> getAllStation_Ligne_HoraireByStation_Ligne(int SL) {
+        Log.v(TAG,"Station_Ligne_Horaire acquired");
+        ArrayList<Station_Ligne_Horaire> A= new ArrayList<Station_Ligne_Horaire>();
+
+        String where = ROW_ID + "=" + SL;
+
+        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+
+        if (mCursor.moveToFirst()) {
+            do {
+                Station_Ligne_Horaire F= new Station_Ligne_Horaire();
+
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                String horaire = mCursor.getString(COL_HORAIRE);
+
+                // Append data to the message:
+                F.setSTATION_LIGNE(new Station_Ligne(id));
+                F.setHORAIRE(horaire);
+
+                A.add(F);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+        return A;
+    }
+
     public Station_Ligne_Horaire getStation_Ligne_Horaire(long rowId) throws SQLException {
         Log.v(TAG,"Station_Ligne_Horaire acquired");
         String where = ROW_ID + "=" + rowId;

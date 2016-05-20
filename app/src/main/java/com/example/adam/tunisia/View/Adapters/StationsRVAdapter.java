@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne_Horaire;
 import com.example.adam.tunisia.Model.Entities.Station;
+import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne_Horaire;
 import com.example.adam.tunisia.R;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
@@ -26,11 +29,13 @@ public class StationsRVAdapter extends RecyclerView.Adapter<StationsRVAdapter.My
 
     private final LayoutInflater inflater;
     List<Station> List = Collections.emptyList();
+    int ligneid;
 
-    public StationsRVAdapter(Context context, List<Station> L){
+    public StationsRVAdapter(Context context, List<Station> L, int ligneid){
         inflater = LayoutInflater.from(context);
         this.C = context;
         this.List = L ;
+        this.ligneid = ligneid;
     }
 
     @Override
@@ -82,11 +87,26 @@ public class StationsRVAdapter extends RecyclerView.Adapter<StationsRVAdapter.My
         @Override
         public void onClick(View v) {
 
+
+            int STATIONID = List.get(getPosition()).getROW_ID();
+            int LIGNEID = ligneid;
+
+
+            DBAdapterStation_Ligne DBASL = new DBAdapterStation_Ligne(C);
+            DBASL.open();
+
+            Station_Ligne SL = DBASL.getStation_LigneBystatByLig(STATIONID,ligneid);
+
+            DBASL.close();
+
+
+           // Toast.makeText(C, SL.toString(), Toast.LENGTH_LONG).show();
+
             DBAdapterStation_Ligne_Horaire B = new DBAdapterStation_Ligne_Horaire(C);
             B.open();
 
 
-            final ArrayList<Station_Ligne_Horaire> LL = B.getAllStation_Ligne_Horaire();
+            final ArrayList<Station_Ligne_Horaire> LL = B.getAllStation_Ligne_HoraireByStation_Ligne(SL.getROW_ID());
 
             B.close();
 
@@ -102,9 +122,9 @@ public class StationsRVAdapter extends RecyclerView.Adapter<StationsRVAdapter.My
 
                         }
                     })
-
-                    .setCancelable(false)
                     .show();
+
+
         }
 
     }

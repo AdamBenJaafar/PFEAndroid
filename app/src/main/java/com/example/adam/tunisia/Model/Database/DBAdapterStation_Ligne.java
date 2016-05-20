@@ -207,6 +207,43 @@ public class DBAdapterStation_Ligne extends AdapterDB {
         return F;
     }
 
+    public Station_Ligne getStation_LigneBystatByLig(int stat, int lig) {
+        Log.v(TAG,"Station_Ligne acquired");
+
+        String where = STATION_ID + "=" + stat + " and "+ LIGNE_ID + "=" + lig ;
+
+        Cursor mCursor =
+
+                this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        Station_Ligne F= new Station_Ligne();
+
+        if (mCursor.moveToFirst()) {
+            do {
+                // Process the data:
+                int id = mCursor.getInt(COL_ROW_ID);
+                int station_id = mCursor.getInt(COL_STATION_ID);
+                int ligne_id = mCursor.getInt(COL_LIGNE_ID);
+                int soc_row_id = mCursor.getInt(COL_POS);
+
+                // Append data to the message:
+                F.setROW_ID(id);
+                F.setSTATION(new Station(station_id));
+                F.setLIGNE(new Ligne(ligne_id));
+                F.setPOSITION(soc_row_id);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+
+        return F;
+    }
+
     public void deleteAll() {
         Log.v(TAG,"Station_Lignes deleted");
         Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);

@@ -47,6 +47,10 @@ public class SCMap extends AppCompatActivity implements OnMapReadyCallback {
 
     private HashMap<Integer,Integer> HM;
 
+    public String Societe;
+    long SocID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,9 @@ public class SCMap extends AppCompatActivity implements OnMapReadyCallback {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Réseau de transport");
+
+        Societe = getIntent().getStringExtra("Societe");
+        SocID = getIntent().getLongExtra("SocID",0);
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -153,6 +160,8 @@ public class SCMap extends AppCompatActivity implements OnMapReadyCallback {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(this, SCDetails.class);
+                intent.putExtra("SocIDEN",Societe);
+                intent.putExtra("SocID",SocID);
                 startActivity(intent);
                 return true;
             default:

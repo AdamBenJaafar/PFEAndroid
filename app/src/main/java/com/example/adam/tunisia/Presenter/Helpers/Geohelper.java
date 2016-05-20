@@ -52,23 +52,8 @@ public class GeoHelper {
     }
 
     /* ***************************************************************
-                        BuILD MAIN GRAPH
+                        RECHERCHE ITINERAIRE
     *************************************************************** */
-    public static ArrayList<ArrayList<Integer>> GraphBuilder(){
-        ArrayList<ArrayList<Integer>> A = new ArrayList<ArrayList<Integer>>();
-        return A;
-    }
-
-
-    /* ***************************************************************
-                        DIJKSTRA IT
-    *************************************************************** */
-    public static ArrayList<Station> Calculate(LatLng A, LatLng B){
-
-
-        return new ArrayList<>();
-    }
-
     public ArrayList<Integer> BuildGraph(Context C,int f, int t){
 
         // Initializing database adapters
@@ -225,6 +210,9 @@ public class GeoHelper {
 
     }
 
+    /* ***************************************************************
+                                CLASS
+    *************************************************************** */
     public class SD{
 
         public double D;

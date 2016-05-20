@@ -213,6 +213,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SplashScreen.class);
+            startActivity(i);
             return true;
         }
 
@@ -401,8 +403,28 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
     public void Open(View view){
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //drawer.openDrawer(Gravity.LEFT);
+
+        int id = view.getId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.textView7) {
+            Intent i = new Intent(this, Soceites.class);
+            startActivity(i);
+        } else if (id == R.id.textView8) {
+            Intent i = new Intent(this, MPActivity.class);
+            startActivity(i);
+        } else if (id == R.id.textView9) {
+            Intent i = new Intent(this, Localisation.class);
+            startActivity(i);
+        } else if (id == R.id.textView10) {
+            Intent i = new Intent(this, Actualites.class);
+            startActivity(i);
+        } else if (id == R.id.textView11) {
+            Intent i = new Intent(this, Perturbations.class);
+            startActivity(i);
+        }
+
 
 
     }

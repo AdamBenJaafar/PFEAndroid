@@ -71,6 +71,7 @@
               app:fab_title="Localisation"
               app:fab_colorPressed="@color/colorPrimary"
               app:fab_icon="@mipmap/stat"
+              app:backgroundTint="@color/orange"
               app:fabSize="mini"
               android:onClick="Localisation"/>
 

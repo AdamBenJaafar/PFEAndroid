@@ -25,13 +25,18 @@ public class LigneRVAdapter extends RecyclerView.Adapter<LigneRVAdapter.MyViewHo
 
     Context C ;
 
+    String Company;
+    long SocID;
+
     private final LayoutInflater inflater;
     List<Ligne> List = Collections.emptyList();
 
-    public LigneRVAdapter(Context context, List<Ligne> L){
+    public LigneRVAdapter(Context context, List<Ligne> L, String Co , long ID){
         inflater = LayoutInflater.from(context);
         this.C = context;
         this.List = L ;
+        this.Company = Co;
+        this.SocID = ID;
     }
 
     @Override
@@ -91,6 +96,13 @@ public class LigneRVAdapter extends RecyclerView.Adapter<LigneRVAdapter.MyViewHo
         public void onClick(View v) {
             Intent intent = new Intent(C, Stations.class);
             intent.putExtra("ligne",List.get(getPosition()).getIDENTIFIANT());
+            intent.putExtra("ligneid",List.get(getPosition()).getROW_ID());
+            intent.putExtra("Societe",Company);
+            intent.putExtra("SocID",SocID);
+
+            Log.v("SENT",Company  );
+            Log.v("SENT", SocID +"" );
+
             C.startActivity(intent);
         }
 

@@ -29,6 +29,11 @@ public class SCFeedback extends AppCompatActivity {
 
     public final static String ID_EXTRA="com.example.adam.tunisia.View.Activities.SCList._ID";
 
+    String Societe;
+    long SocID;
+
+
+
     private SCFeedbackPresenter Presenter;
 
     @Bind(R.id.ratingBar) RatingBar RB;
@@ -46,6 +51,9 @@ public class SCFeedback extends AppCompatActivity {
 
         toolbar.setTitle("Votre avis compte");
         setSupportActionBar(toolbar);
+
+        Societe = getIntent().getStringExtra("Societe");
+        SocID = getIntent().getLongExtra("SocID",0);
 
         Presenter = new SCFeedbackPresenter(this);
 
@@ -95,6 +103,8 @@ public class SCFeedback extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(this, SCDetails.class);
+                intent.putExtra("SocIDEN",Societe);
+                intent.putExtra("SocID",SocID);
                 startActivity(intent);
                 return true;
             default:

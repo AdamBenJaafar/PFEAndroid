@@ -55,7 +55,7 @@ public class SCMapPresenter {
             List<ArrayList<Station_Ligne>> Network = new ArrayList<ArrayList<Station_Ligne>>();
 
             // GET LINES
-            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller("TRANSTU");
+            List<Ligne> LL = myDBLigne.getAllLigneBySocieteAller(SCMap.Societe);
             // FILL LINES
             for( Ligne L : LL) {
 
@@ -68,7 +68,8 @@ public class SCMapPresenter {
 
                     if(Double.parseDouble(SL.getSTATION().getLATITUDE())>MaxLAT){
                         MaxLAT=Double.parseDouble(SL.getSTATION().getLATITUDE());
-                    }else if(Double.parseDouble(SL.getSTATION().getLATITUDE())<MinLAT){
+                    }
+                    if(Double.parseDouble(SL.getSTATION().getLATITUDE())<MinLAT){
                         MinLAT=Double.parseDouble(SL.getSTATION().getLATITUDE());
                     }
 

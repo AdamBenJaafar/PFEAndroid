@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -77,6 +78,12 @@ public class SCDetails extends AppCompatActivity {
         Company = getIntent().getStringExtra("SocIDEN");
         SocID = getIntent().getLongExtra("SocID",0);
 
+
+        Log.v("RECIEVED",Company  );
+        Log.v("REVIEVED", SocID +"" );
+        System.out.println("recieved "  + Company);
+
+
         Societe S = new Societe();
 
         try {
@@ -98,7 +105,7 @@ public class SCDetails extends AppCompatActivity {
         boolean metro = false;
         boolean bus = false;
         ButterKnife.bind(this);
-        Adapter = new LigneRVAdapter(this, LL);
+        Adapter = new LigneRVAdapter(this, LL, Company, SocID);
 
         RV.setAdapter(Adapter);
         RV.setLayoutManager( new LinearLayoutManager(this) );
@@ -168,12 +175,14 @@ public class SCDetails extends AppCompatActivity {
     public void goToFeedback(View view){
         Intent i = new Intent(getApplicationContext(), SCFeedback.class);
         i.putExtra("Societe",Company);
+        i.putExtra("SocID",SocID);
         startActivity(i);
     }
 
     public void goToMap(View view){
         Intent i = new Intent(getApplicationContext(), SCMap.class);
-        i.putExtra("Company",Company);
+        i.putExtra("Societe",Company);
+        i.putExtra("SocID",SocID);
         startActivity(i);
     }
 
