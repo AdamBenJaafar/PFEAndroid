@@ -79,7 +79,7 @@ public class SCDetails extends AppCompatActivity {
         SocID = getIntent().getLongExtra("SocID",0);
 
 
-        Log.v("RECIEVED",Company  );
+
         Log.v("REVIEVED", SocID +"" );
         System.out.println("recieved "  + Company);
 

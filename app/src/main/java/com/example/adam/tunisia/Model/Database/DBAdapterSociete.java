@@ -157,6 +157,61 @@ public class DBAdapterSociete extends AdapterDB {
         return A;
     }
 
+    public Societe getSociete(String SocieteIDENTIFIANT) {
+        Log.v(TAG,"Societe acquired");
+        String where = IDENTIFICATEUR + " LIKE '%"  + SocieteIDENTIFIANT + "%'";
+
+        Cursor mCursor =
+
+                this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        Societe S= new Societe();
+
+        if (mCursor.moveToFirst()) {
+            do {
+                // Process the data:
+                long id = mCursor.getInt(COL_ROW_ID);
+                String date = mCursor.getString(COL_DATE);
+                String details = mCursor.getString(COL_DETAILS);
+                String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);
+                String identificateur = mCursor.getString(COL_IDENTIFICATEUR);
+                String login = mCursor.getString(COL_LOGIN);
+                String logo = mCursor.getString(COL_LOGO);
+                String motdepasse = mCursor.getString(COL_MOTDEPASSE);
+                String nomcomplet = mCursor.getString(COL_NOMCOMPLET);
+                String siegesocial = mCursor.getString(COL_SIEGESOCIAL);
+                String sigle = mCursor.getString(COL_SIGLE);
+                String siteweb = mCursor.getString(COL_SITEWEB);
+
+
+
+                // Append data to the message:
+                S.setROW_ID(id);
+                S.setDATE(date);
+                S.setDETAILS(details);
+                S.setFORMEJURIDIQUE(formejuridique);
+                S.setIDENTIFICATEUR(identificateur);
+                S.setLOGIN(login);
+                S.setLOGO(logo);
+                S.setMOTDEPASSE(motdepasse);
+                S.setNOMCOMPLET(nomcomplet);
+                S.setSIEGESOCIAL(siegesocial);
+                S.setSIGLE(sigle);
+                S.setSITEWEB(siteweb);
+
+            } while(mCursor.moveToNext());
+        }
+
+        // Close the cursor to avoid a resource leak.
+        mCursor.close();
+
+        return S;
+    }
+
+
     public Societe getSociete(long rowId) throws SQLException {
         Log.v(TAG,"Societe acquired");
         String where = ROW_ID + "=" + rowId;
@@ -173,7 +228,7 @@ public class DBAdapterSociete extends AdapterDB {
         if (mCursor.moveToFirst()) {
             do {
                 // Process the data:
-                int id = mCursor.getInt(COL_ROW_ID);
+                long id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
                 String details = mCursor.getString(COL_DETAILS);
                 String formejuridique = mCursor.getString(COL_FORMEJURIDIQUE);

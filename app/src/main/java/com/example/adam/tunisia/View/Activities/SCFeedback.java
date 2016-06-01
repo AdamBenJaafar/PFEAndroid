@@ -69,8 +69,10 @@ public class SCFeedback extends AppCompatActivity {
     public void envoyerFeedback(View view){
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = df.format(Calendar.getInstance().getTime());
-
-        Presenter.postFeedback(new Feedback(date,(int)RB.getRating()+"",ETEmail.getText().toString(),ETCommentaires.getText().toString(),1),Soc);
+        if(!( ETCommentaires.getText().toString().length() == 0   ))
+        Presenter.postFeedback(new Feedback(date,(int)RB.getRating()+"",ETCommentaires.getText().toString(),ETEmail.getText().toString(),1),Soc);
+        else
+            Toast.makeText(this,"Veuillez saisir votre commentaire",Toast.LENGTH_LONG).show();
     }
 
     public void redirect(){
@@ -90,6 +92,8 @@ public class SCFeedback extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(SCFeedback.this,SCDetails.class);
+                i.putExtra("SocIDEN",Societe);
+                i.putExtra("SocID",SocID);
                 startActivity(i);
             }
         });

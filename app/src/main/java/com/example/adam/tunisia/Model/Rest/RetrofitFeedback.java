@@ -24,7 +24,7 @@ public class RetrofitFeedback {
     public void postFeedback(Feedback f, String Soc){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(AdapterREST.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

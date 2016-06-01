@@ -60,7 +60,7 @@
               app:fab_title="Destination"
               app:fabSize="mini"
               app:fab_colorPressed="@color/colorPrimary"
-              app:fab_icon="@mipmap/tracking"
+              app:fab_icon="@mipmap/trend"
               android:onClick="Destination"/>
 
           <com.getbase.floatingactionbutton.FloatingActionButton
@@ -80,10 +80,10 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               app:fab_colorNormal="@color/colorPrimaryLight"
-              app:fab_title="Destination"
+              app:fab_title="Clear"
               app:fabSize="mini"
               app:fab_colorPressed="@color/colorPrimary"
-              app:fab_icon="@mipmap/tracking"
+              app:fab_icon="@drawable/ic_cast_disabled_light"
               android:onClick="Clear"/>
 
       </com.getbase.floatingactionbutton.FloatingActionsMenu>

@@ -31,7 +31,7 @@ public class RetrofitStation_Ligne_Horaires {
     public void getStation_Lignes() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(AdapterREST.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

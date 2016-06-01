@@ -24,12 +24,14 @@
     <array name="rainbow">
         <item>@color/spring_green</item>
         <item>@color/red</item>
-        <item>@color/yellow</item>
-        <item>@color/red</item>
+        <item>@color/colorAccent</item>
         <item>@color/blue</item>
+
+        <item>@color/red</item>
+
         <item>@color/yellow</item>
         <item>@color/chartreuse</item>
-        <item>@color/green</item>
+
         <item>@color/spring_green</item>
         <item>@color/cyan</item>
         <item>@color/azure</item>

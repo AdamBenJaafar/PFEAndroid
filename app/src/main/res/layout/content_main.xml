@@ -62,7 +62,7 @@
                 android:id="@+id/TVPlace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15 C° "
+                android:text="..."
                 android:textColor="@color/colorPrimary"
                 android:textSize="15dp"
                 android:textStyle="bold"

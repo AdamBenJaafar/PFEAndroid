@@ -29,7 +29,7 @@ public class RetrofitStation {
     public void getStations() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(AdapterREST.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

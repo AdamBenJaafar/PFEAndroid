@@ -22,15 +22,21 @@ import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.model.Leg;
 import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
+import com.example.adam.tunisia.Model.Database.DBAdapterLigne;
 import com.example.adam.tunisia.Model.Database.DBAdapterPerturbation;
+import com.example.adam.tunisia.Model.Database.DBAdapterSociete;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation;
+import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Result;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Perturbation;
+import com.example.adam.tunisia.Model.Entities.Recherche;
+import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
+import com.example.adam.tunisia.Model.Rest.RetrofitRecherche;
 import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
 import com.example.adam.tunisia.Presenter.Presenters.MPActivityPresenter;
 import com.example.adam.tunisia.Presenter.Presenters.SCMapPresenter;
@@ -54,7 +60,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -236,7 +245,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
 
                     if( sfrom!=-1 && sto !=-1 )
-                        itinerary(sfrom,sto);
+                        itinerary(sfrom,sto,origin);
 
 
                     GoogleDirection.withServerKey(serverKey)
@@ -281,20 +290,41 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
 
-        getPlaces();
 
 
     }
 
-    public void itinerary(int from, int to){
+    public void itinerary(int from, int to, LatLng O){
+
+
+
+
 
         GeoHelper GH = new GeoHelper();
         ArrayList<Integer>  R = GH.BuildGraph(this,from, to);
 
+        DBAdapterSociete DBASo = new DBAdapterSociete(this);
+        DBAdapterStation_Ligne DBASL = new DBAdapterStation_Ligne(this);
         DBAdapterStation DBAS = new DBAdapterStation(this);
+        DBAdapterLigne DBAL = new DBAdapterLigne(this);
         DBAS.open();
+        DBAL.open();
+        DBASo.open();
+        DBASL.open();
+
+        boolean sent = false;
+
+        Station Destination = DBAS.getStation(to);
+       // getPlaces(Destination);
+
         PolylineOptions P = new PolylineOptions();
         P.geodesic(true);
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        RetrofitRecherche RR = new RetrofitRecherche();
+
 
         for ( Integer I : R) {
 
@@ -303,15 +333,36 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
             P.add(new LatLng(Double.parseDouble(SS.getLATITUDE()), Double.parseDouble(SS.getLONGITUDE())));
 
+            ArrayList<Station_Ligne> LSL = DBASL.getAllStation_LigneByStation(I);
+
+
+
+            for( Station_Ligne SL : LSL){
+                Ligne L = DBAL.getLigne(SL.getLIGNE().getROW_ID());
+                String soo =  L.getSOC().getIDENTIFICATEUR();
+                Log.v("TEST SOC CONCERNE",soo);
+                Societe S = DBASo.getSociete(soo);
+
+                Recherche RRR = new Recherche(S.getROW_ID(),O.latitude+"",O.longitude+"",date,null);
+
+                if(!sent)
+                {RR.postRecherche(RRR,soo);
+                    sent =true;}
+
+                Log.v("TESTrecherche",""+RRR);
+            }
 
         }
-        P.width(5).color(Color.BLUE);
+        P.width(8).color(Color.BLUE);
         Way = mMap.addPolyline(P);
         DBAS.close();
+        DBAL.close();
+        DBASL.close();
+        DBASo.close();
     }
 
 
-    void getPlaces() {
+    void getPlaces(Station S) {
 
         String url = "https://maps.googleapis.com/";
 
@@ -322,7 +373,10 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
         GooglePlacesAPI service = retrofit.create(GooglePlacesAPI.class);
 
-        Call<Example> call = service.getPlacesReport();
+        System.out.println(S.getLATITUDE());
+        System.out.println(S.getLONGITUDE());
+
+        Call<Example> call = service.getPlacesReport(S.getLATITUDE()+","+S.getLATITUDE());
 
         call.enqueue(new Callback<Example>() {
             @Override
@@ -500,7 +554,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
         Toast.makeText(getBaseContext(), "Cliquez sur l'endroit ou vous voulez aller", Toast.LENGTH_SHORT).show();
 
-        buttonf.setVisibility(View.VISIBLE);
+        //buttonf.setVisibility(View.VISIBLE);
     }
 
     public void Source(View view){
@@ -508,9 +562,8 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
         new LovelyStandardDialog(this)
                 .setTopColor(R.color.colorPrimaryDark)
                 .setButtonsColor(R.color.colorPrimary)
-                .setIcon(R.mipmap.perturbation)
+                .setIcon(R.mipmap.stat)
                 .setTitle("Voulez vous chercher votre position ?")
-                .setMessage("OK ?? plz")
                 .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

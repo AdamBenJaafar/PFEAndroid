@@ -6,6 +6,8 @@ public class AdapterREST {
 
     private final Context context;
 
+    public static String URL = /* "http://192.168.43.17:8083/projet_pfe_serveur/"; // 1.6 */ "http://projet-pfe16.rhcloud.com/" ;
+
     public AdapterREST(Context context) {
         this.context = context;
     }

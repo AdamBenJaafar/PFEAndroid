@@ -32,7 +32,7 @@ public class RetrofitVehicule {
     public void getVehicules() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(AdapterREST.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -57,6 +57,7 @@ public class RetrofitVehicule {
                         Vehicule S = response.body().get(i);
 
                         myDb.createVehicule(S);
+                        Log.v("VEHICULE", S.toString());
                     }
 
 

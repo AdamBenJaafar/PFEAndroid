@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Actualite {
 
-    @SerializedName("id_actualite")
+    @SerializedName("auto_actualite")
     @Expose
     private int ROW_ID;
     @SerializedName("text")

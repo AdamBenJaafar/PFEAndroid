@@ -94,6 +94,8 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
                 .build();
         mGoogleApiClient.connect();
 
+        Position = new LatLng(36.0,10.0);
+
     }
 
     // LISTENING TO THE SELECTED LINE VEHICULE VARIATIONS
@@ -430,7 +432,7 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
         for( Vehicule S : B.getAllVehiculeByLigne(liglig) ){
             L.add(S.getIMMATRICULATION());
             MarkerOptions MO = new MarkerOptions().title("").position(new LatLng(36.8074636,10.1354241));
-            MO.snippet(S.toString()).title(S.getIMMATRICULATION());
+            MO.snippet("Climaité, de marque Reneault produit en 1972-5-6").title(S.getIMMATRICULATION());
             switch (ligtype) {
                case "metro": MO.icon(BitmapDescriptorFactory.fromResource(R.mipmap.tram)) ; break;
                case "bus": MO.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_directions_bus_black_24dp)) ; break;

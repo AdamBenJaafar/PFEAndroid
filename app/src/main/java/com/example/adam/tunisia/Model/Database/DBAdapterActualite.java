@@ -64,7 +64,7 @@ public class DBAdapterActualite extends AdapterDB {
         initialValues.put(TEXTE, actualite.getTEXTE());
         initialValues.put(TITRE, actualite.getTITRE());
         initialValues.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
-        return this.db.insert(DATABASE_TABLE, null, initialValues);
+            return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
 
     public boolean deleteActualite(long rowId) {

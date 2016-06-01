@@ -95,7 +95,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
         weatherIconView.setIconResource(getString(R.string.wi_cloud));
-        TVMeteo.setText("55 C°");
+        TVMeteo.setText("Localisation");
 
         if(!getIntent().getBooleanExtra("internet",true)){
             AlertDialog alertDialog = new AlertDialog.Builder(
@@ -270,42 +270,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
-    void getPlaces() {
 
-        String url = "https://maps.googleapis.com/";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GooglePlacesAPI service = retrofit.create(GooglePlacesAPI.class);
-
-        Call<Example> call = service.getPlacesReport();
-
-        call.enqueue(new Callback<Example>() {
-            @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
-
-                try {
-
-
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.v("NOO","FAILED");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Example> call, Throwable t) {
-
-            }
-
-
-        });
-    }
 
     void getReport(String lat, String lon) {
 

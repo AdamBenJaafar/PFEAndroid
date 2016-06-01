@@ -34,7 +34,7 @@ public class RetrofitActualite {
     public void getActualites() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(AdapterREST.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

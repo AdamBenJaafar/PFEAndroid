@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Perturbation {
 
-    @SerializedName("id_perturbation")
+    @SerializedName("auto_perturbation")
     @Expose
     private int ROW_ID;
     @SerializedName("text")
