@@ -77,7 +77,7 @@ public class DBAdapterLigne extends AdapterDB {
     public ArrayList<Ligne> getAllLigne() {
         Log.v(TAG,"Ligne acquired");
         ArrayList<Ligne> A= new ArrayList<Ligne>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -113,7 +113,7 @@ public class DBAdapterLigne extends AdapterDB {
 
         String where = SOC_ROW_ID + " LIKE '%"  + SocieteIDENTIFIANT + "%' and "+ DIRECTION + " LIKE '%aller%'";
 
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, where, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -147,10 +147,7 @@ public class DBAdapterLigne extends AdapterDB {
 
         String where = ROW_ID + " = " + rowId;
 
-        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Ligne L= new Ligne();
 
@@ -185,10 +182,7 @@ public class DBAdapterLigne extends AdapterDB {
 
         String where = IDENTIFIANT + " LIKE '%"  + ID + "%' and "+ DIRECTION + " LIKE '%aller%'";;
 
-        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Ligne L= new Ligne();
 
@@ -221,7 +215,7 @@ public class DBAdapterLigne extends AdapterDB {
 
     public void deleteAll() {
         Log.v(TAG,"Lignes deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {

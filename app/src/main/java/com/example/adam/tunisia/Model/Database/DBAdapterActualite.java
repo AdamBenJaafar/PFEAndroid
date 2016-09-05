@@ -34,10 +34,9 @@ public class DBAdapterActualite extends AdapterDB {
 
     private SQLiteDatabase mDb;
 
-     /* ***************************************************************
-                        INITIALISATION METHODS
-    *************************************************************** */
-
+    /**
+     *  Initialisation methods
+     */
     public DBAdapterActualite(Context ctx) {
         super(ctx);
     }
@@ -52,17 +51,16 @@ public class DBAdapterActualite extends AdapterDB {
         super.close();
     }
 
-     /* ***************************************************************
-                         CRUD METHODS
-    *************************************************************** */
-
+    /**
+     *  CRUD Methods
+     */
     public long createActualite(Actualite actualite){
         Log.v(TAG, "Actualite created");
         ContentValues initialValues = new ContentValues();
         initialValues.put(ROW_ID, actualite.getROW_ID());
         initialValues.put(DATE, actualite.getDATE());
         initialValues.put(TEXTE, actualite.getTEXTE());
-        initialValues.put(TITRE, actualite.getTITRE());
+        initialValues.put(TITRE, actualite.getTitre());
         initialValues.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
             return this.db.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -76,7 +74,7 @@ public class DBAdapterActualite extends AdapterDB {
     public ArrayList<Actualite> getAllActualite() {
         Log.v(TAG,"Actualite acquired");
         ArrayList<Actualite> A= new ArrayList<Actualite>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -93,7 +91,7 @@ public class DBAdapterActualite extends AdapterDB {
                 F.setROW_ID(id);
                 F.setDATE(date);
                 F.setTEXTE(texte);
-                F.setTITRE(titre);
+                F.setTitre(titre);
                 F.setSOC(new Societe(soc_row_id));
 
                 A.add(F);
@@ -112,10 +110,7 @@ public class DBAdapterActualite extends AdapterDB {
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.mDb.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Actualite F= new Actualite();
 
@@ -132,7 +127,7 @@ public class DBAdapterActualite extends AdapterDB {
                 F.setROW_ID(id);
                 F.setDATE(date);
                 F.setTEXTE(texte);
-                F.setTITRE(titre);
+                F.setTitre(titre);
                 F.setSOC(new Societe(soc_row_id));
 
             } while(mCursor.moveToNext());
@@ -146,7 +141,7 @@ public class DBAdapterActualite extends AdapterDB {
 
     public void deleteAll() {
         Log.v(TAG,"Actualites deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {
@@ -168,7 +163,7 @@ public class DBAdapterActualite extends AdapterDB {
         ContentValues args = new ContentValues();
         args.put(DATE, actualite.getDATE());
         args.put(TEXTE, actualite.getTEXTE());
-        args.put(TITRE, actualite.getTITRE());
+        args.put(TITRE, actualite.getTitre());
         args.put(SOC_ROW_ID, actualite.getSOC().getIDENTIFICATEUR());
 
         return this.mDb.update(DATABASE_TABLE, args, where, null) >0;

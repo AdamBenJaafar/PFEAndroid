@@ -3,9 +3,6 @@ package com.example.adam.tunisia.Model.Entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Adam on 04/04/2016.
- */
 public class Actualite {
 
     @SerializedName("auto_actualite")
@@ -16,7 +13,7 @@ public class Actualite {
     private String TEXTE;
     @SerializedName("titre")
     @Expose
-    private String TITRE;
+    private String titre;
     @SerializedName("date_actualite")
     @Expose
     private String DATE;
@@ -29,14 +26,14 @@ public class Actualite {
 
     public Actualite(String TEXTE, String TITRE, String DATE) {
         this.TEXTE = TEXTE;
-        this.TITRE = TITRE;
+        this.titre = TITRE;
         this.DATE = DATE;
     }
 
     public Actualite(int ROW_ID, String TEXTE, String TITRE, String DATE, Societe SOC) {
         this.ROW_ID = ROW_ID;
         this.TEXTE = TEXTE;
-        this.TITRE = TITRE;
+        this.titre = TITRE;
         this.DATE = DATE;
         this.SOC = SOC;
     }
@@ -46,7 +43,7 @@ public class Actualite {
         return "Actualite{" +
                 "ROW_ID=" + ROW_ID +
                 ", TEXTE='" + TEXTE + '\'' +
-                ", TITRE='" + TITRE + '\'' +
+                ", titre='" + titre + '\'' +
                 ", DATE='" + DATE + '\'' +
                 ", SOC=" + SOC +
                 '}';
@@ -68,12 +65,12 @@ public class Actualite {
         this.TEXTE = TEXTE;
     }
 
-    public String getTITRE() {
-        return TITRE;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setTITRE(String TITRE) {
-        this.TITRE = TITRE;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
     public String getDATE() {
@@ -91,4 +88,5 @@ public class Actualite {
     public void setSOC(Societe SOC) {
         this.SOC = SOC;
     }
+
 }

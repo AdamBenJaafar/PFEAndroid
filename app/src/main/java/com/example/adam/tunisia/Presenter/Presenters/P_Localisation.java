@@ -26,7 +26,7 @@ import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Model.Entities.Vehicule;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper;
 import com.example.adam.tunisia.R;
 import com.example.adam.tunisia.View.Activities.Localisation;
 import com.example.adam.tunisia.View.Adapters.DonationAdapter;
@@ -197,8 +197,8 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
 
        // final ArrayList<CharSequence> L = new ArrayList<CharSequence>();
 
-       /* for( Societe S : A.getAllSociete() ){
-            L.add(S.getIDENTIFICATEUR());
+       /* for( Societe Station_ID : A.getAllSociete() ){
+            L.add(Station_ID.getIDENTIFICATEUR());
         }
 
 
@@ -263,10 +263,10 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
         final ArrayList<Integer> LL = new ArrayList<Integer>();
         final ArrayList<CharSequence> LT = new ArrayList<CharSequence>();
 
-        for( Ligne S : B.getAllLigneBySocieteAller(SelectedSociete) ){
-            LS.add(S.getIDENTIFIANT());
-            LL.add(S.getROW_ID());
-            LT.add(S.getTYPE());
+        for( Ligne Station_ID : B.getAllLigneBySocieteAller(SelectedSociete) ){
+            LS.add(Station_ID.getIDENTIFIANT());
+            LL.add(Station_ID.getROW_ID());
+            LT.add(Station_ID.getTYPE());
         }
 
 
@@ -344,7 +344,7 @@ public class P_Localisation implements  LocationListener, GoogleApiClient.Connec
         ArrayList<StationClose> LSC = new ArrayList();
 
         for ( Station S : DBAS.getAllStation() ){
-            StationClose SC = new StationClose(GeoHelper.distFrom(Position.latitude,Position.longitude,Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE())),S.getROW_ID());
+            StationClose SC = new StationClose(Geohelper.distFrom(Position.latitude,Position.longitude,Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE())),S.getROW_ID());
             SC.setNom(S.getNOM());
             Log.v(TAG,SC.toString());
             LSC.add(SC);

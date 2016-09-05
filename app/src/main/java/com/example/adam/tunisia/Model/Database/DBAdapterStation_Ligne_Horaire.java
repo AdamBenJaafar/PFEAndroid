@@ -67,7 +67,7 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
     public ArrayList<Station_Ligne_Horaire> getAllStation_Ligne_Horaire() {
         Log.v(TAG,"Station_Ligne_Horaire acquired");
         ArrayList<Station_Ligne_Horaire> A= new ArrayList<Station_Ligne_Horaire>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -97,7 +97,7 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
 
         String where = ROW_ID + "=" + SL;
 
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, where, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -127,10 +127,7 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.mDb.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Station_Ligne_Horaire F= new Station_Ligne_Horaire();
 
@@ -155,7 +152,7 @@ public class DBAdapterStation_Ligne_Horaire extends AdapterDB {
 
     public void deleteAll() {
         Log.v(TAG,"Station_Ligne_Horaires deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {

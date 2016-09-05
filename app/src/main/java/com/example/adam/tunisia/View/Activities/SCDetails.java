@@ -101,6 +101,7 @@ public class SCDetails extends AppCompatActivity {
         List<Ligne> LL = DBAL.getAllLigneBySocieteAller(S.getIDENTIFICATEUR());
         DBAL.close();
 
+
         boolean train = false;
         boolean metro = false;
         boolean bus = false;
@@ -118,7 +119,7 @@ public class SCDetails extends AppCompatActivity {
         TVSiege.setText(S.getSIEGESOCIAL());
         TVSite.setText(S.getSITEWEB());
 
-       // Toast.makeText(SCDetails.this, S.toString() , Toast.LENGTH_LONG).show();
+       // Toast.makeText(SCDetails.this, Station_ID.toString() , Toast.LENGTH_LONG).show();
 
         // TOOLBAR
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

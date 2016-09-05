@@ -29,7 +29,8 @@ import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.OpenWeather.Model;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
 import com.example.adam.tunisia.Model.Rest.OpenWeather.OpenWeatherAPI;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper
+        ;
 import com.example.adam.tunisia.R;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.google.android.gms.common.ConnectionResult;
@@ -148,7 +149,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         System.out.println(" OK GO BUILD ");
 
-        //GeoHelper GH = new GeoHelper();
+        //Geohelper
+        // GH = new Geohelper
+        // ();
         //GH.BuildGraph(this);
 
     }

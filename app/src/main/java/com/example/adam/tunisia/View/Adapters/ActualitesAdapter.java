@@ -11,7 +11,7 @@ import com.example.adam.tunisia.R;
 
 import java.util.List;
 
-public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.MyViewHolder> {
+public class    ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.MyViewHolder> {
 
     private List<Actualite> moviesList;
 
@@ -42,7 +42,7 @@ public class ActualitesAdapter extends RecyclerView.Adapter<ActualitesAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Actualite movie = moviesList.get(position);
-        holder.title.setText(movie.getTITRE());
+        holder.title.setText(movie.getTitre());
         holder.genre.setText(movie.getDATE());
        // holder.year.setText(movie.getDATE());
     }

@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adam.tunisia.Model.Entities.Actualite;
 import com.example.adam.tunisia.R;
@@ -45,7 +43,7 @@ public class ActualiteRVAdapter extends RecyclerView.Adapter<ActualiteRVAdapter.
 
         Actualite P = List.get(position);
 
-        holder.TVTitre.setText(P.getTITRE());
+        holder.TVTitre.setText(P.getTitre());
         holder.TVLigne.setText(P.getSOC().getIDENTIFICATEUR());
         holder.TVDate.setText(P.getDATE());
 
@@ -78,7 +76,7 @@ public class ActualiteRVAdapter extends RecyclerView.Adapter<ActualiteRVAdapter.
                     .setTopColor(ContextCompat.getColor(C,R.color.colorPrimary))
                     .setButtonsColor(ContextCompat.getColor(C,R.color.colorAccent))
                     .setIcon(R.mipmap.perturbation)
-                    .setTitle(List.get(getPosition()).getTITRE() + "\n " +List.get(getPosition()).getDATE())
+                    .setTitle(List.get(getPosition()).getTitre() + "\n " +List.get(getPosition()).getDATE())
                     .setMessage(List.get(getPosition()).getTEXTE())
                     .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
                         @Override

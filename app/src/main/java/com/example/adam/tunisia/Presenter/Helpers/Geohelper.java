@@ -1,6 +1,5 @@
 package com.example.adam.tunisia.Presenter.Helpers;
 
-
 import android.content.Context;
 import android.graphics.Color;
 
@@ -10,22 +9,35 @@ import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.google.android.gms.maps.model.LatLng;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
 
-public class GeoHelper {
+/** Contains methods for activities using Google Maps and displaying the transport network. */
+public class Geohelper {
 
-    public static int [] Colors = {Color.BLUE,Color.GREEN,Color.RED,Color.YELLOW,Color.CYAN,Color.MAGENTA,  Color.BLUE,Color.WHITE};
+    /**
+     *  Line colors for the Google Maps graph drawing.
+     *  This array is needed to display the transport network.
+     */
+    public static int [] Colors = { Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.BLUE, Color.WHITE };
 
-    // CALCULATE DISTANCE IN METERS BETWEEN TWO POINTS
+    /**
+     *  Calculates the Google Maps camera zoom level needed to cover a given radius.
+     *  This function is needed to display the transport network.
+     */
+    public static int getZoomLevel(double radius) {
+        int zoomLevel=15;
+        double scale = radius / 500;
+        zoomLevel =(int) (16 - Math.log(scale) / Math.log(2));
+        if(zoomLevel<=5)
+            zoomLevel=15;
+        return zoomLevel;
+    }
+
+    /**
+     *  Calculates the distance in meters between two points on the globe.
+     *  This function is needed to calculate itineraries.
+     */
     public static double distFrom(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371000; //meters
 
@@ -41,20 +53,17 @@ public class GeoHelper {
         return dist;
     }
 
-    // CALCULATE ZOOM LEVEL FROM DISTANCE
-    public static int getZoomLevel(double radius) {
-        int zoomLevel=15;
-        double scale = radius / 500;
-        zoomLevel =(int) (16 - Math.log(scale) / Math.log(2));
-        if(zoomLevel<=5)
-            zoomLevel=15;
-        return zoomLevel;
-    }
-
-    /* ***************************************************************
-                        RECHERCHE ITINERAIRE
-    *************************************************************** */
-    public ArrayList<Integer> BuildGraph(Context C,int f, int t){
+    /**
+     *  Searches for the shortest path from point A to B:
+     *      _ Builds a graph from all the stations-lines in the database.
+     *      _ Looks for the closest station to the arrival and departure point.
+     *      _ Searches for the shortest path ( list of stations ) between these stations.
+     *
+     *      ( Needs a lot of optimisation, I know)
+     *
+     *      TODO: Clean this shit !
+     */
+    public ArrayList<Integer> BuildGraph(Context C, int Source, int Destination){
 
         // Initializing database adapters
         DBAdapterStation DBAS = new DBAdapterStation(C);
@@ -67,11 +76,11 @@ public class GeoHelper {
         // Getting all Stations
         ArrayList<Station> LS = DBAS.getAllStation();
 
-        // Hashmap: Each Station with a list of neigboor stations wtih distances
-        HashMap<Integer,ArrayList<SD>> HM = new HashMap<Integer,ArrayList<SD>>();
+        // Hashmap: Each Station with a list of neigboor stations with distances
+        HashMap<Integer,ArrayList<Station_Distance>> HM = new HashMap<Integer,ArrayList<Station_Distance>>();
 
         for(int i=0;i <LS.size(); i++){
-            HM.put(LS.get(i).getROW_ID(),new ArrayList<SD>());
+            HM.put(LS.get(i).getROW_ID(),new ArrayList<Station_Distance>());
         }
 
         // Getting all Lignes
@@ -102,10 +111,10 @@ public class GeoHelper {
                 double X = distFrom(LAT1,LNG1,LAT2,LNG2);
 
                 //faux ecause going to one sense
-                if(!HM.get(A.getSTATION().getROW_ID()).contains(new SD(X,B.getSTATION().getROW_ID())))
+                if(!HM.get(A.getSTATION().getROW_ID()).contains(new Station_Distance(X,B.getSTATION().getROW_ID())))
                 {
-                    HM.get(A.getSTATION().getROW_ID()).add(new SD(X, B.getSTATION().getROW_ID()));
-                    HM.get(B.getSTATION().getROW_ID()).add(new SD(X, A.getSTATION().getROW_ID()));
+                    HM.get(A.getSTATION().getROW_ID()).add(new Station_Distance(X, B.getSTATION().getROW_ID()));
+                    HM.get(B.getSTATION().getROW_ID()).add(new Station_Distance(X, A.getSTATION().getROW_ID()));
                 }
 
             }
@@ -128,8 +137,8 @@ public class GeoHelper {
 
                 if( X < 2000 ){
 
-                    HM.get(LS.get(i).getROW_ID()).add(new SD((X*4),LS.get(j).getROW_ID()));
-                    HM.get(LS.get(j).getROW_ID()).add(new SD((X*4),LS.get(i).getROW_ID()));
+                    HM.get(LS.get(i).getROW_ID()).add(new Station_Distance((X*4),LS.get(j).getROW_ID()));
+                    HM.get(LS.get(j).getROW_ID()).add(new Station_Distance((X*4),LS.get(i).getROW_ID()));
 
                 }
 
@@ -138,19 +147,13 @@ public class GeoHelper {
 
 
 
-        for(Map.Entry<Integer,ArrayList<SD>> entry : HM.entrySet() ){
+        for(Map.Entry<Integer,ArrayList<Station_Distance>> entry : HM.entrySet() ){
             Integer key = entry.getKey();
-            ArrayList<SD> value = entry.getValue();
+            ArrayList<Station_Distance> value = entry.getValue();
 
             System.out.println(key + " " + value.size() + " " + value.toString() );
 
         }
-
-
-        int from = f;
-        int to = t;
-
-
 
         HashMap<Integer,Double> HM1 = new HashMap<Integer,Double>() ;
         HashMap<Integer,ArrayList<Integer>> HM2 = new HashMap<Integer,ArrayList<Integer>>() ;
@@ -160,13 +163,13 @@ public class GeoHelper {
             HM2.put(LS.get(i).getROW_ID(),new ArrayList<Integer>());
         }
 
-        Queue Q = new LinkedList<Integer>();
+        Queue<Integer> Q = new LinkedList<Integer>();
 
-        HM1.put(from,0.0);
-        HM2.put(from,new ArrayList<Integer>());
-        HM2.get(from).add(from);
+        HM1.put(Source,0.0);
+        HM2.put(Source,new ArrayList<Integer>());
+        HM2.get(Source).add(Source);
 
-        Q.add(from);
+        Q.add(Source);
 
         while(!Q.isEmpty()){
 
@@ -174,23 +177,23 @@ public class GeoHelper {
 
             System.out.println(" For station  " + current );
 
-            for( SD neighbor : HM.get(current) ){
+            for( Station_Distance neighbor : HM.get(current) ){
 
-                double distance =  neighbor.D + HM1.get(current) ;
+                double distance =  neighbor.Distance + HM1.get(current) ;
 
                 ArrayList<Integer> way = (ArrayList)HM2.get(current).clone() ;
-                way.add( neighbor.S );
+                way.add( neighbor.Station_ID);
 
-                if(  (distance < HM1.get(neighbor.S)) || HM1.get(neighbor.S)==0.0 ){
+                if(  (distance < HM1.get(neighbor.Station_ID)) || HM1.get(neighbor.Station_ID)==0.0 ){
 
-                    HM1.put(neighbor.S,distance);
+                    HM1.put(neighbor.Station_ID,distance);
 
-                    HM2.put(neighbor.S,way);
+                    HM2.put(neighbor.Station_ID,way);
 
 
-                    System.out.println("now , the way to " + neighbor.S + " is " + HM2.get(neighbor.S).toString() );
+                    System.out.println("now , the way to " + neighbor.Station_ID + " is " + HM2.get(neighbor.Station_ID).toString() );
 
-                    Q.add(neighbor.S);
+                    Q.add(neighbor.Station_ID);
 
                 }
 
@@ -198,50 +201,50 @@ public class GeoHelper {
 
         }
 
-        System.out.println(" Distance to destination = " + HM1.get(to));
-        System.out.println(" Way to destination = " + HM2.get(to).toString() );
+        System.out.println(" Distance to destination = " + HM1.get(Destination));
+        System.out.println(" Way to destination = " + HM2.get(Destination).toString() );
 
         DBAL.close();
         DBASL.close();
         DBAS.close();
 
 
-        return HM2.get(to);
+        return HM2.get(Destination);
 
     }
 
-    /* ***************************************************************
-                                CLASS
-    *************************************************************** */
-    public class SD{
+    /**
+     *  Represents a close stations and their distance ( from a known station ).
+     */
+    public class Station_Distance {
 
-        public double D;
-        public int S;
+        public double Distance;
+        public int Station_ID;
 
         @Override
         public String toString() {
-            return "SD{" +
-                    "D=" + D +
-                    ", S=" + S +
+            return "Station_Distance{" +
+                    "Distance=" + Distance +
+                    ", Station_ID=" + Station_ID +
                     '}';
         }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof SD)) return false;
-            SD sd = (SD) o;
-            return S == sd.S;
+            if (!(o instanceof Station_Distance)) return false;
+            Station_Distance stationDistance = (Station_Distance) o;
+            return Station_ID == stationDistance.Station_ID;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(D, S);
+            return Objects.hash(Distance, Station_ID);
         }
 
-        public SD(double d, int s) {
-            D = d;
-            S = s;
+        public Station_Distance(double distance, int stationID) {
+            Distance = distance;
+            Station_ID = stationID;
         }
     }
 

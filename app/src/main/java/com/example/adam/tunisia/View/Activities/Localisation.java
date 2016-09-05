@@ -18,7 +18,7 @@ import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper;
 import com.example.adam.tunisia.Presenter.Presenters.P_Localisation;
 import com.example.adam.tunisia.R;
 import com.google.android.gms.location.LocationListener;
@@ -235,7 +235,7 @@ public class Localisation extends AppCompatActivity implements OnMapReadyCallbac
         Log.v(TAG," MINLAT = "+ MinLAT);
         Log.v(TAG," MAXLNG = "+ MaxLNG);
         Log.v(TAG," MINLNG = "+ MinLNG);
-        Zoom = GeoHelper.getZoomLevel(Math.max(GeoHelper.distFrom(MaxLAT,0,MinLAT,0),GeoHelper.distFrom(MaxLNG,0,MinLNG,0)));
+        Zoom = Geohelper.getZoomLevel(Math.max(Geohelper.distFrom(MaxLAT,0,MinLAT,0),Geohelper.distFrom(MaxLNG,0,MinLNG,0)));
 
 
         // SETTING CAMERA POSITION

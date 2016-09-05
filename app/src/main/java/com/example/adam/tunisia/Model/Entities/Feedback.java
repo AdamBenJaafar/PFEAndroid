@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Feedback {
 
-
     private transient int ROW_ID;
 
     @SerializedName("date_feed")

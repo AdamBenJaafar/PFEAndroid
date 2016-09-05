@@ -73,7 +73,7 @@ public class DBAdapterPerturbation extends AdapterDB{
     public ArrayList<Perturbation> getAllPerturbation() {
         Log.v(TAG,"Perturbation acquired");
         ArrayList<Perturbation> A= new ArrayList<Perturbation>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -83,6 +83,7 @@ public class DBAdapterPerturbation extends AdapterDB{
                 int id = mCursor.getInt(COL_ROW_ID);
                 String date = mCursor.getString(COL_DATE);
                 String texte = mCursor.getString(COL_TEXTE);
+                
                 String lig_row_id = mCursor.getString(COL_LIG_ROW_ID);
 
                 // Append data to the message:
@@ -107,10 +108,7 @@ public class DBAdapterPerturbation extends AdapterDB{
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.mDb.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Perturbation F= new Perturbation();
 
@@ -139,7 +137,7 @@ public class DBAdapterPerturbation extends AdapterDB{
 
     public void deleteAll() {
         Log.v(TAG,"Perturbations deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {

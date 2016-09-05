@@ -83,7 +83,7 @@ public class DBAdapterStation extends AdapterDB {
     public ArrayList<Station> getAllStation() {
         Log.v(TAG,"Station acquired");
         ArrayList<Station> A= new ArrayList<Station>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -121,10 +121,7 @@ public class DBAdapterStation extends AdapterDB {
         Log.v(TAG,"Station acquired");
         String where = ROW_ID + " = " + rowId;
 
-        Cursor mCursor = this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+        Cursor mCursor = this.db.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Station S= new Station();
 
@@ -160,7 +157,7 @@ public class DBAdapterStation extends AdapterDB {
 
     public void deleteAll() {
         Log.v(TAG,"Stations deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {

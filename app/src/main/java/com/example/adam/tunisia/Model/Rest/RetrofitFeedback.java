@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitFeedback {
 
-    private static final String URL =  "http://192.168.1.6:8083/projet_pfe_serveur/" ;
+    private static final String URL = "http://192.168.1.6:8083/projet_pfe_serveur/" ;
     private static final String TAG = "RetrofitFeedback";
 
 

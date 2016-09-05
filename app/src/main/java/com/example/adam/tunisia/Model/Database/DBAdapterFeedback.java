@@ -77,7 +77,7 @@ public class DBAdapterFeedback extends AdapterDB {
     public ArrayList<Feedback> getAllFeedback() {
         Log.v(TAG,"Feedback acquired");
         ArrayList<Feedback> A= new ArrayList<Feedback>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -115,10 +115,7 @@ public class DBAdapterFeedback extends AdapterDB {
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.mDb.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Feedback F= new Feedback();
 
@@ -151,7 +148,7 @@ public class DBAdapterFeedback extends AdapterDB {
 
     public void deleteAll() {
         Log.v(TAG,"Feedbacks deleted");
-        Cursor c = this.db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, null);
+        Cursor c = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
         long rowId = c.getColumnIndexOrThrow(ROW_ID);
         if (c.moveToFirst()) {
             do {

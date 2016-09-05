@@ -31,13 +31,14 @@ import com.example.adam.tunisia.Model.Entities.GooglePlaces.Example;
 import com.example.adam.tunisia.Model.Entities.GooglePlaces.Result;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Perturbation;
-import com.example.adam.tunisia.Model.Entities.Recherche;
+//import com.example.adam.tunisia.Model.Entities.Recherche;
 import com.example.adam.tunisia.Model.Entities.Societe;
 import com.example.adam.tunisia.Model.Entities.Station;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
 import com.example.adam.tunisia.Model.Rest.GooglePlaces.GooglePlacesAPI;
-import com.example.adam.tunisia.Model.Rest.RetrofitRecherche;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+//import com.example.adam.tunisia.Model.Rest.RetrofitRecherche;
+// com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper;
 import com.example.adam.tunisia.Presenter.Presenters.MPActivityPresenter;
 import com.example.adam.tunisia.Presenter.Presenters.SCMapPresenter;
 import com.example.adam.tunisia.R;
@@ -232,8 +233,8 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
                     for( Station S : LS ){
                         Log.v("sssss","test");
-                        if(GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
-                            dist = GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
+                        if(Geohelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
+                            dist = Geohelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
                             destination = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
                             Log.v("sssss","Smaller, changin");
                             if(aller)
@@ -300,7 +301,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
 
 
-        GeoHelper GH = new GeoHelper();
+        Geohelper GH = new Geohelper();
         ArrayList<Integer>  R = GH.BuildGraph(this,from, to);
 
         DBAdapterSociete DBASo = new DBAdapterSociete(this);
@@ -323,7 +324,7 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = df.format(Calendar.getInstance().getTime());
 
-        RetrofitRecherche RR = new RetrofitRecherche();
+      //  RetrofitRecherche RR = new RetrofitRecherche();
 
 
         for ( Integer I : R) {
@@ -343,13 +344,13 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
                 Log.v("TEST SOC CONCERNE",soo);
                 Societe S = DBASo.getSociete(soo);
 
-                Recherche RRR = new Recherche(S.getROW_ID(),O.latitude+"",O.longitude+"",date,null);
+                //Recherche RRR = new Recherche(Station_ID.getROW_ID(),O.latitude+"",O.longitude+"",date,null);
 
-                if(!sent)
-                {RR.postRecherche(RRR,soo);
-                    sent =true;}
+               // if(!sent)
+               // {RR.postRecherche(RRR,soo);
+               //     sent =true;}
 
-                Log.v("TESTrecherche",""+RRR);
+              //  Log.v("TESTrecherche",""+RRR);
             }
 
         }
@@ -599,8 +600,8 @@ public class MPActivity extends AppCompatActivity implements OnMapReadyCallback 
 
                         for( Station S : LS ){
                             Log.v("sssss","test");
-                            if(GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
-                                dist = GeoHelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
+                            if(Geohelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude)<dist){
+                                dist = Geohelper.distFrom(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()),origin.latitude,origin.longitude);
                                 destination = new LatLng(Double.parseDouble(S.getLATITUDE()),Double.parseDouble(S.getLONGITUDE()));
                                 Log.v("sssss","Smaller, changin");
                             }

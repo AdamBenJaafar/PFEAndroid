@@ -7,7 +7,7 @@ import com.example.adam.tunisia.Model.Database.DBAdapterStation;
 import com.example.adam.tunisia.Model.Database.DBAdapterStation_Ligne;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper;
 import com.example.adam.tunisia.View.Activities.SCMap;
 
 import java.util.ArrayList;
@@ -31,15 +31,16 @@ public class SCMapPresenter {
         this.myDBStation_Ligne = new DBAdapterStation_Ligne(SCMap);
         this.myDBStation = new DBAdapterStation(SCMap);
 
-        this.myDBStation.open();
-        this.myDBStation_Ligne.open();
-        this.myDBLigne.open();
-
     }
 
     public void drawNetwork(){
 
         Log.v(TAG, "Drawing network");
+
+        this.myDBStation.open();
+        this.myDBStation_Ligne.open();
+        this.myDBLigne.open();
+
 
         // CAMERA SETTING VARIABLES
         // -181 & +181 are the bounds of the latlng
@@ -99,7 +100,7 @@ public class SCMapPresenter {
             e.printStackTrace();
         }
 
-        Zoom = GeoHelper.getZoomLevel(Math.max(GeoHelper.distFrom(MaxLAT,0,MinLAT,0),GeoHelper.distFrom(MaxLNG,0,MinLNG,0)));
+        Zoom = Geohelper.getZoomLevel(Math.max(Geohelper.distFrom(MaxLAT,0,MinLAT,0),Geohelper.distFrom(MaxLNG,0,MinLNG,0)));
 
         // SETTING CAMERA POSITION
         SCMap.setCameraPosition((MaxLAT+MinLAT)/2,(MaxLNG+MinLNG)/2, Zoom);

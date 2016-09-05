@@ -19,7 +19,7 @@ import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.adam.tunisia.Model.Entities.Ligne;
 import com.example.adam.tunisia.Model.Entities.Station_Ligne;
-import com.example.adam.tunisia.Presenter.Helpers.GeoHelper;
+import com.example.adam.tunisia.Presenter.Helpers.Geohelper;
 import com.example.adam.tunisia.Presenter.Presenters.SCMapPresenter;
 import com.example.adam.tunisia.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -222,7 +222,7 @@ public class SCMap extends AppCompatActivity implements OnMapReadyCallback {
 
         for( ArrayList<Station_Ligne> L : Network ){
 
-            drawLine(L, GeoHelper.Colors[Network.indexOf(L)%GeoHelper.Colors.length]);
+            drawLine(L, Geohelper.Colors[Network.indexOf(L)%Geohelper.Colors.length]);
         
         }
 

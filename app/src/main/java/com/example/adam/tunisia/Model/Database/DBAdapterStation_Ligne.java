@@ -78,7 +78,7 @@ public class DBAdapterStation_Ligne extends AdapterDB {
 
         String where = LIGNE_ID + "=" + LigneID;
 
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, where, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -112,7 +112,7 @@ public class DBAdapterStation_Ligne extends AdapterDB {
 
         String where = STATION_ID + "=" + StationID;
 
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , where, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, where, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -143,7 +143,7 @@ public class DBAdapterStation_Ligne extends AdapterDB {
     public ArrayList<Station_Ligne> getAllStation_Ligne() {
         Log.v(TAG,"Station_Ligne acquired");
         ArrayList<Station_Ligne> A= new ArrayList<Station_Ligne>();
-        Cursor mCursor = this.db.query(DATABASE_TABLE, ALL_KEYS , null, null, null, null, null);
+        Cursor mCursor = this.db.query(DATABASE_TABLE, null, null, null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             do {
@@ -177,10 +177,7 @@ public class DBAdapterStation_Ligne extends AdapterDB {
 
         Cursor mCursor =
 
-                this.mDb.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.mDb.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Station_Ligne F= new Station_Ligne();
 
@@ -214,10 +211,7 @@ public class DBAdapterStation_Ligne extends AdapterDB {
 
         Cursor mCursor =
 
-                this.db.query(true, DATABASE_TABLE, ALL_KEYS , where, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                this.db.query(true, DATABASE_TABLE, null, where, null, null, null, null, null);
 
         Station_Ligne F= new Station_Ligne();
 

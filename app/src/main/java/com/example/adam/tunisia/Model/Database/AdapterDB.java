@@ -7,20 +7,18 @@ import android.util.Log;
 
 public class AdapterDB {
 
-    /* ***************************************************************
-                         DATABASE INFO
-    *************************************************************** */
-
     private static final String TAG = "AdapterDB";
 
+    /**
+     *  Database informations.
+     */
     public static final String DATABASE_NAME = "stuffIOwn";
 
     public static final int DATABASE_VERSION =51;
 
-    /* ***************************************************************
-                         DATABASE SCHEMA
-    *************************************************************** */
-
+    /**
+     *  Database tables.
+     */
     private static final String TABLE_SOCIETE = "societe";
     private static final String CREATE_TABLE_SOCIETE =
             "create table " + TABLE_SOCIETE + " (_id integer primary key, "
@@ -103,15 +101,30 @@ public class AdapterDB {
                     + DBAdapterVehicule.LIGNE_ID+ " INT,"
                     + DBAdapterVehicule.IMMATRICULATION+ " TEXT " + ");";
 
-
+    /**
+     *  Initialisation methods.
+     */
     private final Context context;
     private DatabaseHelper DBHelper;
     protected SQLiteDatabase db;
 
-    /* ***************************************************************
-                        DATABASE HELPER
-    *************************************************************** */
+    public AdapterDB(Context ctx){
+        this.context = ctx;
+        this.DBHelper = new DatabaseHelper(this.context);
+    }
 
+    public AdapterDB open(){
+        this.db = this.DBHelper.getWritableDatabase();
+        return this;
+    }
+
+    public void close(){
+        this.DBHelper.close();
+    }
+
+    /**
+     *  Database helper class.
+     */
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
         DatabaseHelper(Context context)
@@ -122,6 +135,8 @@ public class AdapterDB {
         @Override
         public void onCreate(SQLiteDatabase db)
         {   Log.v(TAG, "Database CREATED. onCreate method EXECUTED.");
+
+
             db.execSQL(CREATE_TABLE_SOCIETE);
             db.execSQL(CREATE_TABLE_FEEDBACK);
             db.execSQL(CREATE_TABLE_STATION);
@@ -138,6 +153,7 @@ public class AdapterDB {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {   Log.v(TAG, "Database UPGRADED. onUpgrade method EXECUTED.");
+
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOCIETE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
@@ -148,27 +164,11 @@ public class AdapterDB {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION_LIGNE_HORAIRES);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VEHICULE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOYAGE);
+
+            // Data recovery method missing
+
             this.onCreate(db);
-
         }
-    }
-
-     /* ***************************************************************
-                        INTIALISATION METHODS
-    *************************************************************** */
-
-    public AdapterDB(Context ctx){
-        this.context = ctx;
-        this.DBHelper = new DatabaseHelper(this.context);
-    }
-
-    public AdapterDB open(){
-        this.db = this.DBHelper.getWritableDatabase();
-        return this;
-    }
-
-    public void close(){
-        this.DBHelper.close();
     }
 
 
